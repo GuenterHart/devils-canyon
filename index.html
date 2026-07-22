@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devil's Canyon – Interaktive Karte</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #171310;
+    --bg-panel: #221b16;
+    --bg-panel-raised: #2c231c;
+    --line: #3d3226;
+    --gold: #c8a46c;
+    --gold-bright: #e0c08a;
+    --cream: #ece2d0;
+    --cream-dim: #b8ab97;
+    --cat-trapper: #a6432d;
+    --cat-farming: #7a8f5c;
+    --cat-resource: #5c7a8f;
+    --shadow: 0 12px 32px rgba(0,0,0,0.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg-deep);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    height: 100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  #sidebar {
+    width: 340px;
+    min-width: 340px;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    box-shadow: var(--shadow);
+  }
+
+  #brand {
+    padding: 22px 20px 16px;
+    border-bottom: 1px solid var(--line);
+    background:
+      linear-gradient(180deg, rgba(200,164,108,0.08), transparent 70%);
+  }
+
+  #brand h1 {
+    font-family: 'Rye', serif;
+    font-size: 28px;
+    margin: 0 0 2px;
+    color: var(--gold-bright);
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  }
+
+  #brand p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--cream-dim);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  #search-wrap {
+    padding: 16px 20px 8px;
+  }
+
+  #search {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-panel-raised);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 17px;
+    letter-spacing: 0.3px;
+  }
+
+  #search::placeholder { color: var(--cream-dim); }
+  #search:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(200,164,108,0.25);
+  }
+
+  #filters {
+    padding: 10px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 3px;
+    transition: background 0.15s ease;
+    user-select: none;
+  }
+  .filter-row:hover { background: rgba(255,255,255,0.03); }
+
+  .filter-swatch {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+  }
+
+  .filter-row span.label {
+    flex: 1;
+    font-size: 17px;
+    letter-spacing: 0.2px;
+  }
+
+  .filter-row .count {
+    font-size: 13px;
+    color: var(--cream-dim);
+    background: rgba(255,255,255,0.05);
+    padding: 1px 8px;
+    border-radius: 10px;
+  }
+
+  .filter-row input[type="checkbox"] {
+    accent-color: var(--gold);
+    width: 15px;
+    height: 15px;
+  }
+
+  #list-wrap {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 12px 20px;
+  }
+
+  #list-wrap::-webkit-scrollbar { width: 8px; }
+  #list-wrap::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+  .loc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .loc-item:hover {
+    background: var(--bg-panel-raised);
+    border-color: var(--line);
+  }
+  .loc-item .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    margin-top: 5px; flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+  }
+  .loc-item .info { flex: 1; }
+  .loc-item .name {
+    font-size: 17px;
+    color: var(--cream);
+    line-height: 1.15;
+  }
+  .loc-item .meta {
+    font-size: 13px;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  #empty-state {
+    padding: 30px 16px;
+    text-align: center;
+    color: var(--cream-dim);
+    font-size: 15px;
+    display: none;
+  }
+
+  /* ---------- Map ---------- */
+  #map-wrap {
+    flex: 1;
+    position: relative;
+    background: #0d0b09;
+  }
+
+  #map { width: 100%; height: 100%; background: #0d0b09; }
+
+  #map-notice {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(34,27,22,0.92);
+    border: 1px solid var(--line);
+    color: var(--cream-dim);
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 500;
+    box-shadow: var(--shadow);
+    text-align: center;
+    max-width: 560px;
+  }
+  #map-notice b { color: var(--gold); }
+
+  /* Leaflet overrides -> Wanted-poster popup */
+  .leaflet-popup-content-wrapper {
+    background: #ece2d0;
+    color: #241b13;
+    border-radius: 2px;
+    background-image:
+      radial-gradient(circle at 8% 12%, rgba(0,0,0,0.06) 0%, transparent 40%),
+      radial-gradient(circle at 92% 88%, rgba(0,0,0,0.06) 0%, transparent 40%);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+    border: 1px solid #8a7452;
+  }
+  .leaflet-popup-tip { background: #ece2d0; border: 1px solid #8a7452; }
+  .leaflet-popup-content { margin: 16px 18px; font-family: 'Barlow Condensed', sans-serif; }
+
+  .popup-eyebrow {
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #8a5a3a;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .popup-title {
+    font-family: 'Rye', serif;
+    font-size: 22px;
+    line-height: 1.1;
+    margin: 0 0 8px;
+    color: #241b13;
+  }
+  .popup-desc {
+    font-size: 16px;
+    line-height: 1.3;
+    margin: 0 0 8px;
+    color: #3a2e20;
+  }
+  .popup-coords {
+    font-size: 13px;
+    color: #6b5a3f;
+    border-top: 1px dashed #b8a374;
+    padding-top: 6px;
+    margin-top: 6px;
+    font-family: monospace;
+    cursor: pointer;
+  }
+  .popup-coords:hover { color: #8a5a3a; }
+
+  .dc-pin {
+    width: 26px; height: 26px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 2px solid rgba(0,0,0,0.5);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dc-pin::after {
+    content: '';
+    width: 8px; height: 8px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 50%;
+    transform: rotate(45deg);
+  }
+
+  #zoom-hint {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    font-size: 12px;
+    color: var(--cream-dim);
+    background: rgba(34,27,22,0.85);
+    padding: 5px 10px;
+    border-radius: 3px;
+    z-index: 500;
+    border: 1px solid var(--line);
+  }
+
+  @media (max-width: 760px) {
+    body { flex-direction: column; }
+    #sidebar { width: 100%; min-width: 0; height: 46%; border-right: none; border-bottom: 1px solid var(--line); }
+    #map-wrap { height: 54%; }
+  }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <div id="brand">
+    <h1>Devil's Canyon</h1>
+    <p>Interaktive Server-Karte</p>
+  </div>
+
+  <div id="search-wrap">
+    <input id="search" type="text" placeholder="Ort suchen…" autocomplete="off">
+  </div>
+
+  <div id="filters"></div>
+
+  <div id="list-wrap">
+    <div id="empty-state">Keine Treffer für diese Suche/Filter.</div>
+    <div id="list"></div>
+  </div>
+</div>
+
+<div id="map-wrap">
+  <div id="map-notice">
+    <b>Marker sitzen evtl. noch nicht exakt.</b> Klick auf zwei bekannte Orte auf der Karte
+    (z. B. Valentine, Saint Denis), lies die Pixel-Koordinate unten links ab und trag sie zusammen
+    mit der echten Spiel-Koordinate bei <code>CALIBRATION</code> im Script ein.
+  </div>
+  <div id="map"></div>
+  <div id="zoom-hint">Scrollen zum Zoomen · Klick auf Koordinate = kopieren</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* ============================================================================
+   DEVIL'S CANYON – INTERAKTIVE KARTE
+   ============================================================================
+   KALIBRIERUNG (WICHTIG, bevor die Karte "echt" passt):
+   Diese Datei nutzt Leaflet mit L.CRS.Simple (Bild-Pixel-Koordinaten), nicht
+   echte Geo-Koordinaten. Damit eure Spiel-Koordinaten (vector3 x,y aus
+   server.cfg/config.lua) an der richtigen Stelle auf EUREM Kartenbild landen,
+   müsst ihr 2 Referenzpunkte kalibrieren:
+
+   1. Sucht euch 2 Orte, deren Spiel-Koordinate ihr genau kennt (z.B. per /coords
+      an zwei weit auseinanderliegenden Städten wie Valentine und Saint Denis)
+      UND deren Pixel-Position auf eurem Kartenbild ihr ablesen könnt (z.B. mit
+      einem Bildbearbeitungsprogramm, Maus-Position zeigt Pixel-X/Y).
+   2. Trag beide Punkte unten bei CALIBRATION ein.
+   3. gameToMap() rechnet danach automatisch jede Spiel-Koordinate linear in
+      Bild-Pixel um. Je weiter die 2 Referenzpunkte auseinander liegen, desto
+      genauer wird die Umrechnung für den Rest der Karte.
+   ============================================================================ */
+
+const MAP_IMAGE_URL = "map.png"; // <- euer Kartenbild, liegt im selben Ordner
+const MAP_IMAGE_WIDTH = 2512;    // <- echte Pixel-Breite eures Kartenbilds
+const MAP_IMAGE_HEIGHT = 1878;   // <- echte Pixel-Höhe eures Kartenbilds
+
+// Platzhalter-Kalibrierung (grobe RDR2-Weltkoordinaten <-> Standard-Fan-Karten-Pixel).
+// Bitte durch eure eigenen 2 Referenzpunkte ersetzen (siehe Anleitung oben).
+const CALIBRATION = {
+  pointA: { game: { x: -5497.71, y: -2948.02 }, pixel: { x: 341,  y: 1359 } }, // Tumbleweed
+  pointB: { game: { x: 2864.83,  y: 1350.27 },  pixel: { x: 2074, y: 464 } },  // Annesburg
+};
+
+function gameToMap(gx, gy) {
+  const { pointA: A, pointB: B } = CALIBRATION;
+  const scaleX = (B.pixel.x - A.pixel.x) / (B.game.x - A.game.x);
+  const scaleY = (B.pixel.y - A.pixel.y) / (B.game.y - A.game.y);
+  const px = A.pixel.x + (gx - A.game.x) * scaleX;
+  const py = A.pixel.y + (gy - A.game.y) * scaleY;
+  // Leaflet CRS.Simple: y wächst nach OBEN im Koordinatensystem, Bild-Pixel-Y nach UNTEN.
+  return [MAP_IMAGE_HEIGHT - py, px];
+}
+
+/* ============================================================================
+   STANDORT-DATEN
+   Eigene Kategorie-Farbe pro "type". Neue Punkte einfach unten ergänzen -
+   kein Code an anderer Stelle muss angefasst werden.
+   ============================================================================ */
+const CATEGORIES = {
+  trapper:   { label: "Trapper (Jagd)",         color: "#a6432d" },
+  farming:   { label: "Verarbeitung / Farming",  color: "#7a8f5c" },
+  resource:  { label: "Ressourcen / Events",     color: "#5c7a8f" },
+};
+
+const LOCATIONS = [
+  // --- Trapper (dc_hunting) ---
+  { type: "trapper", name: "Kamassa Trapper", desc: "Verkauf von Häuten & Kadavern.", x: 2075.04, y: 1000.21 },
+  { type: "trapper", name: "Riggs Trapper",   desc: "Verkauf von Häuten & Kadavern.", x: -1007.92, y: -541.16 },
+  { type: "trapper", name: "Pronghorn Trapper", desc: "Verkauf von Häuten & Kadavern.", x: -2844.17, y: 136.88 },
+  { type: "trapper", name: "Montana Trapper", desc: "Verkauf von Häuten & Kadavern.", x: -2251.53, y: -1914.97 },
+
+  // --- Verarbeitung (dc_processing) ---
+  { type: "farming", name: "Baumwollverarbeitung – Saint Denis", desc: "Baumwolle zu Wollstoff verarbeiten.", x: 2679.15, y: -847.59 },
+  { type: "farming", name: "Baumwollverarbeitung – Rhodes", desc: "Baumwolle zu Wollstoff verarbeiten.", x: 1406.31, y: -1283.52 },
+
+  // --- Legendäre Tiere / Events (dc_hunting Erweiterung) ---
+  { type: "resource", name: "Kamassa River (Legendär-Zone)",   desc: "Möglicher Spawnpunkt legendärer Tiere.", x: 2050.0, y: 980.0 },
+  { type: "resource", name: "Riggs Station (Legendär-Zone)",   desc: "Möglicher Spawnpunkt legendärer Tiere.", x: -1030.0, y: -560.0 },
+  { type: "resource", name: "Pronghorn Ranch (Legendär-Zone)", desc: "Möglicher Spawnpunkt legendärer Tiere.", x: -2820.0, y: 160.0 },
+  { type: "resource", name: "Manzanita Post (Legendär-Zone)",  desc: "Möglicher Spawnpunkt legendärer Tiere.", x: -2270.0, y: -1900.0 },
+];
+
+/* ============================================================================
+   MAP SETUP
+   ============================================================================ */
+const map = L.map('map', {
+  crs: L.CRS.Simple,
+  minZoom: -2,
+  maxZoom: 3,
+  zoomSnap: 0.25,
+  attributionControl: false,
+});
+
+const bounds = [[0, 0], [MAP_IMAGE_HEIGHT, MAP_IMAGE_WIDTH]];
+
+// Kartenbild-Layer. Falls map.jpg fehlt, zeigt Leaflet einfach eine leere/graue
+// Fläche - die Marker funktionieren trotzdem, nur ohne Hintergrundbild.
+L.imageOverlay(MAP_IMAGE_URL, bounds, { errorOverlayUrl: undefined }).addTo(map);
+map.fitBounds(bounds);
+
+/* ============================================================================
+   KALIBRIER-HELFER
+   Klick auf eine LEERE Stelle der Karte (kein Marker) zeigt die Pixel-Koordinate
+   an dieser Stelle an. Damit könnt ihr z.B. auf "Valentine" auf dem Bild klicken,
+   die angezeigte Pixel-Koordinate ablesen und oben bei CALIBRATION.pointA.pixel
+   eintragen (dazu die Spiel-Koordinate von Valentine eintragen, die ihr per
+   /coords im Spiel selbst ausgelesen habt). Gleiches nochmal für einen zweiten,
+   weit entfernten Ort (z.B. Saint Denis) für pointB - fertig kalibriert.
+   ============================================================================ */
+const calibBox = L.control({ position: 'bottomleft' });
+calibBox.onAdd = function () {
+  const div = L.DomUtil.create('div');
+  div.id = 'calib-readout';
+  div.style.cssText = 'background:rgba(34,27,22,0.92);border:1px solid #3d3226;color:#c8a46c;' +
+    'padding:6px 12px;border-radius:4px;font-family:monospace;font-size:13px;display:none;';
+  return div;
+};
+calibBox.addTo(map);
+
+map.on('click', (e) => {
+  // Bild-Pixel-Koordinate aus Leaflet-latlng zurückrechnen (Umkehrung von gameToMap's Y-Flip)
+  const pixelX = e.latlng.lng;
+  const pixelY = MAP_IMAGE_HEIGHT - e.latlng.lat;
+  const readout = document.getElementById('calib-readout');
+  readout.style.display = 'block';
+  readout.innerHTML = `Pixel-Koordinate hier: <b>x=${pixelX.toFixed(0)}, y=${pixelY.toFixed(0)}</b>` +
+    `<br><span style="opacity:0.7">→ zum Kalibrieren in CALIBRATION.pointA/B.pixel eintragen</span>`;
+});
+
+function makeIcon(color) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="dc-pin" style="background:${color}"></div>`,
+    iconSize: [26, 26],
+    iconAnchor: [13, 24],
+    popupAnchor: [0, -22],
+  });
+}
+
+const markersByLoc = new Map();
+const layerGroup = L.layerGroup().addTo(map);
+
+function buildPopupHTML(loc) {
+  const catLabel = CATEGORIES[loc.type].label;
+  return `
+    <div class="popup-eyebrow">${catLabel}</div>
+    <div class="popup-title">${loc.name}</div>
+    <div class="popup-desc">${loc.desc}</div>
+    <div class="popup-coords" data-coords="vector3(${loc.x.toFixed(2)}, ${loc.y.toFixed(2)}, 0.0)" title="Klicken zum Kopieren">
+      vector3(${loc.x.toFixed(2)}, ${loc.y.toFixed(2)}, 0.0)
+    </div>
+  `;
+}
+
+LOCATIONS.forEach(loc => {
+  const latlng = gameToMap(loc.x, loc.y);
+  const marker = L.marker(latlng, { icon: makeIcon(CATEGORIES[loc.type].color) })
+    .bindPopup(buildPopupHTML(loc));
+  marker.on('popupopen', () => {
+    const el = document.querySelector('.popup-coords');
+    if (el) {
+      el.onclick = () => {
+        navigator.clipboard?.writeText(el.dataset.coords);
+        el.textContent = "Kopiert!";
+        setTimeout(() => { el.textContent = el.dataset.coords; }, 1200);
+      };
+    }
+  });
+  layerGroup.addLayer(marker);
+  markersByLoc.set(loc, marker);
+});
+
+/* ============================================================================
+   SIDEBAR: Filter + Liste + Suche
+   ============================================================================ */
+const activeTypes = new Set(Object.keys(CATEGORIES));
+let searchTerm = "";
+
+const filtersEl = document.getElementById('filters');
+Object.entries(CATEGORIES).forEach(([key, cat]) => {
+  const count = LOCATIONS.filter(l => l.type === key).length;
+  const row = document.createElement('label');
+  row.className = 'filter-row';
+  row.innerHTML = `
+    <input type="checkbox" checked data-type="${key}">
+    <span class="filter-swatch" style="background:${cat.color}"></span>
+    <span class="label">${cat.label}</span>
+    <span class="count">${count}</span>
+  `;
+  row.querySelector('input').addEventListener('change', (e) => {
+    if (e.target.checked) activeTypes.add(key); else activeTypes.delete(key);
+    render();
+  });
+  filtersEl.appendChild(row);
+});
+
+function matchesFilters(loc) {
+  if (!activeTypes.has(loc.type)) return false;
+  if (searchTerm && !loc.name.toLowerCase().includes(searchTerm)) return false;
+  return true;
+}
+
+function render() {
+  layerGroup.clearLayers();
+  const listEl = document.getElementById('list');
+  const emptyEl = document.getElementById('empty-state');
+  listEl.innerHTML = '';
+
+  const visible = LOCATIONS.filter(matchesFilters);
+  emptyEl.style.display = visible.length === 0 ? 'block' : 'none';
+
+  visible.forEach(loc => {
+    layerGroup.addLayer(markersByLoc.get(loc));
+
+    const item = document.createElement('div');
+    item.className = 'loc-item';
+    item.innerHTML = `
+      <span class="dot" style="background:${CATEGORIES[loc.type].color}"></span>
+      <div class="info">
+        <div class="name">${loc.name}</div>
+        <div class="meta">${CATEGORIES[loc.type].label}</div>
+      </div>
+    `;
+    item.addEventListener('click', () => {
+      const marker = markersByLoc.get(loc);
+      map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1), { animate: true });
+      marker.openPopup();
+    });
+    listEl.appendChild(item);
+  });
+}
+
+document.getElementById('search').addEventListener('input', (e) => {
+  searchTerm = e.target.value.trim().toLowerCase();
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
