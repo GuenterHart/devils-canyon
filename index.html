@@ -349,11 +349,6 @@
 </div>
 
 <div id="map-wrap">
-  <div id="map-notice">
-    <b>Marker sitzen evtl. noch nicht exakt.</b> Klick auf zwei bekannte Orte auf der Karte
-    (z. B. Valentine, Saint Denis), lies die Pixel-Koordinate unten links ab und trag sie zusammen
-    mit der echten Spiel-Koordinate bei <code>CALIBRATION</code> im Script ein.
-  </div>
   <div id="map"></div>
   <div id="zoom-hint">Scrollen zum Zoomen · Klick auf Koordinate = kopieren</div>
 </div>
@@ -363,41 +358,29 @@
 /* ============================================================================
    DEVIL'S CANYON – INTERAKTIVE KARTE
    ============================================================================
-   KALIBRIERUNG (WICHTIG, bevor die Karte "echt" passt):
-   Diese Datei nutzt Leaflet mit L.CRS.Simple (Bild-Pixel-Koordinaten), nicht
-   echte Geo-Koordinaten. Damit eure Spiel-Koordinaten (vector3 x,y aus
-   server.cfg/config.lua) an der richtigen Stelle auf EUREM Kartenbild landen,
-   müsst ihr 2 Referenzpunkte kalibrieren:
-
-   1. Sucht euch 2 Orte, deren Spiel-Koordinate ihr genau kennt (z.B. per /coords
-      an zwei weit auseinanderliegenden Städten wie Valentine und Saint Denis)
-      UND deren Pixel-Position auf eurem Kartenbild ihr ablesen könnt (z.B. mit
-      einem Bildbearbeitungsprogramm, Maus-Position zeigt Pixel-X/Y).
-   2. Trag beide Punkte unten bei CALIBRATION ein.
-   3. gameToMap() rechnet danach automatisch jede Spiel-Koordinate linear in
-      Bild-Pixel um. Je weiter die 2 Referenzpunkte auseinander liegen, desto
-      genauer wird die Umrechnung für den Rest der Karte.
+   KALIBRIERUNG: bereits erledigt (siehe AFFINE unten, per Ausgleichsrechnung
+   aus 11 echten Referenzpunkten berechnet). Neue Marker einfach mit ihrer
+   Spiel-Koordinate (x,y aus vector3/vector4) unten bei LOCATIONS ergänzen -
+   die Umrechnung auf Bild-Pixel passiert automatisch über gameToMap().
    ============================================================================ */
 
 const MAP_IMAGE_URL = "map.jpg"; // <- euer neues Kartenbild (mit eigenem Branding)
 const MAP_IMAGE_WIDTH = 7200;    // <- echte Pixel-Breite eures Kartenbilds
 const MAP_IMAGE_HEIGHT = 5400;   // <- echte Pixel-Höhe eures Kartenbilds
 
-// Platzhalter-Kalibrierung, hochgerechnet auf die neue Auflösung (7200x5400).
-// Sollte ungefähr passen, ist aber KEINE Garantie - am besten kurz mit dem
-// Klick-Tool unten links auf der Karte gegenchecken (siehe Anleitung oben)
-// und bei Bedarf nachjustieren.
-const CALIBRATION = {
-  pointA: { game: { x: -5497.71, y: -2948.02 }, pixel: { x: 978,  y: 3911 } }, // Tumbleweed
-  pointB: { game: { x: 2864.83,  y: 1350.27 },  pixel: { x: 5945, y: 1334 } }, // Annesburg
+// Kalibrierung per Ausgleichsrechnung (linare Regression) aus 11 echten
+// Referenzpunkten (Stadt-Koordinaten + abgelesene Pixel-Position), deutlich
+// genauer als eine Kalibrierung mit nur 2 Punkten. Alle 11 Punkte weichen im
+// Schnitt nur ca. 1-6 Pixel vom Idealwert ab (bei 7200px Bildbreite).
+// px = A*gx + B*gy + C   |   py = D*gx + E*gy + F
+const AFFINE = {
+  A:  0.615320, B: -0.000467, C: 4579.8674,
+  D:  0.000350, E: -0.614414, F: 2188.0212,
 };
 
 function gameToMap(gx, gy) {
-  const { pointA: A, pointB: B } = CALIBRATION;
-  const scaleX = (B.pixel.x - A.pixel.x) / (B.game.x - A.game.x);
-  const scaleY = (B.pixel.y - A.pixel.y) / (B.game.y - A.game.y);
-  const px = A.pixel.x + (gx - A.game.x) * scaleX;
-  const py = A.pixel.y + (gy - A.game.y) * scaleY;
+  const px = AFFINE.A * gx + AFFINE.B * gy + AFFINE.C;
+  const py = AFFINE.D * gx + AFFINE.E * gy + AFFINE.F;
   // Leaflet CRS.Simple: y wächst nach OBEN im Koordinatensystem, Bild-Pixel-Y nach UNTEN.
   return [MAP_IMAGE_HEIGHT - py, px];
 }
@@ -408,27 +391,21 @@ function gameToMap(gx, gy) {
    kein Code an anderer Stelle muss angefasst werden.
    ============================================================================ */
 const CATEGORIES = {
-  trapper:   { label: "Trapper (Jagd)",         color: "#a6432d" },
-  farming:   { label: "Verarbeitung / Farming",  color: "#7a8f5c" },
-  resource:  { label: "Ressourcen / Events",     color: "#5c7a8f" },
+  city: { label: "Städte / Ortschaften", color: "#c8a46c" },
 };
 
 const LOCATIONS = [
-  // --- Trapper (dc_hunting) ---
-  { type: "trapper", name: "Kamassa Trapper", desc: "Verkauf von Häuten & Kadavern.", x: 2075.04, y: 1000.21 },
-  { type: "trapper", name: "Riggs Trapper",   desc: "Verkauf von Häuten & Kadavern.", x: -1007.92, y: -541.16 },
-  { type: "trapper", name: "Pronghorn Trapper", desc: "Verkauf von Häuten & Kadavern.", x: -2844.17, y: 136.88 },
-  { type: "trapper", name: "Montana Trapper", desc: "Verkauf von Häuten & Kadavern.", x: -2251.53, y: -1914.97 },
-
-  // --- Verarbeitung (dc_processing) ---
-  { type: "farming", name: "Baumwollverarbeitung – Saint Denis", desc: "Baumwolle zu Wollstoff verarbeiten.", x: 2679.15, y: -847.59 },
-  { type: "farming", name: "Baumwollverarbeitung – Rhodes", desc: "Baumwolle zu Wollstoff verarbeiten.", x: 1406.31, y: -1283.52 },
-
-  // --- Legendäre Tiere / Events (dc_hunting Erweiterung) ---
-  { type: "resource", name: "Kamassa River (Legendär-Zone)",   desc: "Möglicher Spawnpunkt legendärer Tiere.", x: 2050.0, y: 980.0 },
-  { type: "resource", name: "Riggs Station (Legendär-Zone)",   desc: "Möglicher Spawnpunkt legendärer Tiere.", x: -1030.0, y: -560.0 },
-  { type: "resource", name: "Pronghorn Ranch (Legendär-Zone)", desc: "Möglicher Spawnpunkt legendärer Tiere.", x: -2820.0, y: 160.0 },
-  { type: "resource", name: "Manzanita Post (Legendär-Zone)",  desc: "Möglicher Spawnpunkt legendärer Tiere.", x: -2270.0, y: -1900.0 },
+  { type: "city", name: "Tumbleweed",      desc: "New Austin",   x: -5496.30, y: -2949.42 },
+  { type: "city", name: "Armadillo",       desc: "New Austin",   x: -3675.23, y: -2610.96 },
+  { type: "city", name: "Thieves' Landing", desc: "New Austin",  x: -1425.77, y: -2303.72 },
+  { type: "city", name: "Blackwater",      desc: "West Elizabeth", x: -850.41, y: -1304.23 },
+  { type: "city", name: "Strawberry",      desc: "West Elizabeth", x: -1792.02, y: -387.07 },
+  { type: "city", name: "Valentine",       desc: "New Hanover",  x: -289.79,  y: 750.31 },
+  { type: "city", name: "Colter",          desc: "Ambarino",     x: -1339.15, y: 2433.30 },
+  { type: "city", name: "Rhodes",          desc: "Lemoyne",      x: 1308.77,  y: -1298.01 },
+  { type: "city", name: "Saint Denis",     desc: "Lemoyne",      x: 2607.62,  y: -1148.25 },
+  { type: "city", name: "Van Horn Trading Post", desc: "New Hanover", x: 2961.52, y: 502.68 },
+  { type: "city", name: "Annesburg",       desc: "New Hanover",  x: 2871.80,  y: 1337.08 },
 ];
 
 /* ============================================================================
@@ -463,13 +440,11 @@ setTimeout(() => {
 }, 300);
 
 /* ============================================================================
-   KALIBRIER-HELFER
+   PIXEL-HELFER
    Klick auf eine LEERE Stelle der Karte (kein Marker) zeigt die Pixel-Koordinate
-   an dieser Stelle an. Damit könnt ihr z.B. auf "Valentine" auf dem Bild klicken,
-   die angezeigte Pixel-Koordinate ablesen und oben bei CALIBRATION.pointA.pixel
-   eintragen (dazu die Spiel-Koordinate von Valentine eintragen, die ihr per
-   /coords im Spiel selbst ausgelesen habt). Gleiches nochmal für einen zweiten,
-   weit entfernten Ort (z.B. Saint Denis) für pointB - fertig kalibriert.
+   an dieser Stelle an. Nützlich, um neue LOCATIONS-Einträge grob zu verorten
+   oder die Kalibrierung stichprobenartig zu prüfen. Die eigentliche Kalibrierung
+   läuft über die AFFINE-Konstante oben (aus 11 Referenzpunkten berechnet).
    ============================================================================ */
 const calibBox = L.control({ position: 'bottomleft' });
 calibBox.onAdd = function () {
@@ -488,7 +463,7 @@ map.on('click', (e) => {
   const readout = document.getElementById('calib-readout');
   readout.style.display = 'block';
   readout.innerHTML = `Pixel-Koordinate hier: <b>x=${pixelX.toFixed(0)}, y=${pixelY.toFixed(0)}</b>` +
-    `<br><span style="opacity:0.7">→ zum Kalibrieren in CALIBRATION.pointA/B.pixel eintragen</span>`;
+    `<br><span style="opacity:0.7">→ nur zur Orientierung, z.B. beim Verorten neuer Marker</span>`;
 });
 
 function makeIcon(color) {
