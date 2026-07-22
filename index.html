@@ -447,6 +447,19 @@ const bounds = [[0, 0], [MAP_IMAGE_HEIGHT, MAP_IMAGE_WIDTH]];
 L.imageOverlay(MAP_IMAGE_URL, bounds, { errorOverlayUrl: undefined }).addTo(map);
 map.fitBounds(bounds);
 
+// Fix: Beim ersten Laden hat der Browser das Flexbox-Layout (Sidebar-Breite,
+// Fonts) manchmal noch nicht final berechnet, wenn Leaflet initialisiert wird.
+// Dadurch "verrutscht" die Karte in die Ecke. Nach vollständigem Laden die
+// Kartengröße neu berechnen und wieder zentrieren.
+window.addEventListener('load', () => {
+  map.invalidateSize();
+  map.fitBounds(bounds);
+});
+setTimeout(() => {
+  map.invalidateSize();
+  map.fitBounds(bounds);
+}, 300);
+
 /* ============================================================================
    KALIBRIER-HELFER
    Klick auf eine LEERE Stelle der Karte (kein Marker) zeigt die Pixel-Koordinate
