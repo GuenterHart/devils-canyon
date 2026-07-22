@@ -379,15 +379,17 @@
       genauer wird die Umrechnung für den Rest der Karte.
    ============================================================================ */
 
-const MAP_IMAGE_URL = "map.png"; // <- euer Kartenbild, liegt im selben Ordner
-const MAP_IMAGE_WIDTH = 2512;    // <- echte Pixel-Breite eures Kartenbilds
-const MAP_IMAGE_HEIGHT = 1878;   // <- echte Pixel-Höhe eures Kartenbilds
+const MAP_IMAGE_URL = "map.jpg"; // <- euer neues, höher aufgelöstes Kartenbild
+const MAP_IMAGE_WIDTH = 4505;    // <- echte Pixel-Breite eures Kartenbilds
+const MAP_IMAGE_HEIGHT = 3340;   // <- echte Pixel-Höhe eures Kartenbilds
 
-// Platzhalter-Kalibrierung (grobe RDR2-Weltkoordinaten <-> Standard-Fan-Karten-Pixel).
-// Bitte durch eure eigenen 2 Referenzpunkte ersetzen (siehe Anleitung oben).
+// Platzhalter-Kalibrierung, hochgerechnet vom alten Kartenbild (2512x1878) auf
+// das neue (4505x3340). Sollte ungefähr passen, ist aber KEINE Garantie -
+// am besten kurz mit dem Klick-Tool unten links auf der Karte gegenchecken
+// (siehe Anleitung oben) und bei Bedarf nachjustieren.
 const CALIBRATION = {
-  pointA: { game: { x: -5497.71, y: -2948.02 }, pixel: { x: 341,  y: 1359 } }, // Tumbleweed
-  pointB: { game: { x: 2864.83,  y: 1350.27 },  pixel: { x: 2074, y: 464 } },  // Annesburg
+  pointA: { game: { x: -5497.71, y: -2948.02 }, pixel: { x: 612,  y: 2418 } }, // Tumbleweed
+  pointB: { game: { x: 2864.83,  y: 1350.27 },  pixel: { x: 3720, y: 825 } },  // Annesburg
 };
 
 function gameToMap(gx, gy) {
@@ -599,5 +601,3 @@ document.getElementById('search').addEventListener('input', (e) => {
 
 render();
 </script>
-</body>
-</html>
