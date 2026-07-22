@@ -275,22 +275,44 @@
     margin: 0 0 8px;
     color: #241b13;
   }
+  .popup-region {
+    font-size: 13px;
+    color: #6b5a3f;
+    margin: -4px 0 8px;
+    font-style: italic;
+  }
   .popup-desc {
     font-size: 16px;
     line-height: 1.3;
-    margin: 0 0 8px;
+    margin: 0 0 10px;
     color: #3a2e20;
   }
-  .popup-coords {
-    font-size: 13px;
-    color: #6b5a3f;
+  .popup-amenities {
     border-top: 1px dashed #b8a374;
-    padding-top: 6px;
-    margin-top: 6px;
-    font-family: monospace;
-    cursor: pointer;
+    padding-top: 8px;
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
   }
-  .popup-coords:hover { color: #8a5a3a; }
+  .popup-amenities span {
+    font-size: 12px;
+    color: #5a4a34;
+    background: rgba(138,90,58,0.12);
+    border: 1px solid rgba(138,90,58,0.3);
+    border-radius: 10px;
+    padding: 2px 9px;
+    white-space: nowrap;
+  }
+  .popup-image {
+    display: block;
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    margin: -16px -18px 10px;
+    width: calc(100% + 36px);
+    border-bottom: 1px solid #8a7452;
+  }
 
   .dc-pin {
     width: 26px; height: 26px;
@@ -395,18 +417,65 @@ const CATEGORIES = {
 };
 
 const LOCATIONS = [
-  { type: "city", name: "Tumbleweed",      desc: "New Austin",   x: -5496.30, y: -2949.42 },
-  { type: "city", name: "Armadillo",       desc: "New Austin",   x: -3675.23, y: -2610.96 },
-  { type: "city", name: "Thieves' Landing", desc: "New Austin",  x: -1425.77, y: -2303.72 },
-  { type: "city", name: "Blackwater",      desc: "West Elizabeth", x: -850.41, y: -1304.23 },
-  { type: "city", name: "Strawberry",      desc: "West Elizabeth", x: -1792.02, y: -387.07 },
-  { type: "city", name: "Valentine",       desc: "New Hanover",  x: -289.79,  y: 750.31 },
-  { type: "city", name: "Colter",          desc: "Ambarino",     x: -1339.15, y: 2433.30 },
-  { type: "city", name: "Rhodes",          desc: "Lemoyne",      x: 1308.77,  y: -1298.01 },
-  { type: "city", name: "Saint Denis",     desc: "Lemoyne",      x: 2607.62,  y: -1148.25 },
-  { type: "city", name: "Van Horn Trading Post", desc: "New Hanover", x: 2961.52, y: 502.68 },
-  { type: "city", name: "Annesburg",       desc: "New Hanover",  x: 2871.80,  y: 1337.08 },
-  { type: "city", name: "Pleasance",       desc: "Lemoyne",      x: 1737.36,  y: -437.68 },
+  { type: "city", name: "Tumbleweed", region: "New Austin",
+    desc: "Die verstaubte Grenzstadt tief im Süden – hier ticken die Uhren spürbar langsamer. Bank, Kirche, General Store und Sheriffbüro liegen dicht beieinander.",
+    amenities: ["Bank","Bekleidungsgeschäft","General Store","Farmbedarf","Metzger","Kirche","Sheriff","Ärzte","Friedhof","Tiergeschäft","Lotterie","Stall","Schnellreise"],
+    image: "img/tumbleweed.jpg", x: -5496.30, y: -2949.42 },
+
+  { type: "city", name: "Armadillo", region: "New Austin",
+    desc: "Einst eine blühende Minenstadt, heute vom Fieber gezeichnet – wer trotzdem haltmacht, findet Bahnhof, Bank und Stall, dazu einen Heißluftballon für die Vogelperspektive über New Austin.",
+    amenities: ["Bahnhof","Bank","Stall","Metzger","Heißluftballon","Schnellreise"],
+    image: "img/armadillo.jpg", x: -3675.23, y: -2610.96 },
+
+  { type: "city", name: "Thieves' Landing", region: "New Austin",
+    desc: "Ein zwielichtiger Hafenflecken in den Sümpfen – Schatzkarten-Händler und zweifelhafte Gestalten treiben hier ihr Geschäft, direkt am Bootsanleger.",
+    amenities: ["Schatzkarten-Händler","Metzger","Hostel (4 Zimmer)","Bootsanleger"],
+    image: "img/thieves-landing.jpg", x: -1425.77, y: -2303.72 },
+
+  { type: "city", name: "Blackwater", region: "West Elizabeth",
+    desc: "Die glänzende Fassade der Zivilisation im Westen. Bank, Gerichtshof, Sheriffbüro und gleich mehrere Läden sorgen dafür, dass es hier an nichts fehlt.",
+    amenities: ["Bank","Sheriff","Ärzte","Bekleidungsgeschäft","Metzger","Fischer-Shop","Frisör","Tiershop","Stall","Heißluftballon","Öffentliche Jobs","Lotterie","Schnellreise","Bootsanleger","Motelzimmer","Kirche","Friedhof","Gerichtshof"],
+    image: "img/blackwater.jpg", x: -850.41, y: -1304.23 },
+
+  { type: "city", name: "Strawberry", region: "West Elizabeth",
+    desc: "Kleine Bergarbeiterstadt am Fuß der Wälder West Elizabeths. Shop, Bank, Sattlerei, Sheriff und Ärzte decken den Alltag ab.",
+    amenities: ["Schnellreise","Shop","Metzger","Bank","Bekleidungsgeschäft","Farmbedarf","Sheriff","Ärzte","Hotelzimmer","Öffentliche Jobs","Stall","Heißluftballon"],
+    image: "img/strawberry.jpg", x: -1792.02, y: -387.07 },
+
+  { type: "city", name: "Valentine", region: "New Hanover",
+    desc: "Das pulsierende Herz von New Hanover. Bahnhof, Sattlerei, Frisör und mehrere Läden machen Valentine zu einem der belebtesten Orte der Karte.",
+    amenities: ["Bahnhof","Schnellreise","Lotterie","Tiergeschäft","Heißluftballon","Hotelzimmer","Zeitungszusteller","Öffentliche Jobs","Stall","Metzger","Fischer-Shop","Store","Farmbedarf","Frisör","Sheriff","Ärzte"],
+    image: "img/valentine.jpg", x: -289.79, y: 750.31 },
+
+  { type: "city", name: "Colter", region: "Ambarino",
+    desc: "Ein verlassenes Bergdorf hoch oben im Schnee Ambarinos. Nicht viel außer eisiger Kulisse – aber ein guter Ausgangspunkt für alle Nordroute.",
+    amenities: ["Schnellreise"],
+    image: "img/colter.jpg", x: -1339.15, y: 2433.30 },
+
+  { type: "city", name: "Rhodes", region: "Lemoyne",
+    desc: "Kleinstadt im Herzen von Lemoyne, geprägt vom Konflikt zweier Familien. Bank, Kirche, Sattlerei und Bahnhof gehören zum festen Repertoire.",
+    amenities: ["Motelzimmer","Stall","Bank","Schnellreise","Bekleidungsgeschäft","Shop","Heißluftballon","Bahnhof","Zeitungszusteller","Metzger","Kirche","Friedhof"],
+    image: "img/rhodes.jpg", x: 1308.77, y: -1298.01 },
+
+  { type: "city", name: "Saint Denis", region: "Lemoyne",
+    desc: "Die große Stadt im Süden Lemoynes – mit dichtem Trubel und großstädtischem Flair. Polizei, Hotels, Bahnhof und gleich mehrere Jobs machen sie zur Metropole der Karte.",
+    amenities: ["Stall","Schnellreise","Möbel-/Tiergeschäft","Taxi-Job","Zeitungszusteller","Öffentliche Jobs","Ankauf","Shop","Hotels","Metzger","Farmbedarf","Polizei","Ärzte","Bekleidungsgeschäft","Frisör","Lotterie","Bahnhof"],
+    image: "img/saint-denis.jpg", x: 2607.62, y: -1148.25 },
+
+  { type: "city", name: "Van Horn Trading Post", region: "New Hanover",
+    desc: "Ein heruntergekommener Handelsposten an der Küste New Hanovers. Motel, Metzgerei und Hafen reichen für einen kurzen Zwischenstopp.",
+    amenities: ["Motelzimmer","Metzger","Ankauf","Bootsanleger","Stall"],
+    image: "img/van-horn.jpg", x: 2961.52, y: 502.68 },
+
+  { type: "city", name: "Annesburg", region: "New Hanover",
+    desc: "Die Minenstadt im äußersten Nordosten. Bahnhof, Bank und Hafen sorgen für Anbindung, dazu Ärzte, Sheriff und ein Motel für die Nacht.",
+    amenities: ["Bahnhof","Bank","Öffentliche Jobs","Metzger","Lotterie","Motelzimmer","Schnellreise","Heißluftballon","Shop","Sheriff","Ärzte","Stall","Bootsanleger"],
+    image: "img/annesburg.jpg", x: 2871.80, y: 1337.08 },
+
+  { type: "city", name: "Pleasance", region: "Lemoyne",
+    desc: "Eine ruhige Splittersiedlung im Marschland von Lemoyne, abseits vom Trubel der großen Städte.",
+    amenities: [],
+    image: "img/pleasance.jpg", x: 1737.36, y: -437.68 },
 ];
 
 /* ============================================================================
@@ -482,30 +551,26 @@ const layerGroup = L.layerGroup().addTo(map);
 
 function buildPopupHTML(loc) {
   const catLabel = CATEGORIES[loc.type].label;
+  const imageHTML = loc.image
+    ? `<img class="popup-image" src="${loc.image}" alt="${loc.name}" onerror="this.remove()">`
+    : '';
+  const amenitiesHTML = (loc.amenities && loc.amenities.length)
+    ? `<div class="popup-amenities">${loc.amenities.map(a => `<span>${a}</span>`).join('')}</div>`
+    : '';
   return `
+    ${imageHTML}
     <div class="popup-eyebrow">${catLabel}</div>
     <div class="popup-title">${loc.name}</div>
+    ${loc.region ? `<div class="popup-region">${loc.region}</div>` : ''}
     <div class="popup-desc">${loc.desc}</div>
-    <div class="popup-coords" data-coords="vector3(${loc.x.toFixed(2)}, ${loc.y.toFixed(2)}, 0.0)" title="Klicken zum Kopieren">
-      vector3(${loc.x.toFixed(2)}, ${loc.y.toFixed(2)}, 0.0)
-    </div>
+    ${amenitiesHTML}
   `;
 }
 
 LOCATIONS.forEach(loc => {
   const latlng = gameToMap(loc.x, loc.y);
   const marker = L.marker(latlng, { icon: makeIcon(CATEGORIES[loc.type].color) })
-    .bindPopup(buildPopupHTML(loc));
-  marker.on('popupopen', () => {
-    const el = document.querySelector('.popup-coords');
-    if (el) {
-      el.onclick = () => {
-        navigator.clipboard?.writeText(el.dataset.coords);
-        el.textContent = "Kopiert!";
-        setTimeout(() => { el.textContent = el.dataset.coords; }, 1200);
-      };
-    }
-  });
+    .bindPopup(buildPopupHTML(loc), { maxWidth: 260, minWidth: 240 });
   layerGroup.addLayer(marker);
   markersByLoc.set(loc, marker);
 });
