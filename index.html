@@ -555,14 +555,28 @@ const map = L.map('map', {
   maxZoom: 3,
   zoomSnap: 0.25,
   attributionControl: false,
+  // Karte laesst sich nicht ueber den Bildrand hinausziehen.
+  // 1.0 = harte Grenze, kleinere Werte fuehlen sich gummiartig an.
+  maxBoundsViscosity: 1.0,
 });
 
 const bounds = [[0, 0], [MAP_IMAGE_HEIGHT, MAP_IMAGE_WIDTH]];
+map.setMaxBounds(bounds);
+
+// Nicht weiter herauszoomen als noetig, um das ganze Bild zu sehen.
+// Wird bei jeder Fenstergroesse neu bestimmt.
+function lockMinZoom() {
+  const z = map.getBoundsZoom(bounds, false);
+  map.setMinZoom(z);
+  if (map.getZoom() < z) map.setZoom(z);
+}
+map.on('resize', lockMinZoom);
 
 // Kartenbild-Layer. Falls map.jpg fehlt, zeigt Leaflet einfach eine leere/graue
 // Fläche - die Marker funktionieren trotzdem, nur ohne Hintergrundbild.
 L.imageOverlay(MAP_IMAGE_URL, bounds, { errorOverlayUrl: undefined }).addTo(map);
 map.fitBounds(bounds);
+lockMinZoom();
 
 // Fix: Beim ersten Laden hat der Browser das Flexbox-Layout (Sidebar-Breite,
 // Fonts) manchmal noch nicht final berechnet, wenn Leaflet initialisiert wird.
@@ -571,10 +585,12 @@ map.fitBounds(bounds);
 window.addEventListener('load', () => {
   map.invalidateSize();
   map.fitBounds(bounds);
+  lockMinZoom();
 });
 setTimeout(() => {
   map.invalidateSize();
   map.fitBounds(bounds);
+  lockMinZoom();
 }, 300);
 
 /* ============================================================================
