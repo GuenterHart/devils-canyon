@@ -8,6 +8,7 @@
 <link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sancreek&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -259,6 +260,23 @@
     border: 1px solid #8a7452;
   }
   .leaflet-popup-tip { background: #ece2d0; border: 1px solid #8a7452; }
+  /* Cluster-Kreise im Kartenstil statt der gruen/gelben Standardfarben */
+  .marker-cluster {
+    background: rgba(200,164,108,.35);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .marker-cluster div {
+    width: 32px; height: 32px;
+    background: #3a2a1c;
+    border: 2px solid #c8a46c;
+    border-radius: 50%;
+    color: #f0dcbb;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .marker-cluster-large div { width: 38px; height: 38px; font-size: 16px; }
   .discord-link { cursor: pointer; transition: opacity .15s ease; }
   .discord-link:hover { opacity: 0.65; }
   .leaflet-popup-content { margin: 16px 18px; font-family: 'Barlow Condensed', sans-serif; }
@@ -381,6 +399,7 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
 <script>
 /* ============================================================================
    DEVIL'S CANYON – INTERAKTIVE KARTE
@@ -422,37 +441,41 @@ const CATEGORIES = {
   publicjob: { label: "Öffentliche Arbeiten",  color: "#9c8f6f" },
   newspaper: { label: "Zeitungszusteller",     color: "#8fa9c0" },
   taxi:      { label: "Kutschentaxi",          color: "#c9974a" },
+  bank:      { label: "Banken",                color: "#6f8f7a" },
+  barber:    { label: "Frisöre",               color: "#b5847a" },
+  clothing:  { label: "Bekleidung",            color: "#8c86ac" },
+  lodging:   { label: "Hotels & Motels",       color: "#6e7f8c" },
 };
 
 const LOCATIONS = [
   { type: "city", name: "Tumbleweed", region: "New Austin",
     desc: "Die verstaubte Grenzstadt tief im Süden – hier ticken die Uhren spürbar langsamer. Bank, Kirche, General Store und Sheriffbüro liegen dicht beieinander.",
-    amenities: ["Bank","Bekleidungsgeschäft","General Store","Farmbedarf","Metzger","Kirche","Sheriff","Ärzte","Friedhof","Tiergeschäft","Lotterie","Stall","Schnellreise"],
+    amenities: ["General Store","Farmbedarf","Metzger","Kirche","Sheriff","Ärzte","Friedhof","Tiergeschäft","Lotterie","Stall","Schnellreise"],
     image: "img/tumbleweed.jpg", x: -5496.30, y: -2949.42 },
 
   { type: "city", name: "Armadillo", region: "New Austin",
     desc: "Einst eine blühende Minenstadt, heute vom Fieber gezeichnet – wer trotzdem haltmacht, findet Bahnhof, Bank und Stall, dazu einen Heißluftballon für die Vogelperspektive über New Austin.",
-    amenities: ["Bahnhof","Bank","Stall","Metzger","Heißluftballon","Schnellreise"],
+    amenities: ["Bahnhof","Stall","Metzger","Heißluftballon","Schnellreise"],
     image: "img/armadillo.jpg", x: -3675.23, y: -2610.96 },
 
   { type: "city", name: "Thieves' Landing", region: "New Austin",
     desc: "Ein zwielichtiger Hafenflecken in den Sümpfen – Schatzkarten-Händler und zweifelhafte Gestalten treiben hier ihr Geschäft, direkt am Bootsanleger.",
-    amenities: ["Schatzkarten-Händler","Metzger","Hostel (4 Zimmer)","Bootsanleger"],
+    amenities: ["Schatzkarten-Händler","Metzger","Bootsanleger"],
     image: "img/thieves-landing.jpg", x: -1425.77, y: -2303.72 },
 
   { type: "city", name: "Blackwater", region: "West Elizabeth",
     desc: "Die glänzende Fassade der Zivilisation im Westen. Bank, Gerichtshof, Sheriffbüro und gleich mehrere Läden sorgen dafür, dass es hier an nichts fehlt.",
-    amenities: ["Bank","Sheriff","Ärzte","Bekleidungsgeschäft","Metzger","Fischer-Shop","Frisör","Tiershop","Stall","Heißluftballon","Lotterie","Schnellreise","Bootsanleger","Motelzimmer","Kirche","Friedhof","Gerichtshof"],
+    amenities: ["Sheriff","Ärzte","Metzger","Fischer-Shop","Tiershop","Stall","Heißluftballon","Lotterie","Schnellreise","Bootsanleger","Kirche","Friedhof","Gerichtshof"],
     image: "img/blackwater.jpg", x: -850.41, y: -1304.23 },
 
   { type: "city", name: "Strawberry", region: "West Elizabeth",
     desc: "Kleine Bergarbeiterstadt am Fuß der Wälder West Elizabeths. Shop, Bank, Sattlerei, Sheriff und Ärzte decken den Alltag ab.",
-    amenities: ["Schnellreise","Shop","Metzger","Bank","Bekleidungsgeschäft","Farmbedarf","Sheriff","Ärzte","Hotelzimmer","Stall","Heißluftballon"],
+    amenities: ["Schnellreise","Shop","Metzger","Farmbedarf","Sheriff","Ärzte","Stall","Heißluftballon"],
     image: "img/strawberry.jpg", x: -1792.02, y: -387.07 },
 
   { type: "city", name: "Valentine", region: "New Hanover",
     desc: "Das pulsierende Herz von New Hanover. Bahnhof, Sattlerei, Frisör und mehrere Läden machen Valentine zu einem der belebtesten Orte der Karte.",
-    amenities: ["Bahnhof","Schnellreise","Lotterie","Tiergeschäft","Heißluftballon","Hotelzimmer","Stall","Metzger","Fischer-Shop","Store","Farmbedarf","Frisör","Sheriff","Ärzte"],
+    amenities: ["Bahnhof","Schnellreise","Lotterie","Tiergeschäft","Heißluftballon","Stall","Metzger","Fischer-Shop","Store","Farmbedarf","Sheriff","Ärzte"],
     image: "img/valentine.jpg", x: -289.79, y: 750.31 },
 
   { type: "city", name: "Colter", region: "Ambarino",
@@ -462,22 +485,22 @@ const LOCATIONS = [
 
   { type: "city", name: "Rhodes", region: "Lemoyne",
     desc: "Kleinstadt im Herzen von Lemoyne, geprägt vom Konflikt zweier Familien. Bank, Kirche, Sattlerei und Bahnhof gehören zum festen Repertoire.",
-    amenities: ["Motelzimmer","Stall","Bank","Schnellreise","Bekleidungsgeschäft","Shop","Heißluftballon","Bahnhof","Metzger","Kirche","Friedhof"],
+    amenities: ["Stall","Schnellreise","Shop","Heißluftballon","Bahnhof","Metzger","Kirche","Friedhof"],
     image: "img/rhodes.jpg", x: 1308.77, y: -1298.01 },
 
   { type: "city", name: "Saint Denis", region: "Lemoyne",
     desc: "Die große Stadt im Süden Lemoynes – mit dichtem Trubel und großstädtischem Flair. Polizei, Hotels, Bahnhof und gleich mehrere Jobs machen sie zur Metropole der Karte.",
-    amenities: ["Stall","Schnellreise","Möbel-/Tiergeschäft","Ankauf","Shop","Hotels","Metzger","Farmbedarf","Polizei","Ärzte","Bekleidungsgeschäft","Frisör","Lotterie","Bahnhof"],
+    amenities: ["Stall","Schnellreise","Möbel-/Tiergeschäft","Ankauf","Shop","Metzger","Farmbedarf","Polizei","Ärzte","Lotterie","Bahnhof"],
     image: "img/saint-denis.jpg", x: 2607.62, y: -1148.25 },
 
   { type: "city", name: "Van Horn Trading Post", region: "New Hanover",
     desc: "Ein heruntergekommener Handelsposten an der Küste New Hanovers. Motel, Metzgerei und Hafen reichen für einen kurzen Zwischenstopp.",
-    amenities: ["Motelzimmer","Metzger","Ankauf","Bootsanleger","Stall"],
+    amenities: ["Metzger","Ankauf","Bootsanleger","Stall"],
     image: "img/van-horn.jpg", x: 2961.52, y: 502.68 },
 
   { type: "city", name: "Annesburg", region: "New Hanover",
     desc: "Die Minenstadt im äußersten Nordosten. Bahnhof, Bank und Hafen sorgen für Anbindung, dazu Ärzte, Sheriff und ein Motel für die Nacht.",
-    amenities: ["Bahnhof","Bank","Metzger","Lotterie","Motelzimmer","Schnellreise","Heißluftballon","Shop","Sheriff","Ärzte","Stall","Bootsanleger"],
+    amenities: ["Bahnhof","Metzger","Lotterie","Schnellreise","Heißluftballon","Shop","Sheriff","Ärzte","Stall","Bootsanleger"],
     image: "img/annesburg.jpg", x: 2871.80, y: 1337.08 },
 
   { type: "city", name: "Pleasance", region: "Lemoyne",
@@ -543,6 +566,118 @@ const LOCATIONS = [
   { type: "taxi", name: "Tumbleweed", region: "New Austin",
     desc: "Anlaufstelle für den Kutschendienst – hier nimmst du Fahrgäste an und bringst sie ans Ziel.",
     x: -5516.85, y: -3061.86 },
+
+
+  // --- Banken ---
+  { type: "bank", name: "Saint Denis", region: "Lemoyne",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: 2642.64, y: -1290.27 },
+
+  { type: "bank", name: "Valentine", region: "New Hanover",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -307.33, y: 776.94 },
+
+  { type: "bank", name: "Strawberry", region: "West Elizabeth",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -1766.34, y: -383.19 },
+
+  { type: "bank", name: "Blackwater", region: "West Elizabeth",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -812.08, y: -1278.68 },
+
+  { type: "bank", name: "Armadillo", region: "New Austin",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -3665.17, y: -2623.85 },
+
+  { type: "bank", name: "Tumbleweed", region: "New Austin",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -5531.83, y: -2953.37 },
+
+  { type: "bank", name: "Rhodes", region: "Lemoyne",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: 1294.27, y: -1300.51 },
+
+  { type: "bank", name: "Annesburg", region: "New Hanover",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: 2930.53, y: 1283.40 },
+
+
+  // --- Frisöre ---
+  { type: "barber", name: "Saint Denis", region: "Lemoyne",
+    desc: "Haare, Bart und Pflege – hier lässt sich das Aussehen ändern.",
+    x: 2655.15, y: -1179.44 },
+
+  { type: "barber", name: "Valentine", region: "New Hanover",
+    desc: "Haare, Bart und Pflege – hier lässt sich das Aussehen ändern.",
+    x: -306.50, y: 812.84 },
+
+  { type: "barber", name: "Blackwater", region: "West Elizabeth",
+    desc: "Haare, Bart und Pflege – hier lässt sich das Aussehen ändern.",
+    x: -812.69, y: -1367.36 },
+
+
+  // --- Bekleidung ---
+  { type: "clothing", name: "Saint Denis", region: "Lemoyne",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: 2553.50, y: -1170.77 },
+
+  { type: "clothing", name: "Valentine", region: "New Hanover",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: -326.60, y: 774.27 },
+
+  { type: "clothing", name: "Strawberry", region: "West Elizabeth",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: -1789.84, y: -385.65 },
+
+  { type: "clothing", name: "Blackwater", region: "West Elizabeth",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: -761.24, y: -1291.07 },
+
+  { type: "clothing", name: "Tumbleweed", region: "New Austin",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: -5515.78, y: -2966.18 },
+
+  { type: "clothing", name: "Rhodes", region: "Lemoyne",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: 1334.77, y: -1324.86 },
+
+
+  // --- Hotels & Motels ---
+  { type: "lodging", name: "Rhodes", region: "Lemoyne",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 1332.75, y: -1373.93 },
+
+  { type: "lodging", name: "Saint Denis", region: "Lemoyne",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 2637.76, y: -1222.01 },
+
+  { type: "lodging", name: "Draft Horse Brewery", region: "Lemoyne",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 2641.20, y: -1153.14 },
+
+  { type: "lodging", name: "Van Horn", region: "New Hanover",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 2976.93, y: 573.81 },
+
+  { type: "lodging", name: "Annesburg", region: "New Hanover",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 2945.97, y: 1329.95 },
+
+  { type: "lodging", name: "Valentine", region: "New Hanover",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: -322.02, y: 764.97 },
+
+  { type: "lodging", name: "Blackwater", region: "West Elizabeth",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: -820.09, y: -1325.19 },
+
+  { type: "lodging", name: "Thieves\' Landing", region: "New Austin",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: -1430.31, y: -2271.64 },
+
+  { type: "lodging", name: "Strawberry", region: "West Elizabeth",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: -1817.24, y: -371.10 },
 
 ];
 
@@ -631,7 +766,15 @@ function makeIcon(color) {
 }
 
 const markersByLoc = new Map();
-const layerGroup = L.layerGroup().addTo(map);
+const layerGroup = L.markerClusterGroup({
+  // Radius in Bildschirmpixeln, in dem Marker zusammengefasst werden.
+  maxClusterRadius: 45,
+  // Ab dieser Zoomstufe wird jeder Marker einzeln gezeigt.
+  disableClusteringAtZoom: 1,
+  spiderfyOnMaxZoom: true,
+  showCoverageOnHover: false,
+  zoomToBoundsOnClick: true,
+}).addTo(map);
 
 function buildPopupHTML(loc) {
   const catLabel = CATEGORIES[loc.type].label;
