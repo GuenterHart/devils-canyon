@@ -413,7 +413,10 @@ function gameToMap(gx, gy) {
    kein Code an anderer Stelle muss angefasst werden.
    ============================================================================ */
 const CATEGORIES = {
-  city: { label: "Städte / Ortschaften", color: "#c8a46c" },
+  city:      { label: "Städte / Ortschaften",  color: "#c8a46c" },
+  publicjob: { label: "Öffentliche Arbeiten",  color: "#9c8f6f" },
+  newspaper: { label: "Zeitungszusteller",     color: "#8fa9c0" },
+  taxi:      { label: "Kutschentaxi",          color: "#c9974a" },
 };
 
 const LOCATIONS = [
@@ -434,17 +437,17 @@ const LOCATIONS = [
 
   { type: "city", name: "Blackwater", region: "West Elizabeth",
     desc: "Die glänzende Fassade der Zivilisation im Westen. Bank, Gerichtshof, Sheriffbüro und gleich mehrere Läden sorgen dafür, dass es hier an nichts fehlt.",
-    amenities: ["Bank","Sheriff","Ärzte","Bekleidungsgeschäft","Metzger","Fischer-Shop","Frisör","Tiershop","Stall","Heißluftballon","Öffentliche Jobs","Lotterie","Schnellreise","Bootsanleger","Motelzimmer","Kirche","Friedhof","Gerichtshof"],
+    amenities: ["Bank","Sheriff","Ärzte","Bekleidungsgeschäft","Metzger","Fischer-Shop","Frisör","Tiershop","Stall","Heißluftballon","Lotterie","Schnellreise","Bootsanleger","Motelzimmer","Kirche","Friedhof","Gerichtshof"],
     image: "img/blackwater.jpg", x: -850.41, y: -1304.23 },
 
   { type: "city", name: "Strawberry", region: "West Elizabeth",
     desc: "Kleine Bergarbeiterstadt am Fuß der Wälder West Elizabeths. Shop, Bank, Sattlerei, Sheriff und Ärzte decken den Alltag ab.",
-    amenities: ["Schnellreise","Shop","Metzger","Bank","Bekleidungsgeschäft","Farmbedarf","Sheriff","Ärzte","Hotelzimmer","Öffentliche Jobs","Stall","Heißluftballon"],
+    amenities: ["Schnellreise","Shop","Metzger","Bank","Bekleidungsgeschäft","Farmbedarf","Sheriff","Ärzte","Hotelzimmer","Stall","Heißluftballon"],
     image: "img/strawberry.jpg", x: -1792.02, y: -387.07 },
 
   { type: "city", name: "Valentine", region: "New Hanover",
     desc: "Das pulsierende Herz von New Hanover. Bahnhof, Sattlerei, Frisör und mehrere Läden machen Valentine zu einem der belebtesten Orte der Karte.",
-    amenities: ["Bahnhof","Schnellreise","Lotterie","Tiergeschäft","Heißluftballon","Hotelzimmer","Zeitungszusteller","Öffentliche Jobs","Stall","Metzger","Fischer-Shop","Store","Farmbedarf","Frisör","Sheriff","Ärzte"],
+    amenities: ["Bahnhof","Schnellreise","Lotterie","Tiergeschäft","Heißluftballon","Hotelzimmer","Stall","Metzger","Fischer-Shop","Store","Farmbedarf","Frisör","Sheriff","Ärzte"],
     image: "img/valentine.jpg", x: -289.79, y: 750.31 },
 
   { type: "city", name: "Colter", region: "Ambarino",
@@ -454,12 +457,12 @@ const LOCATIONS = [
 
   { type: "city", name: "Rhodes", region: "Lemoyne",
     desc: "Kleinstadt im Herzen von Lemoyne, geprägt vom Konflikt zweier Familien. Bank, Kirche, Sattlerei und Bahnhof gehören zum festen Repertoire.",
-    amenities: ["Motelzimmer","Stall","Bank","Schnellreise","Bekleidungsgeschäft","Shop","Heißluftballon","Bahnhof","Zeitungszusteller","Metzger","Kirche","Friedhof"],
+    amenities: ["Motelzimmer","Stall","Bank","Schnellreise","Bekleidungsgeschäft","Shop","Heißluftballon","Bahnhof","Metzger","Kirche","Friedhof"],
     image: "img/rhodes.jpg", x: 1308.77, y: -1298.01 },
 
   { type: "city", name: "Saint Denis", region: "Lemoyne",
     desc: "Die große Stadt im Süden Lemoynes – mit dichtem Trubel und großstädtischem Flair. Polizei, Hotels, Bahnhof und gleich mehrere Jobs machen sie zur Metropole der Karte.",
-    amenities: ["Stall","Schnellreise","Möbel-/Tiergeschäft","Taxi-Job","Zeitungszusteller","Öffentliche Jobs","Ankauf","Shop","Hotels","Metzger","Farmbedarf","Polizei","Ärzte","Bekleidungsgeschäft","Frisör","Lotterie","Bahnhof"],
+    amenities: ["Stall","Schnellreise","Möbel-/Tiergeschäft","Ankauf","Shop","Hotels","Metzger","Farmbedarf","Polizei","Ärzte","Bekleidungsgeschäft","Frisör","Lotterie","Bahnhof"],
     image: "img/saint-denis.jpg", x: 2607.62, y: -1148.25 },
 
   { type: "city", name: "Van Horn Trading Post", region: "New Hanover",
@@ -469,13 +472,73 @@ const LOCATIONS = [
 
   { type: "city", name: "Annesburg", region: "New Hanover",
     desc: "Die Minenstadt im äußersten Nordosten. Bahnhof, Bank und Hafen sorgen für Anbindung, dazu Ärzte, Sheriff und ein Motel für die Nacht.",
-    amenities: ["Bahnhof","Bank","Öffentliche Jobs","Metzger","Lotterie","Motelzimmer","Schnellreise","Heißluftballon","Shop","Sheriff","Ärzte","Stall","Bootsanleger"],
+    amenities: ["Bahnhof","Bank","Metzger","Lotterie","Motelzimmer","Schnellreise","Heißluftballon","Shop","Sheriff","Ärzte","Stall","Bootsanleger"],
     image: "img/annesburg.jpg", x: 2871.80, y: 1337.08 },
 
   { type: "city", name: "Pleasance", region: "Lemoyne",
     desc: "Eine ruhige Splittersiedlung im Marschland von Lemoyne, abseits vom Trubel der großen Städte.",
     amenities: [],
     image: "img/pleasance.jpg", x: 1737.36, y: -437.68 },
+
+  // --- Öffentliche Arbeiten ---
+  { type: "publicjob", name: "Blackwater", region: "West Elizabeth",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: -877.69, y: -1331.24 },
+
+  { type: "publicjob", name: "Valentine", region: "New Hanover",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: -328.94, y: 774.85 },
+
+  { type: "publicjob", name: "Strawberry", region: "West Elizabeth",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: -1817.43, y: -370.77 },
+
+  { type: "publicjob", name: "Annesburg", region: "New Hanover",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: 2937.79, y: 1290.18 },
+
+  { type: "publicjob", name: "Saint Denis", region: "Lemoyne",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: 2821.45, y: -1223.87 },
+
+  // --- Zeitungszusteller ---
+  { type: "newspaper", name: "Armadillo", region: "New Austin",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: -3727.31, y: -2629.74 },
+
+  { type: "newspaper", name: "Tumbleweed", region: "New Austin",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: -5487.11, y: -2945.35 },
+
+  { type: "newspaper", name: "Blackwater", region: "West Elizabeth",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: -853.91, y: -1346.55 },
+
+  { type: "newspaper", name: "Rhodes", region: "Lemoyne",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: 1281.86, y: -1290.56 },
+
+  { type: "newspaper", name: "Saint Denis", region: "Lemoyne",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: 2742.45, y: -1423.09 },
+
+  { type: "newspaper", name: "Valentine", region: "New Hanover",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: -210.69, y: 645.34 },
+
+  // --- Kutschentaxi ---
+  { type: "taxi", name: "Saint Denis", region: "Lemoyne",
+    desc: "Anlaufstelle für den Kutschendienst – hier nimmst du Fahrgäste an und bringst sie ans Ziel.",
+    x: 2678.86, y: -1446.41 },
+
+  { type: "taxi", name: "Valentine", region: "New Hanover",
+    desc: "Anlaufstelle für den Kutschendienst – hier nimmst du Fahrgäste an und bringst sie ans Ziel.",
+    x: -177.94, y: 647.06 },
+
+  { type: "taxi", name: "Tumbleweed", region: "New Austin",
+    desc: "Anlaufstelle für den Kutschendienst – hier nimmst du Fahrgäste an und bringst sie ans Ziel.",
+    x: -5516.85, y: -3061.86 },
+
 ];
 
 /* ============================================================================
