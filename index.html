@@ -291,6 +291,8 @@
   .marker-cluster-large div { width: 38px; height: 38px; font-size: 16px; }
   .discord-link { cursor: pointer; transition: opacity .15s ease; }
   .discord-link:hover { opacity: 0.65; }
+  /* Popup oeffnet nach unten (fuer Marker dicht am oberen Kartenrand) */
+  .popup-below .leaflet-popup-tip-container { display: none; }
   .leaflet-popup-content { margin: 16px 18px; font-family: 'Barlow Condensed', sans-serif; }
 
   .popup-eyebrow {
@@ -851,8 +853,30 @@ const DISCORD_BOX = { x1: 5790, x2: 6823, y1: 4610, y2: 4770 }; // Bildpixel
 
 LOCATIONS.forEach(loc => {
   const latlng = gameToMap(loc.x, loc.y);
+  // Marker dicht am oberen Bildrand: Popup nach unten klappen, sonst wird es
+  // von der Randbegrenzung abgeschnitten (die Karte kann nicht hochpannen).
+  const nearTop = (MAP_IMAGE_HEIGHT - latlng[0]) < 1100;   // Bild-Pixel-Y
+  const popupOpts = { maxWidth: 260, minWidth: 240, autoPan: true };
+  if (nearTop) {
+    popupOpts.className = 'popup-below';
+    popupOpts.offset = L.point(0, 30);
+    popupOpts.autoPan = false;
+  }
+
   const marker = L.marker(latlng, { icon: makeIcon(CATEGORIES[loc.type].color) })
-    .bindPopup(buildPopupHTML(loc), { maxWidth: 260, minWidth: 240 });
+    .bindPopup(buildPopupHTML(loc), popupOpts);
+
+  // Nach dem Oeffnen die tatsaechliche Hoehe messen und das Popup passend
+  // unter den Marker schieben.
+  if (nearTop) {
+    marker.on('popupopen', (e) => {
+      const el = e.popup.getElement();
+      if (!el) return;
+      const hgt = el.offsetHeight || 300;
+      e.popup.options.offset = L.point(0, hgt + 30);
+      e.popup.update();
+    });
+  }
   layerGroup.addLayer(marker);
   markersByLoc.set(loc, marker);
 });
