@@ -125,12 +125,33 @@
   }
 
   #filters {
-    padding: 10px 20px 16px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 14px 20px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    border-bottom: 1px solid var(--line);
+    gap: 4px;
   }
+  #filters::-webkit-scrollbar { width: 8px; }
+  #filters::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+  /* Ein aufklappbarer Kategorie-Block */
+  .cat { border-bottom: 1px solid var(--line); }
+  .cat:last-child { border-bottom: none; }
+
+  .cat-caret {
+    width: 10px; flex-shrink: 0;
+    color: var(--cream-dim); font-size: 11px;
+    transition: transform 0.15s ease;
+  }
+  .cat.open .cat-caret { transform: rotate(90deg); }
+
+  .cat-body { display: none; padding: 2px 0 8px 30px; }
+  .cat.open .cat-body { display: block; }
+
+  /* Abgewaehlte Kategorie wird gedaempft dargestellt */
+  .cat.off .filter-row span.label,
+  .cat.off .filter-row .count { opacity: 0.45; }
 
   .filter-row {
     display: flex;
@@ -172,15 +193,6 @@
     height: 15px;
   }
 
-  #list-wrap {
-    flex: 1;
-    overflow-y: auto;
-    padding: 8px 12px 20px;
-  }
-
-  #list-wrap::-webkit-scrollbar { width: 8px; }
-  #list-wrap::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
-
   .loc-item {
     display: flex;
     align-items: flex-start;
@@ -206,11 +218,11 @@
     color: var(--cream);
     line-height: 1.15;
   }
+  .loc-item { padding: 7px 8px; }
   .loc-item .meta {
     font-size: 13px;
     color: var(--cream-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.3px;
   }
 
   #empty-state {
@@ -385,11 +397,8 @@
     <input id="search" type="text" placeholder="Ort suchen…" autocomplete="off">
   </div>
 
-  <div id="filters"></div>
-
-  <div id="list-wrap">
+  <div id="filters">
     <div id="empty-state">Keine Treffer für diese Suche/Filter.</div>
-    <div id="list"></div>
   </div>
 </div>
 
@@ -841,24 +850,50 @@ LOCATIONS.forEach(loc => {
    SIDEBAR: Filter + Liste + Suche
    ============================================================================ */
 const activeTypes = new Set(Object.keys(CATEGORIES));
-let searchTerm = "";
+const openTypes   = new Set();          // welche Kategorien aufgeklappt sind
+let   searchTerm  = "";
 
 const filtersEl = document.getElementById('filters');
+const emptyEl   = document.getElementById('empty-state');
+const catEls    = {};                    // key -> { wrap, body, count }
+
+// Ein Block pro Kategorie: Kopfzeile zum Auf-/Zuklappen, Liste darunter.
 Object.entries(CATEGORIES).forEach(([key, cat]) => {
-  const count = LOCATIONS.filter(l => l.type === key).length;
-  const row = document.createElement('label');
-  row.className = 'filter-row';
-  row.innerHTML = `
+  const wrap = document.createElement('div');
+  wrap.className = 'cat';
+
+  const head = document.createElement('div');
+  head.className = 'filter-row';
+  head.innerHTML = `
     <input type="checkbox" checked data-type="${key}">
+    <span class="cat-caret">&#9654;</span>
     <span class="filter-swatch" style="background:${cat.color}"></span>
     <span class="label">${cat.label}</span>
-    <span class="count">${count}</span>
+    <span class="count">0</span>
   `;
-  row.querySelector('input').addEventListener('change', (e) => {
+
+  const body = document.createElement('div');
+  body.className = 'cat-body';
+
+  // Checkbox schaltet die Marker auf der Karte, nicht das Aufklappen.
+  const box = head.querySelector('input');
+  box.addEventListener('click', (e) => e.stopPropagation());
+  box.addEventListener('change', (e) => {
     if (e.target.checked) activeTypes.add(key); else activeTypes.delete(key);
+    wrap.classList.toggle('off', !e.target.checked);
     render();
   });
-  filtersEl.appendChild(row);
+
+  // Klick auf die Zeile klappt auf und zu.
+  head.addEventListener('click', () => {
+    if (openTypes.has(key)) openTypes.delete(key); else openTypes.add(key);
+    wrap.classList.toggle('open', openTypes.has(key));
+  });
+
+  wrap.appendChild(head);
+  wrap.appendChild(body);
+  filtersEl.appendChild(wrap);
+  catEls[key] = { wrap, body, count: head.querySelector('.count') };
 });
 
 function matchesFilters(loc) {
@@ -867,33 +902,48 @@ function matchesFilters(loc) {
   return true;
 }
 
+function focusLocation(loc) {
+  const marker = markersByLoc.get(loc);
+  const go = () => {
+    map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1), { animate: true });
+    marker.openPopup();
+  };
+  // Steckt der Marker in einer Gruppe, erst dorthin zoomen.
+  if (layerGroup.zoomToShowLayer) layerGroup.zoomToShowLayer(marker, go);
+  else go();
+}
+
 function render() {
   layerGroup.clearLayers();
-  const listEl = document.getElementById('list');
-  const emptyEl = document.getElementById('empty-state');
-  listEl.innerHTML = '';
 
   const visible = LOCATIONS.filter(matchesFilters);
   emptyEl.style.display = visible.length === 0 ? 'block' : 'none';
 
-  visible.forEach(loc => {
-    layerGroup.addLayer(markersByLoc.get(loc));
+  visible.forEach(loc => layerGroup.addLayer(markersByLoc.get(loc)));
 
-    const item = document.createElement('div');
-    item.className = 'loc-item';
-    item.innerHTML = `
-      <span class="dot" style="background:${CATEGORIES[loc.type].color}"></span>
-      <div class="info">
-        <div class="name">${loc.name}</div>
-        <div class="meta">${CATEGORIES[loc.type].label}</div>
-      </div>
-    `;
-    item.addEventListener('click', () => {
-      const marker = markersByLoc.get(loc);
-      map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1), { animate: true });
-      marker.openPopup();
+  Object.keys(CATEGORIES).forEach(key => {
+    const el   = catEls[key];
+    const rows = visible.filter(l => l.type === key);
+    el.count.textContent = rows.length;
+    el.body.innerHTML = '';
+
+    rows.forEach(loc => {
+      const item = document.createElement('div');
+      item.className = 'loc-item';
+      item.innerHTML = `
+        <span class="dot" style="background:${CATEGORIES[loc.type].color}"></span>
+        <div class="info">
+          <div class="name">${loc.name}</div>
+          <div class="meta">${loc.region || ''}</div>
+        </div>
+      `;
+      item.addEventListener('click', () => focusLocation(loc));
+      el.body.appendChild(item);
     });
-    listEl.appendChild(item);
+
+    // Bei aktiver Suche die Kategorien mit Treffern von selbst oeffnen.
+    if (searchTerm) el.wrap.classList.toggle('open', rows.length > 0);
+    else            el.wrap.classList.toggle('open', openTypes.has(key));
   });
 }
 
