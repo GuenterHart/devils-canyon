@@ -256,6 +256,8 @@
     border: 1px solid #8a7452;
   }
   .leaflet-popup-tip { background: #ece2d0; border: 1px solid #8a7452; }
+  .discord-link { cursor: pointer; transition: opacity .15s ease; }
+  .discord-link:hover { opacity: 0.65; }
   .leaflet-popup-content { margin: 16px 18px; font-family: 'Barlow Condensed', sans-serif; }
 
   .popup-eyebrow {
@@ -629,6 +631,41 @@ function buildPopupHTML(loc) {
     ${amenitiesHTML}
   `;
 }
+
+/* ============================================================================
+   DISCORD-HINWEIS ueber dem Schriftzug "DEVILS-CANYON.DE"
+   Der Schriftzug liegt fest im Kartenbild bei x 5790-6823, y 4800-5108.
+   Das SVG-Overlay haengt an denselben Bildkoordinaten, skaliert also beim
+   Zoomen exakt mit und ist gleichzeitig anklickbar (interactive: true).
+   Groesse/Position aendern: nur die Werte in DISCORD_BOX anpassen.
+   ============================================================================ */
+const DISCORD_URL = "https://discord.gg/aSrbSCjyKz";
+const DISCORD_BOX = { x1: 5790, x2: 6823, y1: 4610, y2: 4770 }; // Bildpixel
+
+(function addDiscordLink() {
+  const w = DISCORD_BOX.x2 - DISCORD_BOX.x1;
+  const h = DISCORD_BOX.y2 - DISCORD_BOX.y1;
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  svg.innerHTML = `
+    <text x="${w / 2}" y="${h * 0.80}" text-anchor="middle"
+          textLength="${w * 0.96}" lengthAdjust="spacingAndGlyphs"
+          font-family="'Barlow Condensed', sans-serif" font-weight="700"
+          font-size="${h * 0.85}" fill="#5A412B">
+      TRETE UNSEREM DISCORD BEI
+    </text>`;
+
+  const bounds = [
+    [MAP_IMAGE_HEIGHT - DISCORD_BOX.y2, DISCORD_BOX.x1],
+    [MAP_IMAGE_HEIGHT - DISCORD_BOX.y1, DISCORD_BOX.x2],
+  ];
+
+  const overlay = L.svgOverlay(svg, bounds, { interactive: true, className: 'discord-link' });
+  overlay.addTo(map);
+  overlay.on('click', () => window.open(DISCORD_URL, '_blank', 'noopener'));
+})();
 
 LOCATIONS.forEach(loc => {
   const latlng = gameToMap(loc.x, loc.y);
