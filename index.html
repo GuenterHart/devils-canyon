@@ -457,12 +457,13 @@ const CATEGORIES = {
   clothing:  { label: "Bekleidung",            color: "#8c86ac" },
   lodging:   { label: "Hotels & Motels",       color: "#6e7f8c" },
   market:    { label: "Märkte",                color: "#7fa8a0" },
+  general:   { label: "Gemischtwarenläden",    color: "#8f6f4a" },
 };
 
 const LOCATIONS = [
   { type: "city", name: "Tumbleweed", region: "New Austin",
     desc: "Die verstaubte Grenzstadt tief im Süden – hier ticken die Uhren spürbar langsamer. Bank, Kirche, General Store und Sheriffbüro liegen dicht beieinander.",
-    amenities: ["General Store","Farmbedarf","Metzger","Kirche","Sheriff","Ärzte","Friedhof","Tiergeschäft","Lotterie","Stall","Schnellreise"],
+    amenities: ["Farmbedarf","Metzger","Kirche","Sheriff","Ärzte","Friedhof","Tiergeschäft","Lotterie","Stall","Schnellreise"],
     image: "img/tumbleweed.jpg", x: -5496.30, y: -2949.42 },
 
   { type: "city", name: "Armadillo", region: "New Austin",
@@ -482,12 +483,12 @@ const LOCATIONS = [
 
   { type: "city", name: "Strawberry", region: "West Elizabeth",
     desc: "Kleine Bergarbeiterstadt am Fuß der Wälder West Elizabeths. Shop, Bank, Sattlerei, Sheriff und Ärzte decken den Alltag ab.",
-    amenities: ["Schnellreise","Shop","Metzger","Farmbedarf","Sheriff","Ärzte","Stall","Heißluftballon"],
+    amenities: ["Schnellreise","Metzger","Farmbedarf","Sheriff","Ärzte","Stall","Heißluftballon"],
     image: "img/strawberry.jpg", x: -1792.02, y: -387.07 },
 
   { type: "city", name: "Valentine", region: "New Hanover",
     desc: "Das pulsierende Herz von New Hanover. Bahnhof, Sattlerei, Frisör und mehrere Läden machen Valentine zu einem der belebtesten Orte der Karte.",
-    amenities: ["Bahnhof","Schnellreise","Lotterie","Tiergeschäft","Heißluftballon","Stall","Metzger","Fischer-Shop","Store","Farmbedarf","Sheriff","Ärzte"],
+    amenities: ["Bahnhof","Schnellreise","Lotterie","Tiergeschäft","Heißluftballon","Stall","Metzger","Fischer-Shop","Farmbedarf","Sheriff","Ärzte"],
     image: "img/valentine.jpg", x: -289.79, y: 750.31 },
 
   { type: "city", name: "Colter", region: "Ambarino",
@@ -497,12 +498,12 @@ const LOCATIONS = [
 
   { type: "city", name: "Rhodes", region: "Lemoyne",
     desc: "Kleinstadt im Herzen von Lemoyne, geprägt vom Konflikt zweier Familien. Bank, Kirche, Sattlerei und Bahnhof gehören zum festen Repertoire.",
-    amenities: ["Stall","Schnellreise","Shop","Heißluftballon","Bahnhof","Metzger","Kirche","Friedhof"],
+    amenities: ["Stall","Schnellreise","Heißluftballon","Bahnhof","Metzger","Kirche","Friedhof"],
     image: "img/rhodes.jpg", x: 1308.77, y: -1298.01 },
 
   { type: "city", name: "Saint Denis", region: "Lemoyne",
     desc: "Die große Stadt im Süden Lemoynes – mit dichtem Trubel und großstädtischem Flair. Polizei, Hotels, Bahnhof und gleich mehrere Jobs machen sie zur Metropole der Karte.",
-    amenities: ["Stall","Schnellreise","Möbel-/Tiergeschäft","Ankauf","Shop","Metzger","Farmbedarf","Polizei","Ärzte","Lotterie","Bahnhof"],
+    amenities: ["Stall","Schnellreise","Möbel-/Tiergeschäft","Ankauf","Metzger","Farmbedarf","Polizei","Ärzte","Lotterie","Bahnhof"],
     image: "img/saint-denis.jpg", x: 2607.62, y: -1148.25 },
 
   { type: "city", name: "Van Horn Trading Post", region: "New Hanover",
@@ -512,7 +513,7 @@ const LOCATIONS = [
 
   { type: "city", name: "Annesburg", region: "New Hanover",
     desc: "Die Minenstadt im äußersten Nordosten. Bahnhof, Bank und Hafen sorgen für Anbindung, dazu Ärzte, Sheriff und ein Motel für die Nacht.",
-    amenities: ["Bahnhof","Metzger","Lotterie","Schnellreise","Heißluftballon","Shop","Sheriff","Ärzte","Stall","Bootsanleger"],
+    amenities: ["Bahnhof","Metzger","Lotterie","Schnellreise","Heißluftballon","Sheriff","Ärzte","Stall","Bootsanleger"],
     image: "img/annesburg.jpg", x: 2871.80, y: 1337.08 },
 
   { type: "city", name: "Pleasance", region: "Lemoyne",
@@ -700,6 +701,44 @@ const LOCATIONS = [
   { type: "market", name: "Blackwater", region: "West Elizabeth",
     desc: "Stände und Händler – hier wird gehandelt, was die Gegend hergibt.",
     image: "img/blackwater-markt.jpg", x: -823.39, y: -1232.55 },
+
+
+  // --- Gemischtwarenläden ---
+  { type: "general", name: "Blackwater", region: "West Elizabeth",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -784.98, y: -1322.13 },
+
+  { type: "general", name: "Rhodes", region: "Lemoyne",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: 1329.95, y: -1293.98 },
+
+  { type: "general", name: "Saint Denis", region: "Lemoyne",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: 2824.93, y: -1319.72 },
+
+  { type: "general", name: "Annesburg", region: "New Hanover",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: 2924.97, y: 1365.26 },
+
+  { type: "general", name: "Valentine", region: "New Hanover",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -324.25, y: 804.13 },
+
+  { type: "general", name: "Strawberry", region: "West Elizabeth",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -1789.97, y: -388.44 },
+
+  { type: "general", name: "Thieves\' Landing", region: "New Austin",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -1436.06, y: -2267.29 },
+
+  { type: "general", name: "Armadillo", region: "New Austin",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -3687.31, y: -2622.96 },
+
+  { type: "general", name: "Tumbleweed", region: "New Austin",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -5486.24, y: -2937.74 },
 
 ];
 
