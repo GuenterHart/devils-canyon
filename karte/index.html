@@ -4,13 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Devil's Canyon – Interaktive Karte</title>
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="../favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sancreek&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Schriften lokal ausgeliefert – kein Nachladen von Google-Servern,
+     damit beim Aufruf keine Besucher-IP nach aussen geht. */
+  @font-face { font-family:'Sancreek'; src:url('../fonts/Sancreek-Regular.woff2') format('woff2');
+               font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-Regular.woff2') format('woff2');
+               font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-Medium.woff2') format('woff2');
+               font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-SemiBold.woff2') format('woff2');
+               font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-Bold.woff2') format('woff2');
+               font-weight:700; font-style:normal; font-display:swap; }
+</style>
 <style>
   :root {
     --bg-deep: #171310;
@@ -421,7 +433,7 @@
    die Umrechnung auf Bild-Pixel passiert automatisch über gameToMap().
    ============================================================================ */
 
-const MAP_IMAGE_URL = "map.jpg"; // <- euer neues Kartenbild (mit eigenem Branding)
+const MAP_IMAGE_URL = "../map.jpg"; // <- euer neues Kartenbild (mit eigenem Branding)
 const MAP_IMAGE_WIDTH = 7200;    // <- echte Pixel-Breite eures Kartenbilds
 const MAP_IMAGE_HEIGHT = 5400;   // <- echte Pixel-Höhe eures Kartenbilds
 
@@ -464,62 +476,62 @@ const LOCATIONS = [
   { type: "city", name: "Tumbleweed", region: "New Austin",
     desc: "Die verstaubte Grenzstadt tief im Süden – hier ticken die Uhren spürbar langsamer. Bank, Kirche, General Store und Sheriffbüro liegen dicht beieinander.",
     amenities: ["Farmbedarf","Metzger","Kirche","Sheriff","Ärzte","Friedhof","Tiergeschäft","Lotterie","Stall","Schnellreise"],
-    image: "img/tumbleweed.jpg", x: -5496.30, y: -2949.42 },
+    image: "../img/tumbleweed.jpg", x: -5496.30, y: -2949.42 },
 
   { type: "city", name: "Armadillo", region: "New Austin",
     desc: "Einst eine blühende Minenstadt, heute vom Fieber gezeichnet – wer trotzdem haltmacht, findet Bahnhof, Bank und Stall, dazu einen Heißluftballon für die Vogelperspektive über New Austin.",
     amenities: ["Bahnhof","Stall","Metzger","Heißluftballon","Schnellreise"],
-    image: "img/armadillo.jpg", x: -3675.23, y: -2610.96 },
+    image: "../img/armadillo.jpg", x: -3675.23, y: -2610.96 },
 
   { type: "city", name: "Thieves' Landing", region: "New Austin",
     desc: "Ein zwielichtiger Hafenflecken in den Sümpfen – Schatzkarten-Händler und zweifelhafte Gestalten treiben hier ihr Geschäft, direkt am Bootsanleger.",
     amenities: ["Schatzkarten-Händler","Metzger","Bootsanleger"],
-    image: "img/thieves-landing.jpg", x: -1425.77, y: -2303.72 },
+    image: "../img/thieves-landing.jpg", x: -1425.77, y: -2303.72 },
 
   { type: "city", name: "Blackwater", region: "West Elizabeth",
     desc: "Die glänzende Fassade der Zivilisation im Westen. Bank, Gerichtshof, Sheriffbüro und gleich mehrere Läden sorgen dafür, dass es hier an nichts fehlt.",
     amenities: ["Sheriff","Ärzte","Metzger","Fischer-Shop","Tiershop","Stall","Heißluftballon","Lotterie","Schnellreise","Bootsanleger","Kirche","Friedhof","Gerichtshof"],
-    image: "img/blackwater.jpg", x: -850.41, y: -1304.23 },
+    image: "../img/blackwater.jpg", x: -850.41, y: -1304.23 },
 
   { type: "city", name: "Strawberry", region: "West Elizabeth",
     desc: "Kleine Bergarbeiterstadt am Fuß der Wälder West Elizabeths. Shop, Bank, Sattlerei, Sheriff und Ärzte decken den Alltag ab.",
     amenities: ["Schnellreise","Metzger","Farmbedarf","Sheriff","Ärzte","Stall","Heißluftballon"],
-    image: "img/strawberry.jpg", x: -1792.02, y: -387.07 },
+    image: "../img/strawberry.jpg", x: -1792.02, y: -387.07 },
 
   { type: "city", name: "Valentine", region: "New Hanover",
     desc: "Das pulsierende Herz von New Hanover. Bahnhof, Sattlerei, Frisör und mehrere Läden machen Valentine zu einem der belebtesten Orte der Karte.",
     amenities: ["Bahnhof","Schnellreise","Lotterie","Tiergeschäft","Heißluftballon","Stall","Metzger","Fischer-Shop","Farmbedarf","Sheriff","Ärzte"],
-    image: "img/valentine.jpg", x: -289.79, y: 750.31 },
+    image: "../img/valentine.jpg", x: -289.79, y: 750.31 },
 
   { type: "city", name: "Colter", region: "Ambarino",
     desc: "Ein verlassenes Bergdorf hoch oben im Schnee Ambarinos. Nicht viel außer eisiger Kulisse – aber ein guter Ausgangspunkt für alle Nordroute.",
     amenities: ["Schnellreise"],
-    image: "img/colter.jpg", x: -1339.15, y: 2433.30 },
+    image: "../img/colter.jpg", x: -1339.15, y: 2433.30 },
 
   { type: "city", name: "Rhodes", region: "Lemoyne",
     desc: "Kleinstadt im Herzen von Lemoyne, geprägt vom Konflikt zweier Familien. Bank, Kirche, Sattlerei und Bahnhof gehören zum festen Repertoire.",
     amenities: ["Stall","Schnellreise","Heißluftballon","Bahnhof","Metzger","Kirche","Friedhof"],
-    image: "img/rhodes.jpg", x: 1308.77, y: -1298.01 },
+    image: "../img/rhodes.jpg", x: 1308.77, y: -1298.01 },
 
   { type: "city", name: "Saint Denis", region: "Lemoyne",
     desc: "Die große Stadt im Süden Lemoynes – mit dichtem Trubel und großstädtischem Flair. Polizei, Hotels, Bahnhof und gleich mehrere Jobs machen sie zur Metropole der Karte.",
     amenities: ["Stall","Schnellreise","Möbel-/Tiergeschäft","Ankauf","Metzger","Farmbedarf","Polizei","Ärzte","Lotterie","Bahnhof"],
-    image: "img/saint-denis.jpg", x: 2607.62, y: -1148.25 },
+    image: "../img/saint-denis.jpg", x: 2607.62, y: -1148.25 },
 
   { type: "city", name: "Van Horn Trading Post", region: "New Hanover",
     desc: "Ein heruntergekommener Handelsposten an der Küste New Hanovers. Motel, Metzgerei und Hafen reichen für einen kurzen Zwischenstopp.",
     amenities: ["Metzger","Ankauf","Bootsanleger","Stall"],
-    image: "img/van-horn.jpg", x: 2961.52, y: 502.68 },
+    image: "../img/van-horn.jpg", x: 2961.52, y: 502.68 },
 
   { type: "city", name: "Annesburg", region: "New Hanover",
     desc: "Die Minenstadt im äußersten Nordosten. Bahnhof, Bank und Hafen sorgen für Anbindung, dazu Ärzte, Sheriff und ein Motel für die Nacht.",
     amenities: ["Bahnhof","Metzger","Lotterie","Schnellreise","Heißluftballon","Sheriff","Ärzte","Stall","Bootsanleger"],
-    image: "img/annesburg.jpg", x: 2871.80, y: 1337.08 },
+    image: "../img/annesburg.jpg", x: 2871.80, y: 1337.08 },
 
   { type: "city", name: "Pleasance", region: "Lemoyne",
     desc: "Eine ruhige Splittersiedlung im Marschland von Lemoyne, abseits vom Trubel der großen Städte.",
     amenities: [],
-    image: "img/pleasance.jpg", x: 1737.36, y: -437.68 },
+    image: "../img/pleasance.jpg", x: 1737.36, y: -437.68 },
 
   // --- Öffentliche Arbeiten ---
   { type: "publicjob", name: "Blackwater", region: "West Elizabeth",
@@ -696,11 +708,11 @@ const LOCATIONS = [
   // --- Märkte ---
   { type: "market", name: "Festwiese", region: "New Hanover",
     desc: "Stände und Händler – hier wird gehandelt, was die Gegend hergibt.",
-    image: "img/festwiese.jpg", x: 458.16, y: -275.09 },
+    image: "../img/festwiese.jpg", x: 458.16, y: -275.09 },
 
   { type: "market", name: "Blackwater", region: "West Elizabeth",
     desc: "Stände und Händler – hier wird gehandelt, was die Gegend hergibt.",
-    image: "img/blackwater-markt.jpg", x: -823.39, y: -1232.55 },
+    image: "../img/blackwater-markt.jpg", x: -823.39, y: -1232.55 },
 
 
   // --- Gemischtwarenläden ---
