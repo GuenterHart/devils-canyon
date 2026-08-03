@@ -113,7 +113,11 @@
   /* Sattlernaht als Trenner - identisch zur Startseite. */
   hr.rail {
     height: 28px;
-    margin: -14px 0;
+    /* Auf der Startseite sitzt die Naht per negativem Margin auf der Stossfuge
+       zwischen zwei Bildern. Hier gibt es keine Fuge, und die klebrige
+       Suchleiste darunter wuerde die untere Haelfte verdecken. Also ohne
+       Ueberlappung. */
+    margin: 0;
     position: relative;
     z-index: 2;
     border: 0;
@@ -133,7 +137,7 @@
     background: rgba(23,19,16,0.96);
     border-bottom: 1px solid var(--line);
     backdrop-filter: blur(8px);
-    padding: 26px 0 15px;
+    padding: 18px 0 15px;
   }
 
   .field { position: relative; display: flex; align-items: center; }
