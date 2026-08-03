@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devil's Canyon – Interaktive Karte</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sancreek&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #171310;
+    --bg-panel: #221b16;
+    --bg-panel-raised: #2c231c;
+    --line: #3d3226;
+    --gold: #c8a46c;
+    --gold-bright: #f0cf8e;
+    --fire: #e8791e;
+    --fire-deep: #7a2410;
+    --cream: #ece2d0;
+    --cream-dim: #b8ab97;
+    --cat-trapper: #a6432d;
+    --cat-farming: #7a8f5c;
+    --cat-resource: #5c7a8f;
+    --shadow: 0 12px 32px rgba(0,0,0,0.55);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg-deep);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    height: 100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  #sidebar {
+    width: 340px;
+    min-width: 340px;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    box-shadow: var(--shadow);
+  }
+
+  #brand {
+    padding: 26px 20px 18px;
+    border-bottom: 2px solid var(--fire-deep);
+    text-align: center;
+    position: relative;
+    background:
+      radial-gradient(ellipse at 50% -20%, rgba(232,121,30,0.35), transparent 65%),
+      linear-gradient(180deg, rgba(200,164,108,0.08), transparent 70%);
+  }
+
+  #brand h1 {
+    font-family: 'Sancreek', serif;
+    font-weight: 400;
+    font-size: 34px;
+    margin: 0 0 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    background: linear-gradient(180deg, var(--gold-bright) 20%, var(--fire) 75%, var(--fire-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 18px rgba(232,121,30,0.35);
+    filter: drop-shadow(0 3px 2px rgba(0,0,0,0.7));
+  }
+
+  #brand p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--cream-dim);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+    padding-top: 8px;
+  }
+  #brand p::before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    margin: 0 auto 8px;
+    background: linear-gradient(90deg, transparent, var(--fire), transparent);
+  }
+
+  #search-wrap {
+    padding: 16px 20px 8px;
+  }
+
+  #search {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-panel-raised);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 17px;
+    letter-spacing: 0.3px;
+  }
+
+  #search::placeholder { color: var(--cream-dim); }
+  #search:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(200,164,108,0.25);
+  }
+
+  #filters {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 14px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  #filters::-webkit-scrollbar { width: 8px; }
+  #filters::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+  /* Ein aufklappbarer Kategorie-Block */
+  .cat { border-bottom: 1px solid var(--line); }
+  .cat:last-child { border-bottom: none; }
+
+  .cat-caret {
+    width: 10px; flex-shrink: 0;
+    color: var(--cream-dim); font-size: 11px;
+    transition: transform 0.15s ease;
+  }
+  .cat.open .cat-caret { transform: rotate(90deg); }
+
+  .cat-body { display: none; padding: 2px 0 8px 30px; }
+  .cat.open .cat-body { display: block; }
+
+  /* Abgewaehlte Kategorie wird gedaempft dargestellt */
+  .cat.off .filter-row span.label,
+  .cat.off .filter-row .count { opacity: 0.45; }
+
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 3px;
+    transition: background 0.15s ease;
+    user-select: none;
+  }
+  .filter-row:hover { background: rgba(255,255,255,0.03); }
+
+  .filter-swatch {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+  }
+
+  .filter-row span.label {
+    flex: 1;
+    font-size: 17px;
+    letter-spacing: 0.2px;
+  }
+
+  .filter-row .count {
+    font-size: 13px;
+    color: var(--cream-dim);
+    background: rgba(255,255,255,0.05);
+    padding: 1px 8px;
+    border-radius: 10px;
+  }
+
+  .filter-row input[type="checkbox"] {
+    accent-color: var(--gold);
+    width: 15px;
+    height: 15px;
+  }
+
+  .loc-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .loc-item:hover {
+    background: var(--bg-panel-raised);
+    border-color: var(--line);
+  }
+  .loc-item .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    margin-top: 5px; flex-shrink: 0;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.4);
+  }
+  .loc-item .info { flex: 1; }
+  .loc-item .name {
+    font-size: 17px;
+    color: var(--cream);
+    line-height: 1.15;
+  }
+  .loc-item { padding: 7px 8px; }
+  .loc-item .meta {
+    font-size: 13px;
+    color: var(--cream-dim);
+    letter-spacing: 0.3px;
+  }
+
+  #empty-state {
+    padding: 30px 16px;
+    text-align: center;
+    color: var(--cream-dim);
+    font-size: 15px;
+    display: none;
+  }
+
+  /* ---------- Map ---------- */
+  #map-wrap {
+    flex: 1;
+    position: relative;
+    background: #0d0b09;
+  }
+
+  #map { width: 100%; height: 100%; background: #0d0b09; }
+
+  #map-notice {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(34,27,22,0.92);
+    border: 1px solid var(--line);
+    color: var(--cream-dim);
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 500;
+    box-shadow: var(--shadow);
+    text-align: center;
+    max-width: 560px;
+  }
+  #map-notice b { color: var(--gold); }
+
+  /* Leaflet overrides -> Wanted-poster popup */
+  .leaflet-popup-content-wrapper {
+    background: #ece2d0;
+    color: #241b13;
+    border-radius: 2px;
+    background-image:
+      radial-gradient(circle at 8% 12%, rgba(0,0,0,0.06) 0%, transparent 40%),
+      radial-gradient(circle at 92% 88%, rgba(0,0,0,0.06) 0%, transparent 40%);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.6);
+    border: 1px solid #8a7452;
+  }
+  .leaflet-popup-tip { background: #ece2d0; border: 1px solid #8a7452; }
+  /* Cluster-Kreise im Kartenstil statt der gruen/gelben Standardfarben */
+  .marker-cluster {
+    background: rgba(200,164,108,.35);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .marker-cluster div {
+    width: 32px; height: 32px;
+    background: #3a2a1c;
+    border: 2px solid #c8a46c;
+    border-radius: 50%;
+    color: #f0dcbb;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .marker-cluster-large div { width: 38px; height: 38px; font-size: 16px; }
+  .discord-link { cursor: pointer; transition: opacity .15s ease; }
+  .discord-link:hover { opacity: 0.65; }
+  /* Popup oeffnet nach unten (fuer Marker dicht am oberen Kartenrand) */
+  .popup-below .leaflet-popup-tip-container { display: none; }
+  .leaflet-popup-content { margin: 16px 18px; font-family: 'Barlow Condensed', sans-serif; }
+
+  .popup-eyebrow {
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #a6432d;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .popup-title {
+    font-family: 'Sancreek', serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: #241b13;
+  }
+  .popup-region {
+    font-size: 13px;
+    color: #6b5a3f;
+    margin: -4px 0 8px;
+    font-style: italic;
+  }
+  .popup-desc {
+    font-size: 16px;
+    line-height: 1.3;
+    margin: 0 0 10px;
+    color: #3a2e20;
+  }
+  .popup-amenities {
+    border-top: 1px dashed #b8a374;
+    padding-top: 8px;
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .popup-amenities span {
+    font-size: 12px;
+    color: #5a4a34;
+    background: rgba(138,90,58,0.12);
+    border: 1px solid rgba(138,90,58,0.3);
+    border-radius: 10px;
+    padding: 2px 9px;
+    white-space: nowrap;
+  }
+  .popup-image {
+    display: block;
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    margin: -16px -18px 10px;
+    width: calc(100% + 36px);
+    border-bottom: 1px solid #8a7452;
+  }
+
+  .dc-pin {
+    width: 26px; height: 26px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    border: 2px solid rgba(0,0,0,0.5);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .dc-pin::after {
+    content: '';
+    width: 8px; height: 8px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 50%;
+    transform: rotate(45deg);
+  }
+
+  #zoom-hint {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    font-size: 12px;
+    color: var(--cream-dim);
+    background: rgba(34,27,22,0.85);
+    padding: 5px 10px;
+    border-radius: 3px;
+    z-index: 500;
+    border: 1px solid var(--line);
+  }
+
+  @media (max-width: 760px) {
+    body { flex-direction: column; }
+    #sidebar { width: 100%; min-width: 0; height: 46%; border-right: none; border-bottom: 1px solid var(--line); }
+    #map-wrap { height: 54%; }
+  }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <div id="brand">
+    <h1>Devil's Canyon</h1>
+    <p>Interaktive Server-Karte</p>
+  </div>
+
+  <div id="search-wrap">
+    <input id="search" type="text" placeholder="Ort suchen…" autocomplete="off">
+  </div>
+
+  <div id="filters">
+    <div id="empty-state">Keine Treffer für diese Suche/Filter.</div>
+  </div>
+</div>
+
+<div id="map-wrap">
+  <div id="map"></div>
+  <div id="zoom-hint">Scrollen zum Zoomen · Klick auf Koordinate = kopieren</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script>
+/* ============================================================================
+   DEVIL'S CANYON – INTERAKTIVE KARTE
+   ============================================================================
+   KALIBRIERUNG: bereits erledigt (siehe AFFINE unten, per Ausgleichsrechnung
+   aus 11 echten Referenzpunkten berechnet). Neue Marker einfach mit ihrer
+   Spiel-Koordinate (x,y aus vector3/vector4) unten bei LOCATIONS ergänzen -
+   die Umrechnung auf Bild-Pixel passiert automatisch über gameToMap().
+   ============================================================================ */
+
+const MAP_IMAGE_URL = "map.jpg"; // <- euer neues Kartenbild (mit eigenem Branding)
+const MAP_IMAGE_WIDTH = 7200;    // <- echte Pixel-Breite eures Kartenbilds
+const MAP_IMAGE_HEIGHT = 5400;   // <- echte Pixel-Höhe eures Kartenbilds
+
+// Kalibrierung per Ausgleichsrechnung (linare Regression) aus 11 echten
+// Referenzpunkten (Stadt-Koordinaten + abgelesene Pixel-Position), deutlich
+// genauer als eine Kalibrierung mit nur 2 Punkten. Alle 11 Punkte weichen im
+// Schnitt nur ca. 1-6 Pixel vom Idealwert ab (bei 7200px Bildbreite).
+// px = A*gx + B*gy + C   |   py = D*gx + E*gy + F
+const AFFINE = {
+  A:  0.615320, B: -0.000467, C: 4579.8674,
+  D:  0.000350, E: -0.614414, F: 2188.0212,
+};
+
+function gameToMap(gx, gy) {
+  const px = AFFINE.A * gx + AFFINE.B * gy + AFFINE.C;
+  const py = AFFINE.D * gx + AFFINE.E * gy + AFFINE.F;
+  // Leaflet CRS.Simple: y wächst nach OBEN im Koordinatensystem, Bild-Pixel-Y nach UNTEN.
+  return [MAP_IMAGE_HEIGHT - py, px];
+}
+
+/* ============================================================================
+   STANDORT-DATEN
+   Eigene Kategorie-Farbe pro "type". Neue Punkte einfach unten ergänzen -
+   kein Code an anderer Stelle muss angefasst werden.
+   ============================================================================ */
+const CATEGORIES = {
+  city:      { label: "Städte / Ortschaften",  color: "#c8a46c" },
+  publicjob: { label: "Öffentliche Arbeiten",  color: "#9c8f6f" },
+  newspaper: { label: "Zeitungszusteller",     color: "#8fa9c0" },
+  taxi:      { label: "Kutschentaxi",          color: "#c9974a" },
+  bank:      { label: "Banken",                color: "#6f8f7a" },
+  barber:    { label: "Frisöre",               color: "#b5847a" },
+  clothing:  { label: "Bekleidung",            color: "#8c86ac" },
+  lodging:   { label: "Hotels & Motels",       color: "#6e7f8c" },
+  market:    { label: "Märkte",                color: "#7fa8a0" },
+  general:   { label: "Gemischtwarenläden",    color: "#8f6f4a" },
+};
+
+const LOCATIONS = [
+  { type: "city", name: "Tumbleweed", region: "New Austin",
+    desc: "Die verstaubte Grenzstadt tief im Süden – hier ticken die Uhren spürbar langsamer. Bank, Kirche, General Store und Sheriffbüro liegen dicht beieinander.",
+    amenities: ["Farmbedarf","Metzger","Kirche","Sheriff","Ärzte","Friedhof","Tiergeschäft","Lotterie","Stall","Schnellreise"],
+    image: "img/tumbleweed.jpg", x: -5496.30, y: -2949.42 },
+
+  { type: "city", name: "Armadillo", region: "New Austin",
+    desc: "Einst eine blühende Minenstadt, heute vom Fieber gezeichnet – wer trotzdem haltmacht, findet Bahnhof, Bank und Stall, dazu einen Heißluftballon für die Vogelperspektive über New Austin.",
+    amenities: ["Bahnhof","Stall","Metzger","Heißluftballon","Schnellreise"],
+    image: "img/armadillo.jpg", x: -3675.23, y: -2610.96 },
+
+  { type: "city", name: "Thieves' Landing", region: "New Austin",
+    desc: "Ein zwielichtiger Hafenflecken in den Sümpfen – Schatzkarten-Händler und zweifelhafte Gestalten treiben hier ihr Geschäft, direkt am Bootsanleger.",
+    amenities: ["Schatzkarten-Händler","Metzger","Bootsanleger"],
+    image: "img/thieves-landing.jpg", x: -1425.77, y: -2303.72 },
+
+  { type: "city", name: "Blackwater", region: "West Elizabeth",
+    desc: "Die glänzende Fassade der Zivilisation im Westen. Bank, Gerichtshof, Sheriffbüro und gleich mehrere Läden sorgen dafür, dass es hier an nichts fehlt.",
+    amenities: ["Sheriff","Ärzte","Metzger","Fischer-Shop","Tiershop","Stall","Heißluftballon","Lotterie","Schnellreise","Bootsanleger","Kirche","Friedhof","Gerichtshof"],
+    image: "img/blackwater.jpg", x: -850.41, y: -1304.23 },
+
+  { type: "city", name: "Strawberry", region: "West Elizabeth",
+    desc: "Kleine Bergarbeiterstadt am Fuß der Wälder West Elizabeths. Shop, Bank, Sattlerei, Sheriff und Ärzte decken den Alltag ab.",
+    amenities: ["Schnellreise","Metzger","Farmbedarf","Sheriff","Ärzte","Stall","Heißluftballon"],
+    image: "img/strawberry.jpg", x: -1792.02, y: -387.07 },
+
+  { type: "city", name: "Valentine", region: "New Hanover",
+    desc: "Das pulsierende Herz von New Hanover. Bahnhof, Sattlerei, Frisör und mehrere Läden machen Valentine zu einem der belebtesten Orte der Karte.",
+    amenities: ["Bahnhof","Schnellreise","Lotterie","Tiergeschäft","Heißluftballon","Stall","Metzger","Fischer-Shop","Farmbedarf","Sheriff","Ärzte"],
+    image: "img/valentine.jpg", x: -289.79, y: 750.31 },
+
+  { type: "city", name: "Colter", region: "Ambarino",
+    desc: "Ein verlassenes Bergdorf hoch oben im Schnee Ambarinos. Nicht viel außer eisiger Kulisse – aber ein guter Ausgangspunkt für alle Nordroute.",
+    amenities: ["Schnellreise"],
+    image: "img/colter.jpg", x: -1339.15, y: 2433.30 },
+
+  { type: "city", name: "Rhodes", region: "Lemoyne",
+    desc: "Kleinstadt im Herzen von Lemoyne, geprägt vom Konflikt zweier Familien. Bank, Kirche, Sattlerei und Bahnhof gehören zum festen Repertoire.",
+    amenities: ["Stall","Schnellreise","Heißluftballon","Bahnhof","Metzger","Kirche","Friedhof"],
+    image: "img/rhodes.jpg", x: 1308.77, y: -1298.01 },
+
+  { type: "city", name: "Saint Denis", region: "Lemoyne",
+    desc: "Die große Stadt im Süden Lemoynes – mit dichtem Trubel und großstädtischem Flair. Polizei, Hotels, Bahnhof und gleich mehrere Jobs machen sie zur Metropole der Karte.",
+    amenities: ["Stall","Schnellreise","Möbel-/Tiergeschäft","Ankauf","Metzger","Farmbedarf","Polizei","Ärzte","Lotterie","Bahnhof"],
+    image: "img/saint-denis.jpg", x: 2607.62, y: -1148.25 },
+
+  { type: "city", name: "Van Horn Trading Post", region: "New Hanover",
+    desc: "Ein heruntergekommener Handelsposten an der Küste New Hanovers. Motel, Metzgerei und Hafen reichen für einen kurzen Zwischenstopp.",
+    amenities: ["Metzger","Ankauf","Bootsanleger","Stall"],
+    image: "img/van-horn.jpg", x: 2961.52, y: 502.68 },
+
+  { type: "city", name: "Annesburg", region: "New Hanover",
+    desc: "Die Minenstadt im äußersten Nordosten. Bahnhof, Bank und Hafen sorgen für Anbindung, dazu Ärzte, Sheriff und ein Motel für die Nacht.",
+    amenities: ["Bahnhof","Metzger","Lotterie","Schnellreise","Heißluftballon","Sheriff","Ärzte","Stall","Bootsanleger"],
+    image: "img/annesburg.jpg", x: 2871.80, y: 1337.08 },
+
+  { type: "city", name: "Pleasance", region: "Lemoyne",
+    desc: "Eine ruhige Splittersiedlung im Marschland von Lemoyne, abseits vom Trubel der großen Städte.",
+    amenities: [],
+    image: "img/pleasance.jpg", x: 1737.36, y: -437.68 },
+
+  // --- Öffentliche Arbeiten ---
+  { type: "publicjob", name: "Blackwater", region: "West Elizabeth",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: -877.69, y: -1331.24 },
+
+  { type: "publicjob", name: "Valentine", region: "New Hanover",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: -328.94, y: 774.85 },
+
+  { type: "publicjob", name: "Strawberry", region: "West Elizabeth",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: -1817.43, y: -370.77 },
+
+  { type: "publicjob", name: "Annesburg", region: "New Hanover",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: 2937.79, y: 1290.18 },
+
+  { type: "publicjob", name: "Saint Denis", region: "Lemoyne",
+    desc: "Anlaufstelle für die öffentlich zugänglichen Arbeiten – hier lässt sich eine Tätigkeit annehmen, ohne einer Firma anzugehören.",
+    x: 2821.45, y: -1223.87 },
+
+  // --- Zeitungszusteller ---
+  { type: "newspaper", name: "Armadillo", region: "New Austin",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: -3727.31, y: -2629.74 },
+
+  { type: "newspaper", name: "Tumbleweed", region: "New Austin",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: -5487.11, y: -2945.35 },
+
+  { type: "newspaper", name: "Blackwater", region: "West Elizabeth",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: -853.91, y: -1346.55 },
+
+  { type: "newspaper", name: "Rhodes", region: "Lemoyne",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: 1281.86, y: -1290.56 },
+
+  { type: "newspaper", name: "Saint Denis", region: "Lemoyne",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: 2742.45, y: -1423.09 },
+
+  { type: "newspaper", name: "Valentine", region: "New Hanover",
+    desc: "Hier nimmst du eine Zeitungsrunde an und trägst die Ausgaben in der Stadt aus.",
+    x: -210.69, y: 645.34 },
+
+  // --- Kutschentaxi ---
+  { type: "taxi", name: "Saint Denis", region: "Lemoyne",
+    desc: "Anlaufstelle für den Kutschendienst – hier nimmst du Fahrgäste an und bringst sie ans Ziel.",
+    x: 2678.86, y: -1446.41 },
+
+  { type: "taxi", name: "Valentine", region: "New Hanover",
+    desc: "Anlaufstelle für den Kutschendienst – hier nimmst du Fahrgäste an und bringst sie ans Ziel.",
+    x: -177.94, y: 647.06 },
+
+  { type: "taxi", name: "Tumbleweed", region: "New Austin",
+    desc: "Anlaufstelle für den Kutschendienst – hier nimmst du Fahrgäste an und bringst sie ans Ziel.",
+    x: -5516.85, y: -3061.86 },
+
+
+  // --- Banken ---
+  { type: "bank", name: "Saint Denis", region: "Lemoyne",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: 2642.64, y: -1290.27 },
+
+  { type: "bank", name: "Valentine", region: "New Hanover",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -307.33, y: 776.94 },
+
+  { type: "bank", name: "Strawberry", region: "West Elizabeth",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -1766.34, y: -383.19 },
+
+  { type: "bank", name: "Blackwater", region: "West Elizabeth",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -812.08, y: -1278.68 },
+
+  { type: "bank", name: "Armadillo", region: "New Austin",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -3665.17, y: -2623.85 },
+
+  { type: "bank", name: "Tumbleweed", region: "New Austin",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: -5531.83, y: -2953.37 },
+
+  { type: "bank", name: "Rhodes", region: "Lemoyne",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: 1294.27, y: -1300.51 },
+
+  { type: "bank", name: "Annesburg", region: "New Hanover",
+    desc: "Ein- und Auszahlungen, Überweisungen und Firmenkonten.",
+    x: 2930.53, y: 1283.40 },
+
+
+  // --- Frisöre ---
+  { type: "barber", name: "Saint Denis", region: "Lemoyne",
+    desc: "Haare, Bart und Pflege – hier lässt sich das Aussehen ändern.",
+    x: 2655.15, y: -1179.44 },
+
+  { type: "barber", name: "Valentine", region: "New Hanover",
+    desc: "Haare, Bart und Pflege – hier lässt sich das Aussehen ändern.",
+    x: -306.50, y: 812.84 },
+
+  { type: "barber", name: "Blackwater", region: "West Elizabeth",
+    desc: "Haare, Bart und Pflege – hier lässt sich das Aussehen ändern.",
+    x: -812.69, y: -1367.36 },
+
+
+  // --- Bekleidung ---
+  { type: "clothing", name: "Saint Denis", region: "Lemoyne",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: 2553.50, y: -1170.77 },
+
+  { type: "clothing", name: "Valentine", region: "New Hanover",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: -326.60, y: 774.27 },
+
+  { type: "clothing", name: "Strawberry", region: "West Elizabeth",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: -1789.84, y: -385.65 },
+
+  { type: "clothing", name: "Blackwater", region: "West Elizabeth",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: -761.24, y: -1291.07 },
+
+  { type: "clothing", name: "Tumbleweed", region: "New Austin",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: -5515.78, y: -2966.18 },
+
+  { type: "clothing", name: "Rhodes", region: "Lemoyne",
+    desc: "Kleidung kaufen und das Erscheinungsbild anpassen.",
+    x: 1334.77, y: -1324.86 },
+
+
+  // --- Hotels & Motels ---
+  { type: "lodging", name: "Rhodes", region: "Lemoyne",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 1332.75, y: -1373.93 },
+
+  { type: "lodging", name: "Saint Denis", region: "Lemoyne",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 2637.76, y: -1222.01 },
+
+  { type: "lodging", name: "Draft Horse Brewery", region: "Lemoyne",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 2641.20, y: -1153.14 },
+
+  { type: "lodging", name: "Van Horn", region: "New Hanover",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 2976.93, y: 573.81 },
+
+  { type: "lodging", name: "Annesburg", region: "New Hanover",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: 2945.97, y: 1329.95 },
+
+  { type: "lodging", name: "Valentine", region: "New Hanover",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: -322.02, y: 764.97 },
+
+  { type: "lodging", name: "Blackwater", region: "West Elizabeth",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: -820.09, y: -1325.19 },
+
+  { type: "lodging", name: "Thieves\' Landing", region: "New Austin",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: -1430.31, y: -2271.64 },
+
+  { type: "lodging", name: "Strawberry", region: "West Elizabeth",
+    desc: "Ein Zimmer für die Nacht – ausruhen und sicher schlafen.",
+    x: -1817.24, y: -371.10 },
+
+
+  // --- Märkte ---
+  { type: "market", name: "Festwiese", region: "New Hanover",
+    desc: "Stände und Händler – hier wird gehandelt, was die Gegend hergibt.",
+    image: "img/festwiese.jpg", x: 458.16, y: -275.09 },
+
+  { type: "market", name: "Blackwater", region: "West Elizabeth",
+    desc: "Stände und Händler – hier wird gehandelt, was die Gegend hergibt.",
+    image: "img/blackwater-markt.jpg", x: -823.39, y: -1232.55 },
+
+
+  // --- Gemischtwarenläden ---
+  { type: "general", name: "Blackwater", region: "West Elizabeth",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -784.98, y: -1322.13 },
+
+  { type: "general", name: "Rhodes", region: "Lemoyne",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: 1329.95, y: -1293.98 },
+
+  { type: "general", name: "Saint Denis", region: "Lemoyne",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: 2824.93, y: -1319.72 },
+
+  { type: "general", name: "Annesburg", region: "New Hanover",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: 2924.97, y: 1365.26 },
+
+  { type: "general", name: "Valentine", region: "New Hanover",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -324.25, y: 804.13 },
+
+  { type: "general", name: "Strawberry", region: "West Elizabeth",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -1789.97, y: -388.44 },
+
+  { type: "general", name: "Thieves\' Landing", region: "New Austin",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -1436.06, y: -2267.29 },
+
+  { type: "general", name: "Armadillo", region: "New Austin",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -3687.31, y: -2622.96 },
+
+  { type: "general", name: "Tumbleweed", region: "New Austin",
+    desc: "Gemischtwarenladen mit Alltagsbedarf – hier gibt es das Nötigste.",
+    x: -5486.24, y: -2937.74 },
+
+];
+
+/* ============================================================================
+   MAP SETUP
+   ============================================================================ */
+const map = L.map('map', {
+  crs: L.CRS.Simple,
+  minZoom: -2,
+  maxZoom: 3,
+  zoomSnap: 0.25,
+  attributionControl: false,
+  // Karte laesst sich nicht ueber den Bildrand hinausziehen.
+  // 1.0 = harte Grenze, kleinere Werte fuehlen sich gummiartig an.
+  maxBoundsViscosity: 1.0,
+});
+
+const bounds = [[0, 0], [MAP_IMAGE_HEIGHT, MAP_IMAGE_WIDTH]];
+map.setMaxBounds(bounds);
+
+// Nicht weiter herauszoomen als noetig, um das ganze Bild zu sehen.
+// Wird bei jeder Fenstergroesse neu bestimmt.
+function lockMinZoom() {
+  const z = map.getBoundsZoom(bounds, false);
+  map.setMinZoom(z);
+  if (map.getZoom() < z) map.setZoom(z);
+}
+map.on('resize', lockMinZoom);
+
+// Kartenbild-Layer. Falls map.jpg fehlt, zeigt Leaflet einfach eine leere/graue
+// Fläche - die Marker funktionieren trotzdem, nur ohne Hintergrundbild.
+L.imageOverlay(MAP_IMAGE_URL, bounds, { errorOverlayUrl: undefined }).addTo(map);
+map.fitBounds(bounds);
+lockMinZoom();
+
+// Fix: Beim ersten Laden hat der Browser das Flexbox-Layout (Sidebar-Breite,
+// Fonts) manchmal noch nicht final berechnet, wenn Leaflet initialisiert wird.
+// Dadurch "verrutscht" die Karte in die Ecke. Nach vollständigem Laden die
+// Kartengröße neu berechnen und wieder zentrieren.
+window.addEventListener('load', () => {
+  map.invalidateSize();
+  map.fitBounds(bounds);
+  lockMinZoom();
+});
+setTimeout(() => {
+  map.invalidateSize();
+  map.fitBounds(bounds);
+  lockMinZoom();
+}, 300);
+
+/* ============================================================================
+   PIXEL-HELFER
+   Klick auf eine LEERE Stelle der Karte (kein Marker) zeigt die Pixel-Koordinate
+   an dieser Stelle an. Nützlich, um neue LOCATIONS-Einträge grob zu verorten
+   oder die Kalibrierung stichprobenartig zu prüfen. Die eigentliche Kalibrierung
+   läuft über die AFFINE-Konstante oben (aus 11 Referenzpunkten berechnet).
+   ============================================================================ */
+const calibBox = L.control({ position: 'bottomleft' });
+calibBox.onAdd = function () {
+  const div = L.DomUtil.create('div');
+  div.id = 'calib-readout';
+  div.style.cssText = 'background:rgba(34,27,22,0.92);border:1px solid #3d3226;color:#c8a46c;' +
+    'padding:6px 12px;border-radius:4px;font-family:monospace;font-size:13px;display:none;';
+  return div;
+};
+calibBox.addTo(map);
+
+map.on('click', (e) => {
+  // Bild-Pixel-Koordinate aus Leaflet-latlng zurückrechnen (Umkehrung von gameToMap's Y-Flip)
+  const pixelX = e.latlng.lng;
+  const pixelY = MAP_IMAGE_HEIGHT - e.latlng.lat;
+  const readout = document.getElementById('calib-readout');
+  readout.style.display = 'block';
+  readout.innerHTML = `Pixel-Koordinate hier: <b>x=${pixelX.toFixed(0)}, y=${pixelY.toFixed(0)}</b>` +
+    `<br><span style="opacity:0.7">→ nur zur Orientierung, z.B. beim Verorten neuer Marker</span>`;
+});
+
+function makeIcon(color) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="dc-pin" style="background:${color}"></div>`,
+    iconSize: [26, 26],
+    iconAnchor: [13, 24],
+    popupAnchor: [0, -22],
+  });
+}
+
+const markersByLoc = new Map();
+const layerGroup = L.markerClusterGroup({
+  // Radius in Bildschirmpixeln, in dem Marker zusammengefasst werden.
+  maxClusterRadius: 45,
+  // Ab dieser Zoomstufe wird jeder Marker einzeln gezeigt.
+  disableClusteringAtZoom: 1,
+  spiderfyOnMaxZoom: true,
+  showCoverageOnHover: false,
+  zoomToBoundsOnClick: true,
+}).addTo(map);
+
+function buildPopupHTML(loc) {
+  const catLabel = CATEGORIES[loc.type].label;
+  const imageHTML = loc.image
+    ? `<img class="popup-image" src="${loc.image}" alt="${loc.name}" onerror="this.remove()">`
+    : '';
+  const amenitiesHTML = (loc.amenities && loc.amenities.length)
+    ? `<div class="popup-amenities">${loc.amenities.map(a => `<span>${a}</span>`).join('')}</div>`
+    : '';
+  return `
+    ${imageHTML}
+    <div class="popup-eyebrow">${catLabel}</div>
+    <div class="popup-title">${loc.name}</div>
+    ${loc.region ? `<div class="popup-region">${loc.region}</div>` : ''}
+    <div class="popup-desc">${loc.desc}</div>
+    ${amenitiesHTML}
+  `;
+}
+
+/* ============================================================================
+   DISCORD-HINWEIS ueber dem Schriftzug "DEVILS-CANYON.DE"
+   Der Schriftzug liegt fest im Kartenbild bei x 5790-6823, y 4800-5108.
+   Das SVG-Overlay haengt an denselben Bildkoordinaten, skaliert also beim
+   Zoomen exakt mit und ist gleichzeitig anklickbar (interactive: true).
+   Groesse/Position aendern: nur die Werte in DISCORD_BOX anpassen.
+   ============================================================================ */
+const DISCORD_URL = "https://discord.gg/aSrbSCjyKz";
+const DISCORD_BOX = { x1: 5790, x2: 6823, y1: 4610, y2: 4770 }; // Bildpixel
+
+(function addDiscordLink() {
+  const w = DISCORD_BOX.x2 - DISCORD_BOX.x1;
+  const h = DISCORD_BOX.y2 - DISCORD_BOX.y1;
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  svg.innerHTML = `
+    <text x="${w / 2}" y="${h * 0.80}" text-anchor="middle"
+          textLength="${w * 0.96}" lengthAdjust="spacingAndGlyphs"
+          font-family="'Barlow Condensed', sans-serif" font-weight="700"
+          font-size="${h * 0.85}" fill="#5A412B">
+      TRETE UNSEREM DISCORD BEI
+    </text>`;
+
+  const bounds = [
+    [MAP_IMAGE_HEIGHT - DISCORD_BOX.y2, DISCORD_BOX.x1],
+    [MAP_IMAGE_HEIGHT - DISCORD_BOX.y1, DISCORD_BOX.x2],
+  ];
+
+  const overlay = L.svgOverlay(svg, bounds, { interactive: true, className: 'discord-link' });
+  overlay.addTo(map);
+  overlay.on('click', () => window.open(DISCORD_URL, '_blank', 'noopener'));
+})();
+
+LOCATIONS.forEach(loc => {
+  const latlng = gameToMap(loc.x, loc.y);
+  // Marker dicht am oberen Bildrand: Popup nach unten klappen, sonst wird es
+  // von der Randbegrenzung abgeschnitten (die Karte kann nicht hochpannen).
+  const nearTop = (MAP_IMAGE_HEIGHT - latlng[0]) < 1100;   // Bild-Pixel-Y
+  const popupOpts = { maxWidth: 260, minWidth: 240, autoPan: true };
+  if (nearTop) {
+    popupOpts.className = 'popup-below';
+    popupOpts.offset = L.point(0, 30);
+    popupOpts.autoPan = false;
+  }
+
+  const marker = L.marker(latlng, { icon: makeIcon(CATEGORIES[loc.type].color) })
+    .bindPopup(buildPopupHTML(loc), popupOpts);
+
+  // Nach dem Oeffnen die tatsaechliche Hoehe messen und das Popup passend
+  // unter den Marker schieben.
+  if (nearTop) {
+    marker.on('popupopen', (e) => {
+      const el = e.popup.getElement();
+      if (!el) return;
+      const hgt = el.offsetHeight || 300;
+      e.popup.options.offset = L.point(0, hgt + 30);
+      e.popup.update();
+    });
+  }
+  layerGroup.addLayer(marker);
+  markersByLoc.set(loc, marker);
+});
+
+/* ============================================================================
+   SIDEBAR: Filter + Liste + Suche
+   ============================================================================ */
+const activeTypes = new Set(Object.keys(CATEGORIES));
+const openTypes   = new Set();          // welche Kategorien aufgeklappt sind
+let   searchTerm  = "";
+
+const filtersEl = document.getElementById('filters');
+const emptyEl   = document.getElementById('empty-state');
+const catEls    = {};                    // key -> { wrap, body, count }
+
+// Ein Block pro Kategorie: Kopfzeile zum Auf-/Zuklappen, Liste darunter.
+Object.entries(CATEGORIES).forEach(([key, cat]) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'cat';
+
+  const head = document.createElement('div');
+  head.className = 'filter-row';
+  head.innerHTML = `
+    <input type="checkbox" checked data-type="${key}">
+    <span class="cat-caret">&#9654;</span>
+    <span class="filter-swatch" style="background:${cat.color}"></span>
+    <span class="label">${cat.label}</span>
+    <span class="count">0</span>
+  `;
+
+  const body = document.createElement('div');
+  body.className = 'cat-body';
+
+  // Checkbox schaltet die Marker auf der Karte, nicht das Aufklappen.
+  const box = head.querySelector('input');
+  box.addEventListener('click', (e) => e.stopPropagation());
+  box.addEventListener('change', (e) => {
+    if (e.target.checked) activeTypes.add(key); else activeTypes.delete(key);
+    wrap.classList.toggle('off', !e.target.checked);
+    render();
+  });
+
+  // Klick auf die Zeile klappt auf und zu.
+  head.addEventListener('click', () => {
+    if (openTypes.has(key)) openTypes.delete(key); else openTypes.add(key);
+    wrap.classList.toggle('open', openTypes.has(key));
+  });
+
+  wrap.appendChild(head);
+  wrap.appendChild(body);
+  filtersEl.appendChild(wrap);
+  catEls[key] = { wrap, body, count: head.querySelector('.count') };
+});
+
+function matchesFilters(loc) {
+  if (!activeTypes.has(loc.type)) return false;
+  if (searchTerm && !loc.name.toLowerCase().includes(searchTerm)) return false;
+  return true;
+}
+
+function focusLocation(loc) {
+  const marker = markersByLoc.get(loc);
+  const go = () => {
+    map.setView(marker.getLatLng(), Math.max(map.getZoom(), 1), { animate: true });
+    marker.openPopup();
+  };
+  // Steckt der Marker in einer Gruppe, erst dorthin zoomen.
+  if (layerGroup.zoomToShowLayer) layerGroup.zoomToShowLayer(marker, go);
+  else go();
+}
+
+function render() {
+  layerGroup.clearLayers();
+
+  const visible = LOCATIONS.filter(matchesFilters);
+  emptyEl.style.display = visible.length === 0 ? 'block' : 'none';
+
+  visible.forEach(loc => layerGroup.addLayer(markersByLoc.get(loc)));
+
+  Object.keys(CATEGORIES).forEach(key => {
+    const el   = catEls[key];
+    const rows = visible.filter(l => l.type === key);
+    el.count.textContent = rows.length;
+    el.body.innerHTML = '';
+
+    rows.forEach(loc => {
+      const item = document.createElement('div');
+      item.className = 'loc-item';
+      item.innerHTML = `
+        <span class="dot" style="background:${CATEGORIES[loc.type].color}"></span>
+        <div class="info">
+          <div class="name">${loc.name}</div>
+          <div class="meta">${loc.region || ''}</div>
+        </div>
+      `;
+      item.addEventListener('click', () => focusLocation(loc));
+      el.body.appendChild(item);
+    });
+
+    // Bei aktiver Suche die Kategorien mit Treffern von selbst oeffnen.
+    if (searchTerm) el.wrap.classList.toggle('open', rows.length > 0);
+    else            el.wrap.classList.toggle('open', openTypes.has(key));
+  });
+}
+
+document.getElementById('search').addEventListener('input', (e) => {
+  searchTerm = e.target.value.trim().toLowerCase();
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
