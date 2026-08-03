@@ -4,424 +4,514 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Regelwerk – Devil's Canyon</title>
-<meta name="description" content="Das Regelwerk von Devil's Canyon zum Durchsuchen und Verlinken.">
+<meta name="description" content="Das Regelwerk von Devil's Canyon: durchsuchbar, mit direkt verlinkbaren Paragraphen.">
+<link rel="icon" href="../img/dc-logo.png">
 
 <style>
-/* ------------------------------------------------------------------
-   Schriften – liegen bereits selbstgehostet unter /fonts/.
-   Falls eure Dateinamen abweichen, hier anpassen. Es werden mehrere
-   Schreibweisen versucht, der Browser nimmt die erste, die lädt.
-   ------------------------------------------------------------------ */
-@font-face{
-  font-family:"Sancreek"; font-style:normal; font-weight:400; font-display:swap;
-  src:url("../fonts/sancreek-regular.woff2") format("woff2"),
-      url("../fonts/Sancreek-Regular.woff2") format("woff2"),
-      url("../fonts/sancreek.woff2") format("woff2");
-}
-@font-face{
-  font-family:"Barlow Condensed"; font-style:normal; font-weight:400; font-display:swap;
-  src:url("../fonts/barlow-condensed-400.woff2") format("woff2"),
-      url("../fonts/BarlowCondensed-Regular.woff2") format("woff2");
-}
-@font-face{
-  font-family:"Barlow Condensed"; font-style:normal; font-weight:500; font-display:swap;
-  src:url("../fonts/barlow-condensed-500.woff2") format("woff2"),
-      url("../fonts/BarlowCondensed-Medium.woff2") format("woff2");
-}
-@font-face{
-  font-family:"Barlow Condensed"; font-style:normal; font-weight:600; font-display:swap;
-  src:url("../fonts/barlow-condensed-600.woff2") format("woff2"),
-      url("../fonts/BarlowCondensed-SemiBold.woff2") format("woff2");
-}
-@font-face{
-  font-family:"Barlow Condensed"; font-style:normal; font-weight:700; font-display:swap;
-  src:url("../fonts/barlow-condensed-700.woff2") format("woff2"),
-      url("../fonts/BarlowCondensed-Bold.woff2") format("woff2");
-}
+  @font-face { font-family:'Sancreek'; src:url('../fonts/Sancreek-Regular.woff2') format('woff2');
+               font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-Regular.woff2') format('woff2');
+               font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-Medium.woff2') format('woff2');
+               font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-SemiBold.woff2') format('woff2');
+               font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-Bold.woff2') format('woff2');
+               font-weight:700; font-style:normal; font-display:swap; }
+</style>
+<style>
+  :root {
+    --bg-deep:    #171310;
+    --bg-panel:   #221b16;
+    --bg-raised:  #2c231c;
+    --line:       #3d3226;
+    --gold:       #c8a46c;
+    --gold-brt:   #f0cf8e;
+    --fire:       #e8791e;
+    --cream:      #ece2d0;
+    --cream-dim:  #b8ab97;
+    --paper:      #d4b891;
+    --shadow:     0 12px 32px rgba(0,0,0,0.55);
+  }
 
-:root{
-  --leder:#1B1410;
-  --leder-hell:#241B15;
-  --karte:#2A201A;
-  --naht:#3E2F25;
-  --pergament:#EADDC7;
-  --gedaempft:#A08B73;
-  --messing:#C8A46C;
-  --messing-dunkel:#8E7346;
-  --rot:#9A3B2E;
-  --radius:3px;
-}
+  *, *::before, *::after { box-sizing: border-box; }
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth; scroll-padding-top:150px}
-@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{animation:none!important; transition:none!important} }
+  html { scroll-behavior: smooth; scroll-padding-top: 168px; }
 
-body{
-  margin:0; background:var(--leder); color:var(--pergament);
-  font-family:"Barlow Condensed",system-ui,sans-serif; font-size:18px; line-height:1.55;
-  -webkit-font-smoothing:antialiased;
-}
-/* feines Korn wie auf der Startseite */
-body::before{
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:99; opacity:.05;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+  body {
+    margin: 0;
+    position: relative;
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 0%, #1d1712 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 15% 45%, #1c1611 0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 85% 80%, #1c1611 0%, transparent 55%),
+      var(--bg-deep);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
 
-a{color:var(--messing)}
-mark{background:rgba(200,164,108,.28); color:#F6ECD9; padding:0 .1em; border-radius:2px}
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='300'%20height='300'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='4'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='300'%20height='300'%20filter='url%28%2523n%29'/%3E%3C/svg%3E");
+    background-size: 300px 300px;
+    opacity: 0.05;
+  }
 
-/* ---------- Kopf ---------- */
-.kopf{ border-bottom:1px solid var(--naht); background:var(--leder-hell) }
-.kopf-innen{ max-width:1080px; margin:0 auto; padding:34px 22px 26px }
-.zurueck{
-  display:inline-block; font-size:15px; letter-spacing:.09em; text-transform:uppercase;
-  color:var(--gedaempft); text-decoration:none; margin-bottom:18px;
-}
-.zurueck:hover{ color:var(--messing) }
-h1{
-  font-family:"Sancreek",Georgia,serif; font-weight:400; margin:0;
-  font-size:clamp(34px,6vw,54px); line-height:1.05; color:var(--pergament);
-  letter-spacing:.01em;
-}
-.stand{ margin:10px 0 0; color:var(--gedaempft); font-size:16px; letter-spacing:.05em }
+  .wrap { width: min(1080px, 92vw); margin-inline: auto; }
 
-/* ---------- Sattlernaht als Trenner ---------- */
-.naht{ height:14px; background:var(--leder-hell); border-bottom:1px solid var(--naht);
-  background-image:repeating-linear-gradient(90deg,
-    transparent 0 10px, var(--messing-dunkel) 10px 22px, transparent 22px 32px);
-  background-size:auto 1px; background-repeat:repeat-x; background-position:center;
-}
+  a { color: var(--gold-brt); }
+  mark { background: rgba(200,164,108,0.26); color: var(--gold-brt); padding: 0 0.12em; border-radius: 2px; }
 
-/* ---------- Suchleiste ---------- */
-.leiste{
-  position:sticky; top:0; z-index:20; background:rgba(27,20,16,.97);
-  border-bottom:1px solid var(--naht); backdrop-filter:blur(6px);
-}
-.leiste-innen{ max-width:1080px; margin:0 auto; padding:16px 22px 14px }
-.suchfeld{ position:relative; display:flex; align-items:center }
-.suchfeld svg{ position:absolute; left:14px; width:19px; height:19px; stroke:var(--gedaempft); fill:none; stroke-width:2 }
-#suche{
-  width:100%; padding:13px 46px 13px 44px; font-family:inherit; font-size:19px;
-  color:var(--pergament); background:var(--karte);
-  border:1px solid var(--naht); border-radius:var(--radius); outline:none;
-}
-#suche::placeholder{ color:#7A6852 }
-#suche:focus{ border-color:var(--messing); box-shadow:0 0 0 3px rgba(200,164,108,.16) }
-#leeren{
-  position:absolute; right:8px; display:none; background:none; border:0; cursor:pointer;
-  color:var(--gedaempft); font-size:22px; line-height:1; padding:6px 10px; font-family:inherit;
-}
-#leeren:hover{ color:var(--pergament) }
+  ::selection { background: var(--gold); color: var(--bg-deep); }
 
-.chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:12px }
-.chip{
-  font-family:inherit; font-size:15px; letter-spacing:.05em; text-transform:uppercase;
-  color:var(--gedaempft); background:transparent; border:1px solid var(--naht);
-  border-radius:var(--radius); padding:5px 12px; cursor:pointer;
-}
-.chip:hover{ color:var(--pergament); border-color:var(--messing-dunkel) }
-.chip[aria-pressed="true"]{ color:var(--leder); background:var(--messing); border-color:var(--messing); font-weight:600 }
-.chip:focus-visible, #leeren:focus-visible, .nr:focus-visible, .zurueck:focus-visible{
-  outline:2px solid var(--messing); outline-offset:2px
-}
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
-.treffer{ margin:11px 0 0; font-size:15px; color:var(--gedaempft); letter-spacing:.05em }
+  /* ---------------------------------------------------------- Kopfbereich */
+  header { padding: 46px 0 34px; text-align: center; }
 
-/* ---------- Inhalt ---------- */
-main{ max-width:1080px; margin:0 auto; padding:26px 22px 90px }
+  .back {
+    display: inline-block;
+    font-size: 0.9rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    text-decoration: none;
+    margin-bottom: 22px;
+    transition: color 0.18s ease;
+  }
+  .back:hover { color: var(--gold-brt); }
 
-.abschnitt-kopf{
-  font-family:"Sancreek",Georgia,serif; font-size:25px; font-weight:400;
-  color:var(--messing); margin:38px 0 14px; padding-bottom:9px;
-  border-bottom:1px solid var(--naht);
-}
-.abschnitt-kopf:first-child{ margin-top:8px }
+  h1 {
+    font-family: 'Sancreek', serif;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 7vw, 3.4rem);
+    line-height: 1.1;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(180deg, var(--gold-brt) 20%, var(--fire) 78%, #a8500f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-.regel{
-  display:grid; grid-template-columns:96px 1fr; gap:20px;
-  background:var(--karte); border:1px solid var(--naht); border-left:3px solid var(--naht);
-  border-radius:var(--radius); padding:20px 22px; margin-bottom:12px;
-}
-.regel:target, .regel.hervor{ border-left-color:var(--messing); background:#31251D }
+  .stand {
+    margin: 12px 0 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
 
-.nr{
-  font-family:"Sancreek",Georgia,serif; font-size:26px; line-height:1.15; color:var(--messing);
-  background:none; border:0; padding:0; cursor:pointer; text-align:left; font-weight:400;
-}
-.nr:hover{ color:#E3C48E }
-.nr small{ display:block; font-family:"Barlow Condensed",sans-serif; font-size:13px;
-  letter-spacing:.09em; text-transform:uppercase; color:#7A6852; margin-top:5px }
+  hr.rail {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line) 18%, var(--line) 82%, transparent);
+    margin: 0;
+  }
 
-.regel h3{ margin:0 0 8px; font-size:22px; font-weight:600; letter-spacing:.01em; color:#F2E7D3 }
-.regel .text{ margin:0; white-space:pre-wrap; color:#D9CBB3 }
-.regel .text.gekuerzt{ display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden }
-.mehr{
-  margin-top:9px; background:none; border:0; padding:0; cursor:pointer; font-family:inherit;
-  font-size:16px; color:var(--messing); letter-spacing:.04em;
-}
-.mehr:hover{ text-decoration:underline }
+  /* ------------------------------------------------------------ Suchleiste */
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(23,19,16,0.96);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+    padding: 18px 0 15px;
+  }
 
-.hinweis{ text-align:center; padding:60px 20px; color:var(--gedaempft) }
-.hinweis strong{ display:block; font-family:"Sancreek",Georgia,serif; font-weight:400;
-  font-size:24px; color:var(--pergament); margin-bottom:10px }
-.hinweis.fehler strong{ color:var(--rot) }
+  .field { position: relative; display: flex; align-items: center; }
+  .field svg {
+    position: absolute; left: 16px; width: 19px; height: 19px;
+    stroke: var(--cream-dim); fill: none; stroke-width: 2;
+  }
+  #q {
+    width: 100%;
+    padding: 14px 48px 14px 47px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.05rem;
+    color: var(--cream);
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  #q::placeholder { color: #7d6e5c; }
+  #q:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,164,108,0.14); }
+  #q::-webkit-search-cancel-button { display: none; }
 
-.fuss{ max-width:1080px; margin:0 auto; padding:0 22px 60px; color:#7A6852; font-size:15px }
+  #clear {
+    position: absolute; right: 10px; display: none;
+    background: none; border: 0; cursor: pointer;
+    color: var(--cream-dim); font-size: 1.4rem; line-height: 1;
+    padding: 6px 10px; font-family: inherit;
+  }
+  #clear:hover { color: var(--cream); }
 
-#kopiert{
-  position:fixed; left:50%; bottom:28px; transform:translateX(-50%);
-  background:var(--messing); color:var(--leder); font-weight:600; letter-spacing:.05em;
-  padding:9px 20px; border-radius:var(--radius); opacity:0; pointer-events:none;
-  transition:opacity .18s ease; z-index:60;
-}
-#kopiert.an{ opacity:1 }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chip {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--cream-dim);
+    background: rgba(23,19,16,0.6);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  }
+  .chip:hover { color: var(--gold-brt); border-color: var(--gold); }
+  .chip[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--bg-deep); }
 
-@media (max-width:640px){
-  body{ font-size:17px }
-  .regel{ grid-template-columns:1fr; gap:6px; padding:16px }
-  .nr{ font-size:22px }
-  .nr small{ display:inline; margin-left:9px }
-  html{ scroll-padding-top:190px }
-}
+  .count {
+    margin: 12px 0 0;
+    font-size: 0.82rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+
+  /* ---------------------------------------------------------------- Regeln */
+  main { padding: 30px 0 90px; }
+
+  .section-head {
+    font-family: 'Sancreek', serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin: 42px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-head:first-child { margin-top: 6px; }
+
+  .rule {
+    display: grid;
+    grid-template-columns: 104px 1fr;
+    gap: 22px;
+    padding: 22px 24px;
+    background: linear-gradient(160deg, rgba(37,29,23,0.94) 0%, rgba(34,27,22,0.92) 70%);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line);
+    border-radius: 2px;
+    margin-bottom: 12px;
+    transition: border-color 0.18s ease;
+  }
+  .rule:target, .rule.flash { border-left-color: var(--fire); background: var(--bg-raised); }
+
+  .num {
+    font-family: 'Sancreek', serif;
+    font-weight: 400;
+    font-size: 1.45rem;
+    line-height: 1.2;
+    color: var(--gold-brt);
+    background: none; border: 0; padding: 0;
+    text-align: left; cursor: pointer;
+    transition: color 0.18s ease;
+  }
+  .num:hover { color: var(--fire); }
+  .num small {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7d6e5c;
+    margin-top: 6px;
+  }
+
+  .rule h3 {
+    margin: 0 0 8px;
+    font-size: 1.22rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--cream);
+  }
+  .rule .body { margin: 0; white-space: pre-wrap; color: var(--cream-dim); }
+  .rule .body.clip {
+    display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .more {
+    margin-top: 10px;
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .more:hover { color: var(--gold-brt); }
+
+  .notice { text-align: center; padding: 70px 20px; color: var(--cream-dim); }
+  .notice strong {
+    display: block;
+    font-family: 'Sancreek', serif; font-weight: 400;
+    font-size: 1.5rem; color: var(--cream); margin-bottom: 12px;
+  }
+  .notice.error strong { color: var(--fire); }
+
+  footer { padding: 0 0 70px; color: #7d6e5c; font-size: 0.95rem; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%);
+    background: var(--gold); color: var(--bg-deep);
+    font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.85rem;
+    padding: 10px 22px; border-radius: 6px; box-shadow: var(--shadow);
+    opacity: 0; pointer-events: none; transition: opacity 0.18s ease; z-index: 9998;
+  }
+  #toast.on { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+
+  @media (max-width: 640px) {
+    body { font-size: 18px; }
+    html { scroll-padding-top: 210px; }
+    header { padding: 32px 0 24px; }
+    .rule { grid-template-columns: 1fr; gap: 8px; padding: 18px; }
+    .num small { display: inline; margin-left: 10px; }
+  }
 </style>
 </head>
 <body>
 
-<header class="kopf">
-  <div class="kopf-innen">
-    <a class="zurueck" href="../">← Zur Startseite</a>
+<header>
+  <div class="wrap">
+    <a class="back" href="../">← Zur Startseite</a>
     <h1>Regelwerk</h1>
     <p class="stand" id="stand">Devil&rsquo;s Canyon</p>
   </div>
 </header>
-<div class="naht" aria-hidden="true"></div>
 
-<div class="leiste">
-  <div class="leiste-innen">
-    <div class="suchfeld">
+<hr class="rail">
+
+<div class="bar">
+  <div class="wrap">
+    <div class="field">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
-      <input id="suche" type="search" autocomplete="off" spellcheck="false"
+      <input id="q" type="search" autocomplete="off" spellcheck="false"
              placeholder="Regel suchen – z.&nbsp;B. RDM, Bloodout, Geiselnahme oder 2.9"
              aria-label="Regelwerk durchsuchen">
-      <button id="leeren" type="button" aria-label="Suche leeren">×</button>
+      <button id="clear" type="button" aria-label="Suche leeren">×</button>
     </div>
     <div class="chips" id="chips" role="group" aria-label="Nach Abschnitt filtern"></div>
-    <p class="treffer" id="treffer" role="status" aria-live="polite"></p>
+    <p class="count" id="count" role="status" aria-live="polite"></p>
   </div>
 </div>
 
-<main id="liste"></main>
-<footer class="fuss">
-  Es gilt immer die aktuell sichtbare Fassung. Änderungen werden über eigene Ankündigungen bekanntgegeben.
+<main><div class="wrap" id="list"></div></main>
+
+<footer>
+  <div class="wrap">
+    Es gilt immer die aktuell sichtbare Fassung. Änderungen werden über eigene Ankündigungen bekanntgegeben.
+  </div>
 </footer>
-<div id="kopiert" role="status">Link kopiert</div>
+
+<div id="toast" role="status">Link kopiert</div>
 
 <script>
-(function(){
+(function () {
   "use strict";
 
-  var DATEN = null, filterAbschnitt = "alle";
-  var elListe   = document.getElementById("liste");
-  var elSuche   = document.getElementById("suche");
-  var elLeeren  = document.getElementById("leeren");
-  var elChips   = document.getElementById("chips");
-  var elTreffer = document.getElementById("treffer");
-  var elStand   = document.getElementById("stand");
-  var elKopiert = document.getElementById("kopiert");
+  var DATA = null, sectionFilter = "alle";
+  var elList  = document.getElementById("list");
+  var elQ     = document.getElementById("q");
+  var elClear = document.getElementById("clear");
+  var elChips = document.getElementById("chips");
+  var elCount = document.getElementById("count");
+  var elStand = document.getElementById("stand");
+  var elToast = document.getElementById("toast");
 
-  /* ---------- Deutsche Normalisierung ---------- */
-  function norm(s){
-    return (s||"").toLowerCase()
-      .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
-      .replace(/(\d)\./g,"$1~")        // "2.9" zusammenhalten, sonst wird daraus "2" und "9"
-      .replace(/[^a-z0-9~]+/g," ").trim();
+  /* Deutsche Normalisierung. Ziffernfolgen wie 2.9 bleiben zusammen,
+     sonst würde daraus "2" und "9" und die Nummernsuche geht ins Leere. */
+  function norm(s) {
+    return (s || "").toLowerCase()
+      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+      .replace(/(\d)\./g, "$1~")
+      .replace(/[^a-z0-9~]+/g, " ").trim();
   }
-  function esc(s){
-    return String(s).replace(/[&<>"']/g,function(c){
-      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
 
-  /* ---------- Suche ---------- */
-  function bewerten(regel, tokens){
-    var score = 0;
-    for (var i=0;i<tokens.length;i++){
-      var t = tokens[i], teil = 0;
-      if (regel._nr === t || regel._nr.replace(/\D/g,"") === t.replace(/\D/g,"")) teil += 60;
-      else if (regel._nr.indexOf(t) === 0) teil += 30;
-      if (regel._titel.indexOf(t) !== -1) teil += 18;
-      if (regel._syn.indexOf(" "+t+" ") !== -1) teil += 24;   // ganzes Synonym
-      else if (regel._syn.indexOf(t) !== -1) teil += 12;      // Teil eines Synonyms
-      if (regel._text.indexOf(t) !== -1) teil += 4;
-      if (teil === 0) return 0;          // jedes Wort muss irgendwo vorkommen
-      score += teil;
+  function score(rule, tokens) {
+    var total = 0;
+    for (var i = 0; i < tokens.length; i++) {
+      var t = tokens[i], part = 0;
+      if (rule._nr === t || rule._nr.replace(/\D/g, "") === t.replace(/\D/g, "")) part += 60;
+      else if (rule._nr.indexOf(t) === 0) part += 30;
+      if (rule._title.indexOf(t) !== -1) part += 18;
+      if (rule._syn.indexOf(" " + t + " ") !== -1) part += 24;
+      else if (rule._syn.indexOf(t) !== -1) part += 12;
+      if (rule._text.indexOf(t) !== -1) part += 4;
+      if (part === 0) return 0;               // jedes Wort muss irgendwo vorkommen
+      total += part;
     }
-    return score;
+    return total;
   }
 
-  function markieren(text, tokens){
+  function mark(text, tokens) {
     var out = esc(text);
-    if (!tokens.length) return out;
-    var muster = tokens
-      .filter(function(t){ return t.length > 1; })
-      .map(function(t){ return t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); });
-    if (!muster.length) return out;
-    try{
-      return out.replace(new RegExp("("+muster.join("|")+")","gi"), "<mark>$1</mark>");
-    }catch(e){ return out; }
+    var parts = tokens.filter(function (t) { return t.length > 1; })
+                      .map(function (t) { return t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); });
+    if (!parts.length) return out;
+    try { return out.replace(new RegExp("(" + parts.join("|") + ")", "gi"), "<mark>$1</mark>"); }
+    catch (e) { return out; }
   }
 
-  /* ---------- Darstellung ---------- */
-  function zeichnen(){
-    var frage  = elSuche.value.trim();
-    var tokens = norm(frage).split(" ").filter(Boolean);
-    elLeeren.style.display = frage ? "block" : "none";
+  function render() {
+    var query  = elQ.value.trim();
+    var tokens = norm(query).split(" ").filter(Boolean);
+    elClear.style.display = query ? "block" : "none";
 
-    var liste = DATEN.regeln.filter(function(r){
-      return filterAbschnitt === "alle" || r.abschnittNr === filterAbschnitt;
+    var rules = DATA.regeln.filter(function (r) {
+      return sectionFilter === "alle" || r.abschnittNr === sectionFilter;
     });
 
-    if (tokens.length){
-      liste = liste.map(function(r){ return {r:r, s:bewerten(r,tokens)}; })
-                   .filter(function(x){ return x.s > 0; })
-                   .sort(function(a,b){ return b.s - a.s; })
-                   .map(function(x){ return x.r; });
+    if (tokens.length) {
+      rules = rules.map(function (r) { return { r: r, s: score(r, tokens) }; })
+                   .filter(function (x) { return x.s > 0; })
+                   .sort(function (a, b) { return b.s - a.s; })
+                   .map(function (x) { return x.r; });
     }
 
-    if (!liste.length){
-      elTreffer.textContent = "Keine Treffer";
-      elListe.innerHTML =
-        '<div class="hinweis"><strong>Nichts gefunden</strong>' +
-        'Versuch es mit einem anderen Begriff, einer Abkürzung wie RDM oder NLR, ' +
-        'oder gib die Nummer direkt ein – zum Beispiel 2.9.</div>';
+    if (!rules.length) {
+      elCount.textContent = "Keine Treffer";
+      elList.innerHTML =
+        '<div class="notice"><strong>Nichts gefunden</strong>' +
+        "Versuch einen anderen Begriff, eine Abkürzung wie RDM oder NLR, " +
+        "oder gib die Nummer direkt ein – zum Beispiel 2.9." +
+        "</div>";
       return;
     }
 
-    elTreffer.textContent = liste.length === 1
-      ? "1 Regel" : liste.length + " Regeln";
+    elCount.textContent = rules.length === 1 ? "1 Regel" : rules.length + " Regeln";
 
-    var html = "", letzterAbschnitt = null;
-    var gruppieren = !tokens.length;   // bei Suche nach Relevanz, sonst nach Abschnitt
+    var html = "", lastSection = null, group = !tokens.length;
 
-    liste.forEach(function(r){
-      if (gruppieren && r.abschnitt !== letzterAbschnitt){
-        html += '<h2 class="abschnitt-kopf">' + esc(r.abschnitt) + "</h2>";
-        letzterAbschnitt = r.abschnitt;
+    rules.forEach(function (r) {
+      if (group && r.abschnitt !== lastSection) {
+        html += '<h2 class="section-head">' + esc(r.abschnitt) + "</h2>";
+        lastSection = r.abschnitt;
       }
-      var lang = r.text.length > 480;
+      var long = r.text.length > 480;
       html +=
-        '<article class="regel" id="' + esc(r.id) + '">' +
-          '<button class="nr" type="button" data-id="' + esc(r.id) + '" ' +
+        '<article class="rule" id="' + esc(r.id) + '">' +
+          '<button class="num" type="button" data-id="' + esc(r.id) + '" ' +
                   'title="Link zu dieser Regel kopieren">§' + esc(r.nr) +
-            "<small>" + esc(r.abschnittNr) + ".0 &nbsp;·&nbsp; Link</small>" +
+            "<small>" + esc(r.abschnittNr) + ".0 · Link</small>" +
           "</button>" +
           "<div>" +
-            "<h3>" + markieren(r.titel, tokens) + "</h3>" +
-            '<p class="text' + (lang ? " gekuerzt" : "") + '">' +
-              markieren(r.text, tokens) + "</p>" +
-            (lang ? '<button class="mehr" type="button">Ganzen Text anzeigen</button>' : "") +
+            "<h3>" + mark(r.titel, tokens) + "</h3>" +
+            '<p class="body' + (long ? " clip" : "") + '">' + mark(r.text, tokens) + "</p>" +
+            (long ? '<button class="more" type="button">Ganzen Text anzeigen</button>' : "") +
           "</div>" +
         "</article>";
     });
 
-    elListe.innerHTML = html;
+    elList.innerHTML = html;
   }
 
-  /* ---------- Ereignisse ---------- */
-  elListe.addEventListener("click", function(e){
-    var mehr = e.target.closest(".mehr");
-    if (mehr){
-      var p = mehr.previousElementSibling;
-      var zu = p.classList.toggle("gekuerzt");
-      mehr.textContent = zu ? "Ganzen Text anzeigen" : "Text einklappen";
+  elList.addEventListener("click", function (e) {
+    var more = e.target.closest(".more");
+    if (more) {
+      var p = more.previousElementSibling;
+      var clipped = p.classList.toggle("clip");
+      more.textContent = clipped ? "Ganzen Text anzeigen" : "Text einklappen";
       return;
     }
-    var nr = e.target.closest(".nr");
-    if (nr){
-      var url = location.origin + location.pathname + "#" + nr.dataset.id;
-      history.replaceState(null, "", "#" + nr.dataset.id);
-      var melden = function(){
-        elKopiert.classList.add("an");
-        setTimeout(function(){ elKopiert.classList.remove("an"); }, 1600);
+    var num = e.target.closest(".num");
+    if (num) {
+      var url = location.origin + location.pathname + "#" + num.dataset.id;
+      history.replaceState(null, "", "#" + num.dataset.id);
+      var show = function () {
+        elToast.classList.add("on");
+        setTimeout(function () { elToast.classList.remove("on"); }, 1600);
       };
-      if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(url).then(melden, melden);
-      } else { melden(); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(show, show);
+      } else { show(); }
     }
   });
 
-  elSuche.addEventListener("input", zeichnen);
-  elLeeren.addEventListener("click", function(){
-    elSuche.value = ""; zeichnen(); elSuche.focus();
+  elQ.addEventListener("input", render);
+  elClear.addEventListener("click", function () { elQ.value = ""; render(); elQ.focus(); });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== elQ) {
+      e.preventDefault(); elQ.focus(); elQ.select();
+    }
+    if (e.key === "Escape" && document.activeElement === elQ) { elQ.value = ""; render(); }
   });
 
-  document.addEventListener("keydown", function(e){
-    if (e.key === "/" && document.activeElement !== elSuche){
-      e.preventDefault(); elSuche.focus(); elSuche.select();
-    }
-    if (e.key === "Escape" && document.activeElement === elSuche){
-      elSuche.value = ""; zeichnen();
-    }
-  });
-
-  function chipsBauen(){
-    var alle = [{nr:"alle", titel:"Alle"}].concat(DATEN.abschnitte);
-    elChips.innerHTML = alle.map(function(a){
+  function buildChips() {
+    var all = [{ nr: "alle", titel: "Alle" }].concat(DATA.abschnitte);
+    elChips.innerHTML = all.map(function (a) {
       return '<button class="chip" type="button" data-nr="' + esc(a.nr) + '" ' +
              'aria-pressed="' + (a.nr === "alle") + '">' + esc(a.titel) + "</button>";
     }).join("");
-    elChips.addEventListener("click", function(e){
+    elChips.addEventListener("click", function (e) {
       var c = e.target.closest(".chip");
       if (!c) return;
-      filterAbschnitt = c.dataset.nr;
-      Array.prototype.forEach.call(elChips.children, function(x){
+      sectionFilter = c.dataset.nr;
+      Array.prototype.forEach.call(elChips.children, function (x) {
         x.setAttribute("aria-pressed", x === c);
       });
-      zeichnen();
-      window.scrollTo({top:0, behavior:"smooth"});
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
-  function ankerAnspringen(){
+  function jumpToHash() {
     var id = location.hash.slice(1);
     if (!id) return;
     var el = document.getElementById(id);
     if (!el) return;
-    el.classList.add("hervor");
-    el.scrollIntoView({block:"start"});
+    el.classList.add("flash");
+    el.scrollIntoView({ block: "start" });
   }
 
-  /* ---------- Start ---------- */
-  fetch("regeln.json", {cache:"no-cache"})
-    .then(function(r){
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      return r.json();
-    })
-    .then(function(d){
-      DATEN = d;
-      DATEN.regeln.forEach(function(r){
+  fetch("regeln.json", { cache: "no-cache" })
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function (d) {
+      DATA = d;
+      DATA.regeln.forEach(function (r) {
         r._nr    = norm(r.nr);
-        r._titel = norm(r.titel);
+        r._title = norm(r.titel);
         r._text  = norm(r.text);
         r._syn   = " " + (r.syn || []).map(norm).join(" ") + " ";
       });
-      elStand.textContent = "Stand: " + (DATEN.stand || "–") + " · " +
-                            DATEN.regeln.length + " Paragraphen";
-      chipsBauen();
-      zeichnen();
-      setTimeout(ankerAnspringen, 60);
+      elStand.textContent = "Stand " + (DATA.stand || "–") + " · " + DATA.regeln.length + " Paragraphen";
+      buildChips();
+      render();
+      setTimeout(jumpToHash, 60);
     })
-    .catch(function(err){
-      elListe.innerHTML =
-        '<div class="hinweis fehler"><strong>Regelwerk lässt sich nicht laden</strong>' +
+    .catch(function (err) {
+      elList.innerHTML =
+        '<div class="notice error"><strong>Regelwerk lässt sich nicht laden</strong>' +
         "Die Datei regeln.json wurde nicht gefunden. Sie muss im selben Ordner liegen wie diese Seite. " +
-        "Beim lokalen Testen ohne Webserver blockiert der Browser das Laden – dann über die Website öffnen." +
+        "Beim Testen ohne Webserver blockiert der Browser das Laden – dann über die Website öffnen." +
         "</div>";
-      elTreffer.textContent = "";
+      elCount.textContent = "";
       console.error(err);
     });
 
-  window.addEventListener("hashchange", ankerAnspringen);
+  window.addEventListener("hashchange", jumpToHash);
 })();
 </script>
 </body>

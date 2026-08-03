@@ -69,6 +69,22 @@
     box-shadow: var(--shadow);
   }
 
+  #site-nav {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 12px;
+  }
+  #site-nav a {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  #site-nav a:hover { color: var(--gold-bright); }
+
   #brand {
     padding: 26px 20px 18px;
     border-bottom: 2px solid var(--fire-deep);
@@ -405,6 +421,10 @@
   <div id="brand">
     <h1>Devil's Canyon</h1>
     <p>Interaktive Server-Karte</p>
+    <nav id="site-nav">
+      <a href="../">Startseite</a>
+      <a href="../regeln/">Regelwerk</a>
+    </nav>
   </div>
 
   <div id="search-wrap">
