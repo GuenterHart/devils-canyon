@@ -1,0 +1,767 @@
+{
+ "stand": "03.08.2026",
+ "abschnitte": [
+  {
+   "nr": "1",
+   "titel": "1.0 Allgemeine Serverregeln"
+  },
+  {
+   "nr": "2",
+   "titel": "2.0 Ingame- & RP-Grundregeln"
+  },
+  {
+   "nr": "3",
+   "titel": "3.0 Raub & Überfälle"
+  },
+  {
+   "nr": "4",
+   "titel": "4.0 New Life Regel"
+  },
+  {
+   "nr": "5",
+   "titel": "5.0 Support & Ticket-System"
+  },
+  {
+   "nr": "6",
+   "titel": "6.0 Unternehmen"
+  }
+ ],
+ "regeln": [
+  {
+   "id": "1-1",
+   "nr": "1",
+   "titel": "Grundvoraussetzungen",
+   "abschnitt": "1.0 Allgemeine Serverregeln",
+   "abschnittNr": "1",
+   "text": "Du bist mindestens 18 Jahre alt – dein Charakter ebenfalls.\nDu besitzt ein funktionsfähiges Mikrofon ohne störende Hintergrundgeräusche.\nDu hast die Whitelist erfolgreich bestanden.\nÄnderungen am Regelwerk können jederzeit erfolgen – du bist verpflichtet, dich selbst zu informieren.\nDie ersten vier Wochen gelten als Probezeit.",
+   "syn": []
+  },
+  {
+   "id": "1-2",
+   "nr": "2",
+   "titel": "Verhalten & Respekt",
+   "abschnitt": "1.0 Allgemeine Serverregeln",
+   "abschnittNr": "1",
+   "text": "Ein respektvoller Umgang ist Pflicht. Beleidigungen, Diskriminierungen oder absichtliche Provokationen im OOC sind verboten.\nIC-Beleidigungen sind nur gegen den Charakter gerichtet. Persönliche Angriffe oder entgleisendes RP werden sanktioniert.\nSchwarzer Humor mit Bezug auf Kinder oder reale Tragödien ist strengstens untersagt.\nDas Ausspielen von Behinderungen, schweren Krankheiten, Schwangerschaften oder sexuellen Handlungen ist verboten.\nSexuelle Belästigung oder entsprechende Anspielungen führen zum sofortigen Ausschluss.\nRegelbrüche sind per Ticket oder über den Support zu melden.\nRP-Niederlagen sind Teil des Spiels und fair zu akzeptieren.",
+   "syn": []
+  },
+  {
+   "id": "1-3",
+   "nr": "3",
+   "titel": "Kommunikation & Sprache",
+   "abschnitt": "1.0 Allgemeine Serverregeln",
+   "abschnittNr": "1",
+   "text": "Die Serversprache ist Deutsch.\nAkzente oder einzelne fremde Wörter sind erlaubt, ganze Fremdsprachen nicht.\nVoice-Changer, Zweitstimmen oder extern abgespielte Musik sind verboten.\nErlaubt sind nur zeitgemäße Instrumente passend zum Jahr 1899.\nAchte auf eine angemessene Lautstärke und Verständlichkeit.",
+   "syn": [
+    "sprache",
+    "voicechanger",
+    "voice changer",
+    "musik",
+    "fremdsprache"
+   ]
+  },
+  {
+   "id": "1-4",
+   "nr": "4",
+   "titel": "Roleplay-Regeln",
+   "abschnitt": "1.0 Allgemeine Serverregeln",
+   "abschnittNr": "1",
+   "text": "IC/OOC-Vermischung ist untersagt.\nInhalte aus laufenden RP-Situationen dürfen erst mit zeitlichem Abstand veröffentlicht oder weitergegeben werden.\nDas Ausnutzen von Grauzonen ist verboten.\nDas Decken von Regelbrechern wird bestraft.",
+   "syn": []
+  },
+  {
+   "id": "1-5",
+   "nr": "5",
+   "titel": "Cheating & Exploits",
+   "abschnitt": "1.0 Allgemeine Serverregeln",
+   "abschnittNr": "1",
+   "text": "Cheats, Hacks, Makros, Exploits oder sonstige Manipulationen führen zum permanenten Bann.\n\nBugs sind unverzüglich per Ticket zu melden.\n\nWer Cheater deckt, unterstützt oder von solchen Verstößen bewusst profitiert, macht sich mitschuldig.\n\nBitte bedenkt dabei besonders:\nWir sehen, wenn Goldschürfen per Makro genutzt wird. Solche Abläufe sind nicht normal und fallen auf.\n\nZusätzlich schadet dieses Verhalten nicht nur der Wirtschaft auf dem Server, sondern auch dem RP für andere Spieler. Wenn euer Charakter stundenlang im Spiel steht und automatisch farmt, während ihr in Wirklichkeit arbeitet, einkaufen oder essen seid, leidet darunter das gemeinsame Spielerlebnis. Es kommt zu Situationen, in denen nicht gesprochen wird, Aktionen vermieden werden oder kein vernünftiges RP zustande kommt.\n\nWir wollen an dieser Stelle bewusst nicht weiter gehen als nötig. Trotzdem möchten wir klar ansprechen und euch bitten, solche Makros ab sofort zu unterlassen.\n\nEs gibt bei uns viele Möglichkeiten, auf faire Weise an Geld zu kommen. Bitte nutzt diese Wege und nicht unerlaubte Hilfsmittel.",
+   "syn": [
+    "cheat",
+    "cheater",
+    "hack",
+    "exploit",
+    "makro",
+    "bann"
+   ]
+  },
+  {
+   "id": "1-6",
+   "nr": "6",
+   "titel": "Account & Handel",
+   "abschnitt": "1.0 Allgemeine Serverregeln",
+   "abschnittNr": "1",
+   "text": "Account-Sharing, Multiaccounts und Echtgeldhandel sind verboten.\nJeder ist für seinen eigenen Account selbst verantwortlich.",
+   "syn": [
+    "accountsharing",
+    "account sharing",
+    "multiaccount",
+    "echtgeld",
+    "realmoney"
+   ]
+  },
+  {
+   "id": "1-7",
+   "nr": "7",
+   "titel": "Aufnahmen & Streaming",
+   "abschnitt": "1.0 Allgemeine Serverregeln",
+   "abschnittNr": "1",
+   "text": "Mit dem Spielen auf Devil’s Canyon stimmst du zu, in Streams oder Aufnahmen zu erscheinen.\nSchädigende Aufnahmen können entfernt oder rechtlich verfolgt werden.\nSupport-Gespräche dürfen nicht aufgenommen werden.\nRP-Situationen sollen aufgezeichnet werden.\nAufnahmen dürfen nicht IC genutzt werden.\nDas Team kann Clips zur Klärung anfordern.",
+   "syn": [
+    "stream",
+    "streaming",
+    "aufnahme",
+    "clip",
+    "youtube",
+    "twitch"
+   ]
+  },
+  {
+   "id": "1-8",
+   "nr": "8",
+   "titel": "Datenschutz",
+   "abschnitt": "1.0 Allgemeine Serverregeln",
+   "abschnittNr": "1",
+   "text": "Gespeichert werden unter anderem IP-Adresse, Discord-ID, SteamID und Spielaktivität.\nBei schweren Verstößen können Daten projektübergreifend geteilt werden.",
+   "syn": [
+    "datenschutz",
+    "dsgvo",
+    "daten"
+   ]
+  },
+  {
+   "id": "2-1",
+   "nr": "2.1",
+   "titel": "Allgemeines",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Charaktername & Darstellung\nDer Charaktername muss zeitlich zur Epoche um 1899 passen.\n\nVerboten sind:\nTrollnamen\nmoderne Namen\nWortspiele\nNamen von realen Personen, Film- oder Serienfiguren\n\nDer gewählte Charaktername muss einheitlich verwendet werden und mit den folgenden Plattformen übereinstimmen:\nRedM (Ingame-Name)\nTeamSpeak\nDiscord\n\nAbweichende oder absichtlich unterschiedliche Namen gelten als Täuschung und sind untersagt.\n\nBegründung: Der Name ist Teil der Immersion und beeinflusst das RP-Erlebnis aller.\n\nÜbernatürliche Charaktere\nDas Ausspielen übernatürlicher Rollen, z. B. Hexen, Dämonen oder Magier, ist grundsätzlich verboten.\n\nAusnahmen sind nur nach ausdrücklicher Genehmigung durch den Support erlaubt.\n\nBegründung: Devil´s Canyon ist ein realistisches Western-RP. Übernatürliche Elemente müssen streng kontrolliert bleiben.\n\nNutzung der Spielwelt\nMöbel dürfen nicht als Schutzwände oder taktische Deckung missbraucht werden.\nDas absichtliche Blockieren von Wegen, Türen oder Zugängen ist verboten.\nDas Einschließen anderer Spieler ist untersagt.\n\nAusnahme: Exekutive Organe im Rahmen eines legitimen RP-Einsatzes.\n\nSklaverei & Zwang\nSklaverei-RP ist vollständig verboten.\nJegliche Darstellung von Besitz, Zwang oder dauerhafter Kontrolle über andere Charaktere ist untersagt.\n\nSafezones\nEs existieren keine Safezones. RP kann grundsätzlich überall stattfinden, sofern es regelkonform ausgespielt wird.\n\nArztpraxen & medizinische Einrichtungen\nIn Arztpraxen und medizinischen Einrichtungen sind aggressive Handlungen untersagt. Diese Orte dienen der Versorgung, nicht der Eskalation.\n\nInstrumente & Ausrüstung\nInstrumente dürfen nicht während Schießereien oder aggressiven Situationen getragen oder genutzt werden.\nRüstungen oder schützende Ausrüstung müssen sichtbar angelegt sein.",
+   "syn": []
+  },
+  {
+   "id": "2-2",
+   "nr": "2.2",
+   "titel": "Ped-Charaktere (Tier-Charaktere)",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Siehe separates Dokument „§2.2 Ped-Charaktere – Ausführliche Regelung“.\n\nDieser Paragraph ist ausgelagert, da Tier-RP besonderen Regeln unterliegt.",
+   "syn": [
+    "ped",
+    "tier charakter",
+    "tierchar",
+    "wolf",
+    "hund"
+   ]
+  },
+  {
+   "id": "2-3",
+   "nr": "2.3",
+   "titel": "Immobilien",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Pro Account sind maximal drei Häuser erlaubt, inklusive Fraktions- und Unternehmenshäuser.\nBei Inaktivität von mehr als 14 Tagen kann ein Haus gepfändet und neu vergeben werden.",
+   "syn": []
+  },
+  {
+   "id": "2-4",
+   "nr": "2.4",
+   "titel": "Verhalten im RP",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Sprache & Ausdruck\nModerne Umgangssprache wie „Alter“, „Digga“, „Bro“ usw. ist zu vermeiden.\n\nDie Sprache soll zum historischen Setting passen.\n\nAusführliche Regel- & Erklärungsversion\n\nZweck dieser Regel\nPed-Charaktere (Tier-Charaktere) sind ein RP-Feature zur Atmosphäre, nicht zur Vorteilsbeschaffung. Diese Regel stellt sicher, dass Tier-RP realistisch, fair und konfliktfrei bleibt und nicht für Meta, Störungen oder Eskalationen missbraucht wird.",
+   "syn": []
+  },
+  {
+   "id": "2-2-1",
+   "nr": "2.2.1",
+   "titel": "Bewerbung & Genehmigung",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Die Nutzung eines Ped-Charakters ist nicht automatisch erlaubt.\n\nJeder Spieler, der einen Tier-Charakter spielen möchte, muss:\neine Bewerbung einreichen\ndie ausdrückliche Zustimmung der Administration erhalten\n\nDie Administration entscheidet nach RP-Eignung, Aktivität und Zuverlässigkeit. Ein Anspruch auf Genehmigung besteht nicht.\n\nBegründung: Tier-Charaktere wirken stark auf das RP-Umfeld. Eine ungeregelte Nutzung würde schnell zu Missbrauch oder Störungen führen.",
+   "syn": []
+  },
+  {
+   "id": "2-2-2",
+   "nr": "2.2.2",
+   "titel": "Charakterbindung & Multichar-Verbot",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Ein genehmigter Ped-Charakter:\ndarf ausschließlich als einzelner Charakter gespielt werden\nersetzt einen regulären Charakter vollständig\nMulticharaktere sind verboten, auch zeitversetzt\n\nEin Wechsel zwischen Ped-Charakter und menschlichem Charakter ist nicht erlaubt, solange die Genehmigung aktiv ist.\n\nBegründung: Ein Tier-Charakter darf nicht als „Nebenrolle“ oder situativer Vorteil genutzt werden.",
+   "syn": []
+  },
+  {
+   "id": "2-2-3",
+   "nr": "2.2.3",
+   "titel": "RP-Einordnung als Tier",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Ped-Charaktere gelten vollumfänglich als Tiere.\n\nDas bedeutet insbesondere:\nkein menschliches Denken oder Planen\nkein taktisches Verhalten\nkein bewusstes Eingreifen in bewaffnete oder komplexe RP-Situationen\n\nPed-Charaktere haben sich scheu oder instinktiv zu verhalten, vor allem bei:\nSchüssen\nExplosionen\nlauten Auseinandersetzungen\naggressivem Verhalten anderer Spieler\n\nUnzulässig sind u. a.:\ngezieltes Positionieren für Vorteile\nAusspähen von Situationen\nbewusstes Auslösen oder Lenken von Eskalationen",
+   "syn": []
+  },
+  {
+   "id": "2-2-4",
+   "nr": "2.2.4",
+   "titel": "Kommunikation & Geräusche",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Ped-Charaktere dürfen nicht sprechen.\n\nVerboten ist:\njegliche verbale Kommunikation über Voice-Chat\nmenschliche Laute, Wörter oder Sätze\n\nErlaubt sind ausschließlich:\nnatürliche Tierlaute, z. B. Bellen, sofern serverseitig vorgesehen\nzusätzliche Sounds nur nach vorheriger Absprache mit der Administration\n\nDer Einsatz von Soundboards, Voice-Effekten oder externen Tiergeräuschen ist ohne Genehmigung untersagt.\n\nBegründung: Kommunikation ist einer der größten Meta-Hebel. Diese Regel verhindert Informationsmissbrauch.",
+   "syn": []
+  },
+  {
+   "id": "2-2-5",
+   "nr": "2.2.5",
+   "titel": "RP-Fairness & Einflussnahme",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Ped-Charaktere dürfen keinen unfairen Einfluss auf RP-Situationen nehmen.\n\nInsbesondere verboten sind:\nabsichtliches Blockieren von Spielern oder Wegen\ngezieltes Provozieren von Reaktionen\ndas Nutzen der Tierform zur Informationsbeschaffung (Meta)\n\nDer Fokus eines Ped-Charakters liegt auf:\nAtmosphäre\nunterstützendem Hintergrund-RP\nglaubwürdigem Tierverhalten\n\nNicht auf:\nKontrolle\nStörung\nEskalation",
+   "syn": []
+  },
+  {
+   "id": "2-2-6",
+   "nr": "2.2.6",
+   "titel": "Sanktionen",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Bei Verstößen gegen diese Regelung kann:\ndie Genehmigung sofort widerrufen werden\nder Ped-Charakter dauerhaft entzogen werden\nzusätzlich eine Sanktion gemäß Regelwerk erfolgen\n\nDie Administration behält sich vor, Tier-RP jederzeit zu überprüfen.",
+   "syn": []
+  },
+  {
+   "id": "2-5",
+   "nr": "2.5",
+   "titel": "Das Leben deines Charakters",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Das Leben deines Charakters ist das höchste Gut.\nSinnlose Selbstgefährdung ist verboten.\nDein Charakter soll nachvollziehbar handeln und sein Leben nicht leichtfertig aufs Spiel setzen.",
+   "syn": []
+  },
+  {
+   "id": "2-6",
+   "nr": "2.6",
+   "titel": "Meta",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "OOC-Informationen dürfen nicht IC genutzt werden.\n\nDazu zählen unter anderem:\nDiscord-Informationen\nStreams oder Aufnahmen\nGespräche außerhalb des Spiels\nWissen aus Tickets, Support oder anderen Charakteren",
+   "syn": [
+    "meta",
+    "metagaming",
+    "streamsniping",
+    "stream sniping",
+    "discord wissen"
+   ]
+  },
+  {
+   "id": "2-7",
+   "nr": "2.7",
+   "titel": "VDM / HDM",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "VDM und HDM sind verboten.\n\nSpieler oder Tiere dürfen nicht grundlos oder ohne RP-Kontext mit Pferden, Kutschen oder anderen Mitteln angefahren, überritten oder verletzt werden.",
+   "syn": [
+    "vdm",
+    "hdm",
+    "vehicle deathmatch",
+    "pferd rammen",
+    "kutsche rammen"
+   ]
+  },
+  {
+   "id": "2-8",
+   "nr": "2.8",
+   "titel": "RDM",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "RDM ist verboten.\n\nGewalt oder Tötungen ohne nachvollziehbaren RP-Grund sind nicht erlaubt.",
+   "syn": [
+    "rdm",
+    "random deathmatch",
+    "grundlos töten"
+   ]
+  },
+  {
+   "id": "2-9",
+   "nr": "2.9",
+   "titel": "Power-RP",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Erzwungene Handlungen sind verboten.\n\nAndere Spieler müssen eine realistische Möglichkeit zur Reaktion haben.\n\nZusätzlich gilt:\ngefesselte Spieler dürfen nicht grundlos getötet werden\nRP darf nicht so ausgespielt werden, dass die Gegenseite keine faire Handlungsmöglichkeit mehr hat",
+   "syn": [
+    "power rp",
+    "powerrp",
+    "powergaming",
+    "power gaming"
+   ]
+  },
+  {
+   "id": "2-10",
+   "nr": "2.10",
+   "titel": "Fail-RP",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Unrealistisches Verhalten ist verboten.\n\nDazu zählt Verhalten, das nicht zur Situation, zur Epoche, zum Charakter oder zum Zustand des Charakters passt.",
+   "syn": [
+    "fail rp",
+    "failrp",
+    "unrealistisch"
+   ]
+  },
+  {
+   "id": "2-11",
+   "nr": "2.11",
+   "titel": "RP-Flucht",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "RP-Flucht ist verboten.\n\nDazu zählt unter anderem:\nAusloggen während laufender RP-Situationen\nFlucht in Menüs, Systeme oder Mechaniken\nabsichtliches Vermeiden von Konsequenzen\ndas Verlassen einer Situation ohne RP-Grund",
+   "syn": [
+    "rp flucht",
+    "combat log",
+    "combatlog",
+    "disconnect",
+    "alt f4"
+   ]
+  },
+  {
+   "id": "2-12",
+   "nr": "2.12",
+   "titel": "AFK",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Wer länger als 10 Minuten AFK ist, hat sich auszuloggen.\n\nAFK-Farmen oder das Umgehen dieser Regel ist verboten.",
+   "syn": [
+    "afk",
+    "abwesend",
+    "makro",
+    "afk farmen"
+   ]
+  },
+  {
+   "id": "2-13",
+   "nr": "2.13",
+   "titel": "Baiting / Trolling",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Baiting und Trolling sind verboten.\n\nDas absichtliche Provozieren anderer Spieler ohne sinnvollen RP-Hintergrund wird sanktioniert.",
+   "syn": [
+    "baiting",
+    "trolling",
+    "trollen",
+    "provokation"
+   ]
+  },
+  {
+   "id": "2-14",
+   "nr": "2.14",
+   "titel": "Gruppengröße & Handlungen",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Für aktive Konflikt- oder Handlungssituationen gelten folgende Maximalgrößen:\n\nZivil: maximal 5 Personen\nStaat / Bad-Fraktionen: maximal 10 Personen\n\nAbweichungen oder größere Szenarien müssen über das Team abgesprochen werden.",
+   "syn": []
+  },
+  {
+   "id": "2-15",
+   "nr": "2.15",
+   "titel": "Blacklist-Wörter",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "OOC-Begriffe und moderne Begriffe sind im RP zu vermeiden.\n\nDazu zählen insbesondere Wörter und Formulierungen, die klar nicht in das Jahr 1899 oder das Western-Setting passen.",
+   "syn": []
+  },
+  {
+   "id": "2-16",
+   "nr": "2.16",
+   "titel": "Trennung von staatlichen, medizinischen und kriminellen Rollen",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Zweck dieser Regel\nDiese Regel schützt die Glaubwürdigkeit staatlicher und medizinischer Rollen und verhindert Vorteilsnutzung durch Zweitcharaktere, interne Informationen oder Rollenvermischung.\n\nStaatliche Rollen\nSheriffs dürfen keine aktiven kriminellen Handlungen begehen oder bewusst unterstützen.\n\nDazu zählen unter anderem:\nBeteiligung an Raub, Überfällen oder illegalen Geschäften\nbewusste Unterstützung krimineller Gruppen\nWeitergabe vertraulicher Informationen\nMissbrauch von Dienstwissen oder Dienstmitteln\n\nMedizinische Rollen\nMedics und Ärzte zählen nicht als staatliche Behörde, arbeiten jedoch unter medizinischer Lizenz und öffentlichem Vertrauen.\n\nSie dürfen keine aktiven kriminellen Handlungen begehen oder bewusst unterstützen.\n\nSchwere Straftaten, Korruption oder die Nutzung der medizinischen Stellung für illegale Zwecke können zum Entzug der Approbation und zum Ausschluss aus dem Dienst führen.\n\nZweitcharaktere\nDer Zweitcharakter darf grundsätzlich keiner kriminellen Vereinigung angehören, wenn der Hauptcharakter in einer staatlichen Fraktion oder im medizinischen Dienst tätig ist.\n\nAusnahmen\nAusnahmen können durch die Serverleitung genehmigt werden, z. B. für Story-RP, sofern keine Informationsweitergabe oder Vorteilsausnutzung erfolgt.\n\nGenehmigte Ausnahmen müssen klar getrennt ausgespielt werden.",
+   "syn": []
+  },
+  {
+   "id": "2-17",
+   "nr": "2.17",
+   "titel": "Schnellreise",
+   "abschnitt": "2.0 Ingame- & RP-Grundregeln",
+   "abschnittNr": "2",
+   "text": "Die Schnellreise dient ausschließlich der normalen Reise zwischen Orten und darf nicht genutzt werden, um sich aus laufenden RP-Situationen, Konflikten oder Konsequenzen zu entziehen.\n\nVerbotene Nutzung\nEs ist verboten, die Schnellreise zu nutzen, wenn man sich aktuell in einer aktiven RP-Situation befindet, verfolgt wird, bedroht wird, gesucht wird oder kurz zuvor an einer Auseinandersetzung beteiligt war.\n\nDazu zählen unter anderem:\nFlucht vor Sheriffs, Medics, Spielern oder Fraktionen\nEntkommen nach Straftaten oder Überfällen\nVerlassen eines laufenden Konflikts\nAusweichen vor Festnahme, Kontrolle oder RP-Konsequenzen\nNutzung direkt nach Schüssen, Kämpfen, Raub, Diebstahl oder ähnlichen Situationen\n\nWartezeit\nNach solchen Situationen darf die Schnellreise für 30 Minuten nicht genutzt werden.\n\nVerantwortung\nWer eine Schnellreise nutzt, muss sicherstellen, dass keine aktive RP-Situation mehr besteht und dadurch niemandem RP genommen wird.\n\nEin Missbrauch der Schnellreise kann je nach Situation als RP-Flucht gewertet und entsprechend sanktioniert werden.",
+   "syn": [
+    "schnellreise",
+    "fasttravel",
+    "fast travel",
+    "kutschreise"
+   ]
+  },
+  {
+   "id": "3-1",
+   "nr": "3.1",
+   "titel": "Grundprinzip: RP vor Profit",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Ein Raub oder Überfall darf niemals ausschließlich zur Bereicherung dienen.\n\nEin gültiger Überfall:\nhat einen klaren RP-Hintergrund\nbaut Spannung und Dialog auf\nendet nicht zwangsläufig mit maximalem Gewinn\n\nUnzulässig sind:\n„Ich zieh dich ab, weil du da bist“\nwortlose Überfälle ohne Aufbau\nwiederholtes Ausrauben ohne erkennbare Geschichte\n\nMerksatz: Wer raubt, um zu gewinnen, spielt kein RP.",
+   "syn": []
+  },
+  {
+   "id": "3-2",
+   "nr": "3.2",
+   "titel": "Erlaubte und verbotene Beute",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Verboten zu entwenden sind:\nPferde\nKutschen samt Inhalt\nZugschlüssel\nKontostände\nKleidung\nkomplette Ausrüstung\n\nAusnahme: Staatsfraktionen dürfen im RP Kutschen durchsuchen.\n\n50-Prozent-Regel\nEin Opfer darf maximal 50 % seines Bargeldes oder Inventars verlieren.\n\nBesitzt ein Spieler nur eine Waffe, darf diese eine entwendet werden.\n\nNicht als Waffen zählen:\nMesser\nLasso\nLaterne\nAngel\nFernglas\n\nBeispiel:\nInventar: 2 Schusswaffen, 1 Messer, 50 Holz, 3 Wasser, 300 $\n\nErlaubt wäre z. B.:\n1 Waffe\noder 150 $\noder 25 Holz + 1 Wasser\n\nNicht erlaubt: alles.",
+   "syn": []
+  },
+  {
+   "id": "3-3",
+   "nr": "3.3",
+   "titel": "Verhalten während eines Raubes",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Während eines aktiven Raubes ist streng verboten:\nInventar auszulagern\nItems in Satteltaschen oder Kutschen zu verschieben\nabsichtlich Zeit zu schinden, um Verlust zu vermeiden\n\nEbenso verboten ist es, Opfer nach dem Raub zu töten.\n\nGrundsatz: Raub + Tod bringt keinen RP-Mehrwert.",
+   "syn": []
+  },
+  {
+   "id": "3-4",
+   "nr": "3.4",
+   "titel": "Überfälle auf Staatsfraktionen",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Überfälle auf Sheriffs, US-Army oder andere staatliche Akteure sind nur mit triftigem RP-Grund erlaubt.\n\nNicht ausreichend sind:\nMaskenaufforderungen\nreine Provokation\n„weil sie da waren“\n\nWährend des aktiven Dienstes:\ndürfen Waffen nicht entwendet werden\ndürfen Dienstmarken nicht angelegt oder missbraucht werden",
+   "syn": []
+  },
+  {
+   "id": "3-5",
+   "nr": "3.5",
+   "titel": "Geiselnahmen",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Maximal 5 Geiseln pro Situation\nGeiseln dürfen nicht grundlos misshandelt werden\nGeiseln sind kein Druckmittel ohne RP-Tiefe\n\nEine Geiselnahme dient:\nVerhandlungen\nEskalationsvermeidung\nSpannung\n\nNicht:\nschnellen Forderungen\nsofortiger Gewalt",
+   "syn": [
+    "geiselnahme",
+    "geisel",
+    "hostage"
+   ]
+  },
+  {
+   "id": "3-6",
+   "nr": "3.6",
+   "titel": "Banküberfälle",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Bei Banküberfällen gilt:\nSheriffs und US-Army dürfen gemeinsam agieren\nWird die Identität der Täter bekannt, darf der Staat bis zur nächsten Wende mit direkter Strafverfolgung beginnen\n\nBanküberfälle sind Groß-RP, selten und intensiv und entsprechend auszuspielen.",
+   "syn": [
+    "banküberfall",
+    "bank",
+    "bankraub"
+   ]
+  },
+  {
+   "id": "3-7",
+   "nr": "3.7",
+   "titel": "Schussankündigungen",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Eine Schussankündigung ist nur gültig, wenn:\ndie Waffe sichtbar auf das Ziel gerichtet ist\neine realistische Reaktionszeit gewährt wird\n\nDie Ankündigung gilt 10 Minuten und muss danach erneuert werden.",
+   "syn": []
+  },
+  {
+   "id": "3-8",
+   "nr": "3.8",
+   "titel": "Lasso-Regelung",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Das Einfangen mit dem Lasso gilt als Schussankündigung.\n\nPflicht:\nsichtbares Schwingen oder klare verbale Ankündigung\nZeit zur Reaktion\n\nBleibt eine Person 20 Minuten gefesselt, ohne Spieler in Hör- oder Sichtweite, darf sie sich selbstständig befreien.\n\nDanach:\ngilt sie als verwundet (siehe New Life)\ndarf 30 Minuten keine aggressiven Handlungen beginnen\n\nVerboten:\nSelbstbefreiung per Systemoption\nMesser-Exploit\n„Aufgeben“ → zählt als RP-Flucht",
+   "syn": [
+    "lasso",
+    "lassoregel"
+   ]
+  },
+  {
+   "id": "3-9",
+   "nr": "3.9",
+   "titel": "Hinrichtungen",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Hinrichtungen sind kein spontanes RP-Element.\n\nVoraussetzungen:\nTicket mit Begründung\nVideomaterial\nFreigabe durch das Team\n\nFolge: Charaktertod.\n\nLehnt der betroffene Spieler ab, findet keine IC-Hinrichtung statt.",
+   "syn": [
+    "hinrichtung",
+    "execution",
+    "exekution"
+   ]
+  },
+  {
+   "id": "3-10",
+   "nr": "3.10",
+   "titel": "Korruption",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Korruption innerhalb staatlicher Fraktionen ist grundsätzlich verboten.\n\nAusnahmen nur mit vorheriger Admin-Genehmigung per Ticket.",
+   "syn": []
+  },
+  {
+   "id": "3-11",
+   "nr": "3.11",
+   "titel": "Maskierungen",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Masken oder Bandanas machen die Stimme nicht identifizierbar\nKleidung kann ein Indiz, aber kein Beweis sein",
+   "syn": [
+    "maskierung",
+    "maske",
+    "vermummung"
+   ]
+  },
+  {
+   "id": "3-12",
+   "nr": "3.12",
+   "titel": "Destillen",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Destillen dürfen nicht in Höhlen, Interieurs oder anderen Dimensionen aufgebaut werden\nSie gelten nicht als Waffen\nExplosionen oder Zweckentfremdung sind verboten",
+   "syn": []
+  },
+  {
+   "id": "3-13",
+   "nr": "3.13",
+   "titel": "NPC-Raub",
+   "abschnitt": "3.0 Raub & Überfälle",
+   "abschnittNr": "3",
+   "text": "Auch beim NPC-Raub gilt:\nRP vor Profit\nkein stumpfes Farmen oder Routenlaufen\n\nWenn NPCs dich erkennen oder Alarm schlagen, müssen Konsequenzen ausgespielt werden:\nFlucht\nVerstecken\nFahndung\nVerhöre\n\nDas System ist Szenen-RP, keine Geldquelle.",
+   "syn": []
+  },
+  {
+   "id": "4-1",
+   "nr": "4.1",
+   "titel": "Bewusstlosigkeit",
+   "abschnitt": "4.0 New Life Regel",
+   "abschnittNr": "4",
+   "text": "Fällt dein Charakter zu Boden, gilt er als bewusstlos.\n\nWährend dieser Zeit:\nkann dein Charakter nichts sehen oder hören\nkann sich an nichts erinnern, was währenddessen geschieht\ndarf keine Informationen oder Items weitergeben\n\nJegliche Interaktion in diesem Zustand, z. B. Reden, Schreiben oder Warnen, ist verboten und gilt als Fail-RP.",
+   "syn": [
+    "nlr",
+    "new life",
+    "bewusstlos",
+    "down",
+    "ko"
+   ]
+  },
+  {
+   "id": "4-2",
+   "nr": "4.2",
+   "titel": "Erinnerungsverlust",
+   "abschnitt": "4.0 New Life Regel",
+   "abschnittNr": "4",
+   "text": "Nach dem Erwachen – unabhängig davon, ob durch Arzt-RP, Notfallhilfe oder Systemwiederbelebung – gilt:\ndein Charakter erinnert sich nur an die Ereignisse bis zur Bewusstlosigkeit\nalles, was danach passiert ist, gilt als vergessen\n\nBeispiele:\nTäter, Stimmen oder Gespräche nach dem Fall dürfen nicht erinnert werden\nBewegungen, Ortswechsel oder Handlungen anderer Spieler nach der Ohnmacht sind nicht bekannt",
+   "syn": []
+  },
+  {
+   "id": "4-3",
+   "nr": "4.3",
+   "titel": "Verletzungen & Erholung",
+   "abschnitt": "4.0 New Life Regel",
+   "abschnittNr": "4",
+   "text": "Verletzungen müssen ausgespielt werden.\n\nNach dem Erwachen:\nist dein Charakter geschwächt\ndarf mindestens 30 Minuten lang keine aggressiven Handlungen beginnen\ndarf sich nicht sofort erneut in Kampf- oder Eskalationssituationen begeben\n\nDiese Regel gilt auch für verletzte Pferde, welche ebenfalls Zeit zur Erholung benötigen.",
+   "syn": []
+  },
+  {
+   "id": "4-4",
+   "nr": "4.4",
+   "titel": "Der /ko-Befehl",
+   "abschnitt": "4.0 New Life Regel",
+   "abschnittNr": "4",
+   "text": "Zur Unterstützung realistischer RP-Szenen steht der Befehl /ko zur Verfügung.\n\nMit /ko:\nkann dein Charakter bewusst in Ohnmacht fallen\nwird der Zustand „bewusstlos“ RP-konform ausgelöst\ngelten alle Regeln der New-Life-Regel\n\nDer Befehl dient ausschließlich dem RP-Support, nicht der Flucht oder Vermeidung von Konsequenzen.",
+   "syn": [
+    "ko befehl",
+    "/ko",
+    "ko"
+   ]
+  },
+  {
+   "id": "4-5",
+   "nr": "4.5",
+   "titel": "Koma & Rückkehrverbot",
+   "abschnitt": "4.0 New Life Regel",
+   "abschnittNr": "4",
+   "text": "Nach einem Koma ist es nicht erlaubt, in die laufende RP-Situation zurückzukehren.\n\nAuch wenn das RP an einem anderen Ort weitergeführt wird oder andere Spieler noch involviert sind, gilt:\ndein Charakter ist zu geschwächt\neine sofortige Rückkehr wäre unrealistisch",
+   "syn": []
+  },
+  {
+   "id": "4-6",
+   "nr": "4.6",
+   "titel": "Bloodout (Charaktertod)",
+   "abschnitt": "4.0 New Life Regel",
+   "abschnittNr": "4",
+   "text": "Kommt es zu einem Bloodout, verliert dein Charakter:\nden kompletten RP-Strang der jeweiligen Fraktion\nsämtliche Erinnerungen an die vorherige Situation\n\nDieser Verlust ist unwiderruflich.\n\nAndere beteiligte Spieler, z. B. Freunde oder Bandenmitglieder:\ndürfen die Geschehnisse weiterverwenden\ndürfen Konsequenzen in ihrem RP ausspielen",
+   "syn": [
+    "bloodout",
+    "blood out",
+    "chartod",
+    "charaktertod",
+    "permatod"
+   ]
+  },
+  {
+   "id": "4-7",
+   "nr": "4.7",
+   "titel": "Missbrauch & Sanktionen",
+   "abschnitt": "4.0 New Life Regel",
+   "abschnittNr": "4",
+   "text": "Der Missbrauch der New-Life-Regel wird streng sanktioniert.\n\nDazu zählt insbesondere:\ngezieltes Ausnutzen zur Flucht\nabsichtliche Informationsweitergabe\nsofortige Rachehandlungen\n\nDie New-Life-Regel ist kein Schutzschild, sondern ein Konsequenz-Werkzeug.",
+   "syn": []
+  },
+  {
+   "id": "5-1",
+   "nr": "5.1",
+   "titel": "Allgemeines",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Das Support-Team steht allen Spielern bei Fragen, Problemen, Regelverstößen und Unklarheiten zur Verfügung.\n\nDamit Support sinnvoll arbeiten kann, gelten feste Regeln.",
+   "syn": []
+  },
+  {
+   "id": "5-2",
+   "nr": "5.2",
+   "titel": "Fristen & Gültigkeit",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Gemeldete RP-Situationen dürfen nicht älter als 48 Stunden sein.\nTickets, die nach Ablauf dieser Frist eingereicht werden, können abgelehnt werden.\nJe frischer ein Fall gemeldet wird, desto besser ist die Nachvollziehbarkeit.",
+   "syn": []
+  },
+  {
+   "id": "5-3",
+   "nr": "5.3",
+   "titel": "Verhalten während einer RP-Situation",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Kommt es während einer laufenden RP-Situation zu einem möglichen Regelverstoß:\nDie RP-Szene wird immer zu Ende gespielt.\nEs darf keine OOC-Diskussion während der Szene geführt werden.\nSupport wird erst nach Abschluss der Situation kontaktiert.\n\nAusnahme:\nschwere technische Probleme\nServerabstürze\neindeutige Regelbrüche mit sofortigem Schaden",
+   "syn": []
+  },
+  {
+   "id": "5-4",
+   "nr": "5.4",
+   "titel": "Vor dem Ticket: Kommunikation",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Bevor ein Ticket eröffnet wird, sollte – sofern möglich – versucht werden:\nein ruhiges Gespräch mit der Gegenpartei zu führen\nMissverständnisse direkt zu klären\n\nViele Konflikte lassen sich so schneller und ohne Sanktionen lösen.\n\nBleibt der Konflikt bestehen, ist ein Ticket der richtige Weg.",
+   "syn": []
+  },
+  {
+   "id": "5-5",
+   "nr": "5.5",
+   "titel": "Videobeweis",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Für Beschwerden, Regelverstöße und Erstattungen gilt:\nVideobeweis ist verpflichtend.\nDas Video muss die Situation vollständig zeigen, unbearbeitet sein und Ton enthalten.\nEinzelne Screenshots sind nicht ausreichend.\n\nOhne Videobeweis kann ein Ticket abgelehnt werden.",
+   "syn": [
+    "videobeweis",
+    "clip",
+    "aufnahme",
+    "shadowplay"
+   ]
+  },
+  {
+   "id": "5-6",
+   "nr": "5.6",
+   "titel": "Erstattungen",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Erstattungen sind keine Selbstverständlichkeit.\n\nErstattet werden ausschließlich Verluste, die entstanden sind durch:\nserverseitige Fehler\nBugs\nCrashes\nunplanmäßige Restarts\n\nNicht erstattet werden:\nClient-Crashes\nFehlbedienung\nfalsche Übergaben\nEigenverschulden",
+   "syn": [
+    "erstattung",
+    "rückerstattung",
+    "verlust",
+    "wiederherstellung"
+   ]
+  },
+  {
+   "id": "5-7",
+   "nr": "5.7",
+   "titel": "Erstattungsfristen & Voraussetzungen",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Für eine Erstattung gilt:\nTicket innerhalb von 24 Stunden\nVideobeweis erforderlich\nMindestwert der Erstattung: 50 $\n\nErfüllt ein Antrag diese Voraussetzungen nicht, kann er abgelehnt werden.",
+   "syn": []
+  },
+  {
+   "id": "5-8",
+   "nr": "5.8",
+   "titel": "Charakteranpassungen",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Nach der Charaktererstellung gilt:\nÄnderungen am Namen sind nur am Nachnamen erlaubt\nnur im Rahmen einer Eheschließung\n\nBist du nach der Erstellung unzufrieden, kannst du dich innerhalb von 24 Stunden per Ticket melden.\n\nSpätere Anpassungen sind ausgeschlossen.",
+   "syn": []
+  },
+  {
+   "id": "5-9",
+   "nr": "5.9",
+   "titel": "Warn-System",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Regelverstöße werden durch Warns dokumentiert.\n\nNach 1 Monat ohne weitere Auffälligkeiten kann ein Warn per Ticket zur Löschung beantragt werden.\n3 aktive Warns führen zu einem permanenten Bann.\nWarns dienen der Transparenz und Nachvollziehbarkeit von Sanktionen.",
+   "syn": [
+    "warn",
+    "verwarnung",
+    "warnsystem",
+    "strafe",
+    "sanktion"
+   ]
+  },
+  {
+   "id": "5-10",
+   "nr": "5.10",
+   "titel": "Missbrauch des Support-Systems",
+   "abschnitt": "5.0 Support & Ticket-System",
+   "abschnittNr": "5",
+   "text": "Verboten ist:\ndas absichtliche Fluten von Tickets\nfalsche oder manipulierte Angaben\ndas Instrumentalisieren des Supports gegen andere Spieler\n\nMissbrauch des Systems wird sanktioniert.",
+   "syn": []
+  },
+  {
+   "id": "6-1",
+   "nr": "6.1",
+   "titel": "Voraussetzungen zur Unternehmensgründung",
+   "abschnitt": "6.0 Unternehmen",
+   "abschnittNr": "6",
+   "text": "Spieler, die ein Unternehmen gründen möchten, müssen mindestens 7 Tage aktiv auf dem Server gespielt haben.\nAls aktiv gilt nur tatsächliche Spielzeit; reines AFK-Sein oder das Umgehen der Aktivität wird nicht angerechnet.\nDie Serverleitung behält sich vor, die Aktivität im Zweifelsfall zu überprüfen.",
+   "syn": [
+    "unternehmen",
+    "firma",
+    "gründung",
+    "betrieb"
+   ]
+  },
+  {
+   "id": "6-2",
+   "nr": "6.2",
+   "titel": "Konzeptpflicht",
+   "abschnitt": "6.0 Unternehmen",
+   "abschnittNr": "6",
+   "text": "Für jede Unternehmensgründung ist ein ausführliches Konzept erforderlich.\nDieses Konzept muss in Form eines Google-Docs-Dokuments als Ticket eingereicht werden. Alternativ kann Hilfe angefordert werden, wenn keinerlei Wissen zu Google Docs besteht.\nDas Konzept sollte mindestens folgende Punkte enthalten:\n\nArt und Name des Unternehmens und Besitzer\n\nAngebotene Dienstleistungen oder Waren\n\nRoleplay-Mehrwert für den Server\n\nLangfristige Zielsetzung\n\nUnvollständige oder qualitativ unzureichende Konzepte können von der Serverleitung abgelehnt werden.\nErst nach Genehmigung durch die Serverleitung darf das Unternehmen offiziell gegründet werden.",
+   "syn": [
+    "konzept",
+    "konzeptpflicht",
+    "bewerbung"
+   ]
+  },
+  {
+   "id": "6-3",
+   "nr": "6.3",
+   "titel": "Aufgabe eines eigenen Unternehmens",
+   "abschnitt": "6.0 Unternehmen",
+   "abschnittNr": "6",
+   "text": "Spieler, die ihr eigenes Unternehmen aufgeben oder schließen, unterliegen einer Wartezeit von 7 Tagen.\nWährend dieser Zeit ist es nicht erlaubt, ein neues Unternehmen zu gründen oder sich für eine Unternehmensleitung zu bewerben.\nDiese Regel dient dazu, kurzfristige Wechsel und Missbrauch zu verhindern.",
+   "syn": []
+  },
+  {
+   "id": "6-4",
+   "nr": "6.4",
+   "titel": "Wechsel zwischen Unternehmen",
+   "abschnitt": "6.0 Unternehmen",
+   "abschnittNr": "6",
+   "text": "Spieler, die ein Unternehmen verlassen, um einem anderen beizutreten, müssen eine Cooldown-Zeit von 3 Tagen ohne Job einhalten.\nWährend dieser Zeit dürfen keine Tätigkeiten für andere Unternehmen ausgeführt werden, auch nicht inoffiziell.\nZiel dieser Regel ist es, unrealistische Jobwechsel im Roleplay zu vermeiden.",
+   "syn": []
+  },
+  {
+   "id": "6-5",
+   "nr": "6.5",
+   "titel": "Allgemeine Bestimmungen",
+   "abschnitt": "6.0 Unternehmen",
+   "abschnittNr": "6",
+   "text": "Die Serverleitung behält sich das Recht vor, bei Regelverstößen Maßnahmen zu ergreifen.\nVersuche, diese Regeln zu umgehen, können zu Ablehnung, Entzug oder Sanktionen führen.\nAlle Entscheidungen der Serverleitung in Bezug auf Unternehmen sind bindend.",
+   "syn": []
+  }
+ ]
+}

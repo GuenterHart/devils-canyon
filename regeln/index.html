@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regelwerk – Devil's Canyon</title>
+<meta name="description" content="Das Regelwerk von Devil's Canyon zum Durchsuchen und Verlinken.">
+
+<style>
+/* ------------------------------------------------------------------
+   Schriften – liegen bereits selbstgehostet unter /fonts/.
+   Falls eure Dateinamen abweichen, hier anpassen. Es werden mehrere
+   Schreibweisen versucht, der Browser nimmt die erste, die lädt.
+   ------------------------------------------------------------------ */
+@font-face{
+  font-family:"Sancreek"; font-style:normal; font-weight:400; font-display:swap;
+  src:url("../fonts/sancreek-regular.woff2") format("woff2"),
+      url("../fonts/Sancreek-Regular.woff2") format("woff2"),
+      url("../fonts/sancreek.woff2") format("woff2");
+}
+@font-face{
+  font-family:"Barlow Condensed"; font-style:normal; font-weight:400; font-display:swap;
+  src:url("../fonts/barlow-condensed-400.woff2") format("woff2"),
+      url("../fonts/BarlowCondensed-Regular.woff2") format("woff2");
+}
+@font-face{
+  font-family:"Barlow Condensed"; font-style:normal; font-weight:500; font-display:swap;
+  src:url("../fonts/barlow-condensed-500.woff2") format("woff2"),
+      url("../fonts/BarlowCondensed-Medium.woff2") format("woff2");
+}
+@font-face{
+  font-family:"Barlow Condensed"; font-style:normal; font-weight:600; font-display:swap;
+  src:url("../fonts/barlow-condensed-600.woff2") format("woff2"),
+      url("../fonts/BarlowCondensed-SemiBold.woff2") format("woff2");
+}
+@font-face{
+  font-family:"Barlow Condensed"; font-style:normal; font-weight:700; font-display:swap;
+  src:url("../fonts/barlow-condensed-700.woff2") format("woff2"),
+      url("../fonts/BarlowCondensed-Bold.woff2") format("woff2");
+}
+
+:root{
+  --leder:#1B1410;
+  --leder-hell:#241B15;
+  --karte:#2A201A;
+  --naht:#3E2F25;
+  --pergament:#EADDC7;
+  --gedaempft:#A08B73;
+  --messing:#C8A46C;
+  --messing-dunkel:#8E7346;
+  --rot:#9A3B2E;
+  --radius:3px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:150px}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{animation:none!important; transition:none!important} }
+
+body{
+  margin:0; background:var(--leder); color:var(--pergament);
+  font-family:"Barlow Condensed",system-ui,sans-serif; font-size:18px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+/* feines Korn wie auf der Startseite */
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:99; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a{color:var(--messing)}
+mark{background:rgba(200,164,108,.28); color:#F6ECD9; padding:0 .1em; border-radius:2px}
+
+/* ---------- Kopf ---------- */
+.kopf{ border-bottom:1px solid var(--naht); background:var(--leder-hell) }
+.kopf-innen{ max-width:1080px; margin:0 auto; padding:34px 22px 26px }
+.zurueck{
+  display:inline-block; font-size:15px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--gedaempft); text-decoration:none; margin-bottom:18px;
+}
+.zurueck:hover{ color:var(--messing) }
+h1{
+  font-family:"Sancreek",Georgia,serif; font-weight:400; margin:0;
+  font-size:clamp(34px,6vw,54px); line-height:1.05; color:var(--pergament);
+  letter-spacing:.01em;
+}
+.stand{ margin:10px 0 0; color:var(--gedaempft); font-size:16px; letter-spacing:.05em }
+
+/* ---------- Sattlernaht als Trenner ---------- */
+.naht{ height:14px; background:var(--leder-hell); border-bottom:1px solid var(--naht);
+  background-image:repeating-linear-gradient(90deg,
+    transparent 0 10px, var(--messing-dunkel) 10px 22px, transparent 22px 32px);
+  background-size:auto 1px; background-repeat:repeat-x; background-position:center;
+}
+
+/* ---------- Suchleiste ---------- */
+.leiste{
+  position:sticky; top:0; z-index:20; background:rgba(27,20,16,.97);
+  border-bottom:1px solid var(--naht); backdrop-filter:blur(6px);
+}
+.leiste-innen{ max-width:1080px; margin:0 auto; padding:16px 22px 14px }
+.suchfeld{ position:relative; display:flex; align-items:center }
+.suchfeld svg{ position:absolute; left:14px; width:19px; height:19px; stroke:var(--gedaempft); fill:none; stroke-width:2 }
+#suche{
+  width:100%; padding:13px 46px 13px 44px; font-family:inherit; font-size:19px;
+  color:var(--pergament); background:var(--karte);
+  border:1px solid var(--naht); border-radius:var(--radius); outline:none;
+}
+#suche::placeholder{ color:#7A6852 }
+#suche:focus{ border-color:var(--messing); box-shadow:0 0 0 3px rgba(200,164,108,.16) }
+#leeren{
+  position:absolute; right:8px; display:none; background:none; border:0; cursor:pointer;
+  color:var(--gedaempft); font-size:22px; line-height:1; padding:6px 10px; font-family:inherit;
+}
+#leeren:hover{ color:var(--pergament) }
+
+.chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:12px }
+.chip{
+  font-family:inherit; font-size:15px; letter-spacing:.05em; text-transform:uppercase;
+  color:var(--gedaempft); background:transparent; border:1px solid var(--naht);
+  border-radius:var(--radius); padding:5px 12px; cursor:pointer;
+}
+.chip:hover{ color:var(--pergament); border-color:var(--messing-dunkel) }
+.chip[aria-pressed="true"]{ color:var(--leder); background:var(--messing); border-color:var(--messing); font-weight:600 }
+.chip:focus-visible, #leeren:focus-visible, .nr:focus-visible, .zurueck:focus-visible{
+  outline:2px solid var(--messing); outline-offset:2px
+}
+
+.treffer{ margin:11px 0 0; font-size:15px; color:var(--gedaempft); letter-spacing:.05em }
+
+/* ---------- Inhalt ---------- */
+main{ max-width:1080px; margin:0 auto; padding:26px 22px 90px }
+
+.abschnitt-kopf{
+  font-family:"Sancreek",Georgia,serif; font-size:25px; font-weight:400;
+  color:var(--messing); margin:38px 0 14px; padding-bottom:9px;
+  border-bottom:1px solid var(--naht);
+}
+.abschnitt-kopf:first-child{ margin-top:8px }
+
+.regel{
+  display:grid; grid-template-columns:96px 1fr; gap:20px;
+  background:var(--karte); border:1px solid var(--naht); border-left:3px solid var(--naht);
+  border-radius:var(--radius); padding:20px 22px; margin-bottom:12px;
+}
+.regel:target, .regel.hervor{ border-left-color:var(--messing); background:#31251D }
+
+.nr{
+  font-family:"Sancreek",Georgia,serif; font-size:26px; line-height:1.15; color:var(--messing);
+  background:none; border:0; padding:0; cursor:pointer; text-align:left; font-weight:400;
+}
+.nr:hover{ color:#E3C48E }
+.nr small{ display:block; font-family:"Barlow Condensed",sans-serif; font-size:13px;
+  letter-spacing:.09em; text-transform:uppercase; color:#7A6852; margin-top:5px }
+
+.regel h3{ margin:0 0 8px; font-size:22px; font-weight:600; letter-spacing:.01em; color:#F2E7D3 }
+.regel .text{ margin:0; white-space:pre-wrap; color:#D9CBB3 }
+.regel .text.gekuerzt{ display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden }
+.mehr{
+  margin-top:9px; background:none; border:0; padding:0; cursor:pointer; font-family:inherit;
+  font-size:16px; color:var(--messing); letter-spacing:.04em;
+}
+.mehr:hover{ text-decoration:underline }
+
+.hinweis{ text-align:center; padding:60px 20px; color:var(--gedaempft) }
+.hinweis strong{ display:block; font-family:"Sancreek",Georgia,serif; font-weight:400;
+  font-size:24px; color:var(--pergament); margin-bottom:10px }
+.hinweis.fehler strong{ color:var(--rot) }
+
+.fuss{ max-width:1080px; margin:0 auto; padding:0 22px 60px; color:#7A6852; font-size:15px }
+
+#kopiert{
+  position:fixed; left:50%; bottom:28px; transform:translateX(-50%);
+  background:var(--messing); color:var(--leder); font-weight:600; letter-spacing:.05em;
+  padding:9px 20px; border-radius:var(--radius); opacity:0; pointer-events:none;
+  transition:opacity .18s ease; z-index:60;
+}
+#kopiert.an{ opacity:1 }
+
+@media (max-width:640px){
+  body{ font-size:17px }
+  .regel{ grid-template-columns:1fr; gap:6px; padding:16px }
+  .nr{ font-size:22px }
+  .nr small{ display:inline; margin-left:9px }
+  html{ scroll-padding-top:190px }
+}
+</style>
+</head>
+<body>
+
+<header class="kopf">
+  <div class="kopf-innen">
+    <a class="zurueck" href="../">← Zur Startseite</a>
+    <h1>Regelwerk</h1>
+    <p class="stand" id="stand">Devil&rsquo;s Canyon</p>
+  </div>
+</header>
+<div class="naht" aria-hidden="true"></div>
+
+<div class="leiste">
+  <div class="leiste-innen">
+    <div class="suchfeld">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+      <input id="suche" type="search" autocomplete="off" spellcheck="false"
+             placeholder="Regel suchen – z.&nbsp;B. RDM, Bloodout, Geiselnahme oder 2.9"
+             aria-label="Regelwerk durchsuchen">
+      <button id="leeren" type="button" aria-label="Suche leeren">×</button>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Nach Abschnitt filtern"></div>
+    <p class="treffer" id="treffer" role="status" aria-live="polite"></p>
+  </div>
+</div>
+
+<main id="liste"></main>
+<footer class="fuss">
+  Es gilt immer die aktuell sichtbare Fassung. Änderungen werden über eigene Ankündigungen bekanntgegeben.
+</footer>
+<div id="kopiert" role="status">Link kopiert</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var DATEN = null, filterAbschnitt = "alle";
+  var elListe   = document.getElementById("liste");
+  var elSuche   = document.getElementById("suche");
+  var elLeeren  = document.getElementById("leeren");
+  var elChips   = document.getElementById("chips");
+  var elTreffer = document.getElementById("treffer");
+  var elStand   = document.getElementById("stand");
+  var elKopiert = document.getElementById("kopiert");
+
+  /* ---------- Deutsche Normalisierung ---------- */
+  function norm(s){
+    return (s||"").toLowerCase()
+      .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
+      .replace(/(\d)\./g,"$1~")        // "2.9" zusammenhalten, sonst wird daraus "2" und "9"
+      .replace(/[^a-z0-9~]+/g," ").trim();
+  }
+  function esc(s){
+    return String(s).replace(/[&<>"']/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  /* ---------- Suche ---------- */
+  function bewerten(regel, tokens){
+    var score = 0;
+    for (var i=0;i<tokens.length;i++){
+      var t = tokens[i], teil = 0;
+      if (regel._nr === t || regel._nr.replace(/\D/g,"") === t.replace(/\D/g,"")) teil += 60;
+      else if (regel._nr.indexOf(t) === 0) teil += 30;
+      if (regel._titel.indexOf(t) !== -1) teil += 18;
+      if (regel._syn.indexOf(" "+t+" ") !== -1) teil += 24;   // ganzes Synonym
+      else if (regel._syn.indexOf(t) !== -1) teil += 12;      // Teil eines Synonyms
+      if (regel._text.indexOf(t) !== -1) teil += 4;
+      if (teil === 0) return 0;          // jedes Wort muss irgendwo vorkommen
+      score += teil;
+    }
+    return score;
+  }
+
+  function markieren(text, tokens){
+    var out = esc(text);
+    if (!tokens.length) return out;
+    var muster = tokens
+      .filter(function(t){ return t.length > 1; })
+      .map(function(t){ return t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); });
+    if (!muster.length) return out;
+    try{
+      return out.replace(new RegExp("("+muster.join("|")+")","gi"), "<mark>$1</mark>");
+    }catch(e){ return out; }
+  }
+
+  /* ---------- Darstellung ---------- */
+  function zeichnen(){
+    var frage  = elSuche.value.trim();
+    var tokens = norm(frage).split(" ").filter(Boolean);
+    elLeeren.style.display = frage ? "block" : "none";
+
+    var liste = DATEN.regeln.filter(function(r){
+      return filterAbschnitt === "alle" || r.abschnittNr === filterAbschnitt;
+    });
+
+    if (tokens.length){
+      liste = liste.map(function(r){ return {r:r, s:bewerten(r,tokens)}; })
+                   .filter(function(x){ return x.s > 0; })
+                   .sort(function(a,b){ return b.s - a.s; })
+                   .map(function(x){ return x.r; });
+    }
+
+    if (!liste.length){
+      elTreffer.textContent = "Keine Treffer";
+      elListe.innerHTML =
+        '<div class="hinweis"><strong>Nichts gefunden</strong>' +
+        'Versuch es mit einem anderen Begriff, einer Abkürzung wie RDM oder NLR, ' +
+        'oder gib die Nummer direkt ein – zum Beispiel 2.9.</div>';
+      return;
+    }
+
+    elTreffer.textContent = liste.length === 1
+      ? "1 Regel" : liste.length + " Regeln";
+
+    var html = "", letzterAbschnitt = null;
+    var gruppieren = !tokens.length;   // bei Suche nach Relevanz, sonst nach Abschnitt
+
+    liste.forEach(function(r){
+      if (gruppieren && r.abschnitt !== letzterAbschnitt){
+        html += '<h2 class="abschnitt-kopf">' + esc(r.abschnitt) + "</h2>";
+        letzterAbschnitt = r.abschnitt;
+      }
+      var lang = r.text.length > 480;
+      html +=
+        '<article class="regel" id="' + esc(r.id) + '">' +
+          '<button class="nr" type="button" data-id="' + esc(r.id) + '" ' +
+                  'title="Link zu dieser Regel kopieren">§' + esc(r.nr) +
+            "<small>" + esc(r.abschnittNr) + ".0 &nbsp;·&nbsp; Link</small>" +
+          "</button>" +
+          "<div>" +
+            "<h3>" + markieren(r.titel, tokens) + "</h3>" +
+            '<p class="text' + (lang ? " gekuerzt" : "") + '">' +
+              markieren(r.text, tokens) + "</p>" +
+            (lang ? '<button class="mehr" type="button">Ganzen Text anzeigen</button>' : "") +
+          "</div>" +
+        "</article>";
+    });
+
+    elListe.innerHTML = html;
+  }
+
+  /* ---------- Ereignisse ---------- */
+  elListe.addEventListener("click", function(e){
+    var mehr = e.target.closest(".mehr");
+    if (mehr){
+      var p = mehr.previousElementSibling;
+      var zu = p.classList.toggle("gekuerzt");
+      mehr.textContent = zu ? "Ganzen Text anzeigen" : "Text einklappen";
+      return;
+    }
+    var nr = e.target.closest(".nr");
+    if (nr){
+      var url = location.origin + location.pathname + "#" + nr.dataset.id;
+      history.replaceState(null, "", "#" + nr.dataset.id);
+      var melden = function(){
+        elKopiert.classList.add("an");
+        setTimeout(function(){ elKopiert.classList.remove("an"); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(melden, melden);
+      } else { melden(); }
+    }
+  });
+
+  elSuche.addEventListener("input", zeichnen);
+  elLeeren.addEventListener("click", function(){
+    elSuche.value = ""; zeichnen(); elSuche.focus();
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "/" && document.activeElement !== elSuche){
+      e.preventDefault(); elSuche.focus(); elSuche.select();
+    }
+    if (e.key === "Escape" && document.activeElement === elSuche){
+      elSuche.value = ""; zeichnen();
+    }
+  });
+
+  function chipsBauen(){
+    var alle = [{nr:"alle", titel:"Alle"}].concat(DATEN.abschnitte);
+    elChips.innerHTML = alle.map(function(a){
+      return '<button class="chip" type="button" data-nr="' + esc(a.nr) + '" ' +
+             'aria-pressed="' + (a.nr === "alle") + '">' + esc(a.titel) + "</button>";
+    }).join("");
+    elChips.addEventListener("click", function(e){
+      var c = e.target.closest(".chip");
+      if (!c) return;
+      filterAbschnitt = c.dataset.nr;
+      Array.prototype.forEach.call(elChips.children, function(x){
+        x.setAttribute("aria-pressed", x === c);
+      });
+      zeichnen();
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+  }
+
+  function ankerAnspringen(){
+    var id = location.hash.slice(1);
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add("hervor");
+    el.scrollIntoView({block:"start"});
+  }
+
+  /* ---------- Start ---------- */
+  fetch("regeln.json", {cache:"no-cache"})
+    .then(function(r){
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(function(d){
+      DATEN = d;
+      DATEN.regeln.forEach(function(r){
+        r._nr    = norm(r.nr);
+        r._titel = norm(r.titel);
+        r._text  = norm(r.text);
+        r._syn   = " " + (r.syn || []).map(norm).join(" ") + " ";
+      });
+      elStand.textContent = "Stand: " + (DATEN.stand || "–") + " · " +
+                            DATEN.regeln.length + " Paragraphen";
+      chipsBauen();
+      zeichnen();
+      setTimeout(ankerAnspringen, 60);
+    })
+    .catch(function(err){
+      elListe.innerHTML =
+        '<div class="hinweis fehler"><strong>Regelwerk lässt sich nicht laden</strong>' +
+        "Die Datei regeln.json wurde nicht gefunden. Sie muss im selben Ordner liegen wie diese Seite. " +
+        "Beim lokalen Testen ohne Webserver blockiert der Browser das Laden – dann über die Website öffnen." +
+        "</div>";
+      elTreffer.textContent = "";
+      console.error(err);
+    });
+
+  window.addEventListener("hashchange", ankerAnspringen);
+})();
+</script>
+</body>
+</html>
