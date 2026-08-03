@@ -36,7 +36,7 @@
 
   *, *::before, *::after { box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; scroll-padding-top: 168px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 200px; } /* wird per JS an die echte Leistenhöhe angepasst */
 
   body {
     margin: 0;
@@ -278,7 +278,7 @@
 
   @media (max-width: 640px) {
     body { font-size: 18px; }
-    html { scroll-padding-top: 210px; }
+    html { scroll-padding-top: 250px; }
     header { padding: 32px 0 24px; }
     .rule { grid-template-columns: 1fr; gap: 8px; padding: 18px; }
     .num small { display: inline; margin-left: 10px; }
@@ -473,11 +473,23 @@
         x.setAttribute("aria-pressed", x === c);
       });
       render();
+      fitScrollPadding();
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
+  /* Die Suchleiste ist klebrig und je nach Fensterbreite unterschiedlich hoch,
+     weil die Abschnitts-Chips umbrechen. Ein fester Wert im CSS trifft daher
+     nie. Stattdessen die echte Höhe messen und als scroll-padding setzen. */
+  var elBar = document.querySelector(".bar");
+  function fitScrollPadding() {
+    if (!elBar) return;
+    document.documentElement.style.scrollPaddingTop = (elBar.offsetHeight + 18) + "px";
+  }
+  window.addEventListener("resize", fitScrollPadding);
+
   function jumpToHash() {
+    fitScrollPadding();
     var id = location.hash.slice(1);
     if (!id) return;
     var el = document.getElementById(id);
@@ -499,6 +511,7 @@
       elStand.textContent = "Stand " + (DATA.stand || "–") + " · " + DATA.regeln.length + " Paragraphen";
       buildChips();
       render();
+      fitScrollPadding();
       setTimeout(jumpToHash, 60);
     })
     .catch(function (err) {
