@@ -73,8 +73,33 @@
 
   :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
-  /* ---------------------------------------------------------- Kopfbereich */
-  header { padding: 46px 0 34px; text-align: center; }
+  /* ---------------------------------------------------------- Kopfbereich
+     Eigene Bildflaeche wie der Hero der Startseite. Damit hat die Naht
+     darunter eine echte Stossfuge zwischen zwei Flaechen und haelt etwas
+     zusammen, statt frei auf einheitlichem Grund zu liegen. */
+  header {
+    position: relative;
+    overflow: hidden;
+    padding: 52px 0 42px;
+    text-align: center;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('../img/hero-map.jpg') center 30% / cover no-repeat;
+    filter: grayscale(0.35) brightness(0.42) contrast(1.05);
+    transform: scale(1.04);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at center, transparent 30%, rgba(23,19,16,0.82) 80%),
+      linear-gradient(to bottom, rgba(23,19,16,0.5) 0%, transparent 45%, rgba(23,19,16,0.72) 100%);
+  }
+  header .wrap { position: relative; z-index: 1; }
 
   .back {
     display: inline-block;
@@ -134,7 +159,7 @@
     position: sticky;
     top: 0;
     z-index: 40;
-    background: rgba(23,19,16,0.96);
+    background: var(--bg-deep);
     border-bottom: 1px solid var(--line);
     backdrop-filter: blur(8px);
     padding: 18px 0 15px;
