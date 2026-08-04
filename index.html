@@ -103,6 +103,93 @@
   }
 
   /* ── Kopfbereich ────────────────────────────────────────── */
+
+  /* ---------------------------------------------------------------- Burger-Menü
+     Feste Navigation oben links. Sie pulsiert dezent, bis der Besucher sie
+     einmal geöffnet hat - danach nie wieder, sonst nervt es. */
+  #nav-btn {
+    position: fixed;
+    top: 22px;
+    left: 22px;
+    z-index: 900;
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    gap: 0;
+    padding: 0;
+    cursor: pointer;
+    background: rgba(23,19,16,0.82);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    backdrop-filter: blur(6px);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  #nav-btn:hover { border-color: var(--gold); background: rgba(34,27,22,0.95); }
+  #nav-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+    margin: 3px 0;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+  #nav-btn.offen span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  #nav-btn.offen span:nth-child(2) { opacity: 0; }
+  #nav-btn.offen span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  #nav-btn.pulst { animation: nav-puls 2.6s ease-in-out infinite; }
+  @keyframes nav-puls {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(200,164,108,0.42); border-color: var(--line); }
+    50%      { box-shadow: 0 0 0 12px rgba(200,164,108,0);  border-color: var(--gold); }
+  }
+
+  #nav-menu {
+    position: fixed;
+    top: 84px;
+    left: 22px;
+    z-index: 899;
+    min-width: 226px;
+    padding: 8px;
+    background: rgba(23,19,16,0.97);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  #nav-menu.offen { opacity: 1; transform: none; pointer-events: auto; }
+  #nav-menu a {
+    display: block;
+    padding: 11px 14px;
+    border-radius: 4px;
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.16s ease, color 0.16s ease;
+  }
+  #nav-menu a:hover { background: rgba(200,164,108,0.13); color: var(--gold-bright); }
+  #nav-menu hr {
+    border: 0;
+    height: 1px;
+    background: var(--line);
+    margin: 6px 10px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #nav-btn.pulst { animation: none; }
+    #nav-menu { transition: none; }
+  }
+  @media (max-width: 640px) {
+    #nav-btn { top: 14px; left: 14px; width: 46px; height: 46px; }
+    #nav-menu { top: 68px; left: 14px; right: 14px; }
+  }
+
   header {
     position: relative;
     min-height: 88vh;
@@ -453,7 +540,21 @@
 </head>
 <body>
 
-<header>
+<button id="nav-btn" class="pulst" type="button"
+        aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-menu">
+  <span></span><span></span><span></span>
+</button>
+
+<nav id="nav-menu" aria-label="Hauptnavigation">
+  <a href="#top">Startseite</a>
+  <a href="karte/">Interaktive Karte</a>
+  <a href="regeln/">Regelwerk</a>
+  <a href="faq/">Häufige Fragen</a>
+  <hr>
+  <a href="https://discord.gg/yWe493bN8T">Discord beitreten</a>
+</nav>
+
+<header id="top">
   <img class="crest" src="img/dc-logo.png" alt="Wappen von Devil's Canyon">
   <h1>Devil's Canyon</h1>
   <p class="tagline">Deutsches RedM Roleplay</p>
@@ -461,8 +562,6 @@
   <div class="cta-row">
     <a class="btn btn--solid" href="https://discord.gg/yWe493bN8T">Discord beitreten</a>
     <a class="btn" href="karte/">Karte ansehen</a>
-    <a class="btn" href="regeln/">Regelwerk</a>
-    <a class="btn" href="faq/">Häufige Fragen</a>
   </div>
 </header>
 
@@ -597,7 +696,7 @@
 
     <div class="team">
       <div class="member">
-        <span class="role">Gründer</span>
+        <span class="role">Serverleitung</span>
         <span class="who">Guenter</span>
       </div>
       <div class="member">
@@ -610,7 +709,7 @@
       </div>
       <div class="member">
         <span class="role">Fraktionsverwaltung</span>
-        <span class="who">Damon</span>
+        <span class="who">Damon &amp; Bethy</span>
       </div>
       <div class="member">
         <span class="role">Senior Admin</span>
@@ -663,5 +762,40 @@
   </div>
 </footer>
 
+
+<script>
+(function () {
+  var btn  = document.getElementById("nav-btn");
+  var menu = document.getElementById("nav-menu");
+  if (!btn || !menu) return;
+
+  function auf(zustand) {
+    btn.classList.toggle("offen", zustand);
+    menu.classList.toggle("offen", zustand);
+    btn.setAttribute("aria-expanded", zustand ? "true" : "false");
+    btn.setAttribute("aria-label", zustand ? "Menü schließen" : "Menü öffnen");
+  }
+
+  btn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    // Nach der ersten Nutzung hört das Pulsieren auf.
+    btn.classList.remove("pulst");
+    auf(!menu.classList.contains("offen"));
+  });
+
+  document.addEventListener("click", function (e) {
+    if (menu.classList.contains("offen") && !menu.contains(e.target)) auf(false);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") auf(false);
+  });
+
+  // Wer scrollt, hat die Seite gefunden - dann muss nichts mehr blinken.
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 400) btn.classList.remove("pulst");
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
