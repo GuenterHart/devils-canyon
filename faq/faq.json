@@ -383,7 +383,7 @@
    "id": "4-2",
    "kategorie": "4",
    "frage": "Kann ich ein Haus kaufen?",
-   "antwort": "Ja. Es gibt kaufbare Häuser, Hotel- und Motelzimmer sowie baubare Häuser.\n\nDie Hausverwaltung öffnest du mit /haus. Darüber läuft alles: Haupttür, Kleiderschrank, Lager, rein und raus, Miete im Voraus zahlen, Innenausbau, Möbel setzen, Türen und Schlösser, Haus erweitern.\n\nMaximal drei Häuser, Bauten oder Interiors pro Spieler. Miete kannst du bis zu vier Wochen im Voraus zahlen.\n\nWer selbst bauen will, braucht ein Baubuch, für den Innenausbau ein Interior-Buch.",
+   "antwort": "Ja. Es gibt kaufbare Häuser, Hotel- und Motelzimmer sowie baubare Häuser.\n\nDie Hausverwaltung öffnest du mit /haus. Darüber läuft alles: Haupttür, Kleiderschrank, Lager, rein und raus, Miete im Voraus zahlen, Innenausbau, Möbel setzen, Türen und Schlösser, Haus erweitern.\n\nMaximal zwei Häuser, Bauten oder Interiors pro Spieler. Miete kannst du bis zu vier Wochen im Voraus zahlen.\n\nWer selbst bauen will, braucht ein Baubuch, für den Innenausbau ein Interior-Buch.",
    "syn": [
     "haus",
     "housing",
