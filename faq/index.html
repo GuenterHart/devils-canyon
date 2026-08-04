@@ -251,7 +251,7 @@
 
   .rule {
     display: grid;
-    grid-template-columns: 58px 1fr;
+    grid-template-columns: 76px 1fr;
     gap: 22px;
     padding: 22px 24px;
     background: linear-gradient(160deg, rgba(37,29,23,0.94) 0%, rgba(34,27,22,0.92) 70%);
@@ -266,7 +266,7 @@
   .num {
     font-family: 'Sancreek', serif;
     font-weight: 400;
-    font-size: 2rem;
+    font-size: 1.35rem;
     line-height: 1.2;
     color: var(--gold-brt);
     background: none; border: 0; padding: 0;
@@ -467,7 +467,7 @@
       html +=
         '<article class="rule" id="' + esc(r.id) + '">' +
           '<button class="num" type="button" data-id="' + esc(r.id) + '" ' +
-                  'title="Link zu dieser Frage kopieren">?' +
+                  'title="Link zu dieser Frage kopieren">' + esc(r.id.replace("-", ".")) +
             "<small>Link</small>" +
           "</button>" +
           "<div>" +
