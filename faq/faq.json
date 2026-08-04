@@ -69,14 +69,16 @@
    "id": "1-4",
    "kategorie": "1",
    "frage": "Wie verbinde ich mich auf den Server?",
-   "antwort": "Nach der Freischaltung findest du uns direkt in der RedM-Serverliste — such dort nach Devil's Canyon.\n\nDen direkten Verbindungslink gibt es im Discord im Kanal Verbinden.",
+   "antwort": "Am schnellsten über diesen Link, der RedM direkt öffnet:\n\ncfx.re/join/krlzav\n\nAlternativ findest du uns in der RedM-Serverliste — such dort nach Devil's Canyon.\n\nBeides funktioniert erst, wenn du freigeschaltet bist.",
    "syn": [
     "verbinden",
     "beitreten",
     "connect",
     "wie komme ich drauf",
     "serverliste",
-    "ip"
+    "ip",
+    "link",
+    "cfx"
    ]
   },
   {
