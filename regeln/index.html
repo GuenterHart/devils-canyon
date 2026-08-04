@@ -236,7 +236,9 @@
   .section-head:first-child { margin-top: 6px; }
 
   /* Einleitungstext des Abschnitts - Kontext, keine Regel. Deshalb ohne
-     Paragraphennummer und optisch zurueckgenommen. */
+     Paragraphennummer und optisch zurueckgenommen. Bewusst NICHT einklappbar:
+     die laengste Einleitung hat acht Zeilen, da schneidet ein Einklappen nur
+     mitten im Satz ab, ohne nennenswert Platz zu sparen. */
   .section-intro {
     margin: 0 0 18px;
     padding: 16px 20px;
@@ -245,9 +247,7 @@
     font-size: 0.97rem;
     white-space: pre-wrap;
   }
-  .section-intro.clip {
-    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-  }
+
 
   .rule {
     display: grid;
@@ -459,10 +459,7 @@
         html += '<h2 class="section-head">' + esc(r.abschnitt) + "</h2>";
         var meta = INTROS[r.abschnittNr];
         if (meta) {
-          var langIntro = meta.length > 340;
-          html += '<div class="section-intro' + (langIntro ? " clip" : "") + '">' +
-                  esc(meta) + "</div>" +
-                  (langIntro ? '<button class="more" type="button">Ganzen Text anzeigen</button>' : "");
+          html += '<div class="section-intro">' + esc(meta) + "</div>";
         }
         lastSection = r.abschnitt;
       }
@@ -488,8 +485,6 @@
     var more = e.target.closest(".more");
     if (more) {
       var p = more.previousElementSibling;
-      if (!p || !p.classList.contains("clip") && !p.classList.contains("body")
-             && !p.classList.contains("section-intro")) return;
       var clipped = p.classList.toggle("clip");
       more.textContent = clipped ? "Ganzen Text anzeigen" : "Text einklappen";
       return;
