@@ -345,9 +345,6 @@
     z-index: 900;
     width: 52px;
     height: 52px;
-    display: grid;
-    place-items: center;
-    gap: 0;
     padding: 0;
     cursor: pointer;
     background: rgba(23,19,16,0.82);
@@ -357,17 +354,28 @@
     transition: border-color 0.2s ease, background 0.2s ease;
   }
   #nav-btn:hover { border-color: var(--gold); background: rgba(34,27,22,0.95); }
+
+  /* Die drei Striche werden absolut gesetzt statt über ein Raster verteilt.
+     Nur so treffen sich beide Linien beim Umschalten exakt in der Mitte -
+     mit Rasterabständen ergab das eine Pfeilform statt eines Kreuzes. */
   #nav-btn span {
-    display: block;
+    position: absolute;
+    left: 50%;
     width: 24px;
     height: 2px;
+    margin-left: -12px;
     background: var(--gold);
-    margin: 3px 0;
-    transition: transform 0.25s ease, opacity 0.2s ease;
+    border-radius: 1px;
+    transition: top 0.2s ease, transform 0.25s ease 0.05s, opacity 0.15s ease;
   }
-  #nav-btn.offen span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  #nav-btn span:nth-child(1) { top: 17px; }
+  #nav-btn span:nth-child(2) { top: 25px; }
+  #nav-btn span:nth-child(3) { top: 33px; }
+
+  #nav-btn.offen span { transition: top 0.2s ease, transform 0.25s ease 0.2s, opacity 0.15s ease; }
+  #nav-btn.offen span:nth-child(1) { top: 25px; transform: rotate(45deg); }
   #nav-btn.offen span:nth-child(2) { opacity: 0; }
-  #nav-btn.offen span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+  #nav-btn.offen span:nth-child(3) { top: 25px; transform: rotate(-45deg); }
 
   #nav-btn.pulst { animation: nav-puls 2.6s ease-in-out infinite; }
   @keyframes nav-puls {
@@ -418,6 +426,11 @@
   }
   @media (max-width: 640px) {
     #nav-btn { top: 14px; left: 14px; width: 46px; height: 46px; }
+    #nav-btn span:nth-child(1) { top: 14px; }
+    #nav-btn span:nth-child(2) { top: 22px; }
+    #nav-btn span:nth-child(3) { top: 30px; }
+    #nav-btn.offen span:nth-child(1),
+    #nav-btn.offen span:nth-child(3) { top: 22px; }
     #nav-menu { top: 68px; left: 14px; right: 14px; }
   }
 </style>
