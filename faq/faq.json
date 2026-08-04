@@ -131,16 +131,15 @@
   {
    "id": "1-9",
    "kategorie": "1",
-   "frage": "Was kommt im Whitelist-Fragebogen dran?",
-   "antwort": "Alles, was du wissen musst, steht im Regelwerk unter devils-canyon.de/regeln. Die Fragen prüfen kein Detailwissen, sondern ob du das Grundprinzip verstanden hast.\n\nDiese Themen solltest du vorher gelesen haben:\n• RDM — was gilt als grundloses Töten\n• Fail-RP — und wie man richtig damit umgeht, wenn es einem passiert\n• Meta — welches Wissen dein Charakter haben darf und welches nicht\n• Wortwahl und Zeitkolorit — wir spielen 1899, nicht heute\n• Verbotene RP-Inhalte\n• Raub und Überfälle — was man einem Opfer abnehmen darf\n• Lasso und Schussankündigung\n\nWenn du dir bei einem Thema unsicher bist, lies den entsprechenden Abschnitt lieber zweimal. Der Fragebogen ist keine Schikane, sondern soll sicherstellen, dass alle mit denselben Grundlagen anfangen.",
+   "frage": "Wie bereite ich mich auf den Fragebogen vor?",
+   "antwort": "Lies das Regelwerk. Mehr braucht es nicht.\n\nDie Fragen prüfen kein Detailwissen, sondern ob du die Grundlagen verstanden hast — und alle Antworten stehen im Regelwerk unter devils-canyon.de/regeln.\n\nWenn dir ein Abschnitt unklar ist, lies ihn lieber zweimal.",
    "syn": [
     "fragebogen",
     "quiz",
-    "fragen",
-    "whitelist fragen",
     "vorbereitung",
     "worauf achten",
-    "test"
+    "test",
+    "whitelist fragen"
    ]
   },
   {
@@ -243,7 +242,7 @@
    "id": "2-8",
    "kategorie": "2",
    "frage": "Kann ich meinen Charakternamen ändern?",
-   "antwort": "Nur eingeschränkt. Nach der Erstellung sind Änderungen ausschließlich am Nachnamen möglich, und auch nur im Rahmen einer Eheschließung.\n\nWenn du direkt nach der Erstellung merkst, dass etwas nicht stimmt, melde dich zeitnah per Ticket. Später sind Anpassungen ausgeschlossen.",
+   "antwort": "Innerhalb der ersten 24 Stunden nach der Charaktererstellung ja — melde dich dafür per Ticket.\n\nDanach sind Änderungen nur noch am Nachnamen möglich, und auch nur im Rahmen einer Eheschließung.\n\nÜberleg dir den Namen also vorher in Ruhe. Er soll zur Epoche um 1899 passen.",
    "syn": [
     "name",
     "namen aendern",
@@ -368,7 +367,7 @@
    "id": "4-1",
    "kategorie": "4",
    "frage": "Wie lagere ich mein Pferd ein?",
-   "antwort": "Über den Stall. In den größeren Orten gibt es einen Stall mit einem NPC — dort kannst du Pferde und Kutschen einlagern und wieder herausrufen.\n\nDie großen Ställe können mehr als nur lagern: Hufeisen, Zucht, Farben, Pferdetransfer, dazu Kutschenlager und Kutschentransfer. Kleinere Ställe haben nicht alles davon aktiv — das ist kein Fehler, sondern Absicht.\n\nWildpferde lassen sich ebenfalls am Stall speichern.",
+   "antwort": "Über den Stall. In den größeren Orten gibt es einen Stall mit einem NPC — dort lagerst du Pferde und Kutschen ein und rufst sie wieder heraus.\n\nUnterwegs geht das schneller:\n• H ruft dein Pferd\n• J ruft deine Kutsche\n\nWildpferde lassen sich ebenfalls am Stall speichern.",
    "syn": [
     "stall",
     "pferd",
@@ -376,7 +375,10 @@
     "einlagern",
     "abstellen",
     "kutsche",
-    "stable"
+    "stable",
+    "rufen",
+    "pferd rufen",
+    "kutsche rufen"
    ]
   },
   {
@@ -399,20 +401,6 @@
   {
    "id": "4-3",
    "kategorie": "4",
-   "frage": "Kann ich mir ein eigenes Lager aufbauen?",
-   "antwort": "Ja, über das Camp-System. Du stellst dein Lager draußen in der Welt Stück für Stück auf: Zelte, Pferdeanbinder, Stühle, Tische, Lichter, Lagerfeuer, Truhen, Türen.\n\nDie Gegenstände kaufst du beim NPC-Shop. Verwaltet wird über /lager, Zugriff für andere gibst du mit /zugriff und nimmst ihn mit /unzugriff.\n\nIn Städten ist der Aufbau nicht erlaubt. Mit passend vergebenem Zugriff könnt ihr ein Lager auch gemeinsam nutzen.",
-   "syn": [
-    "camp",
-    "lager",
-    "zelt",
-    "aufbauen",
-    "truhe",
-    "lagerfeuer"
-   ]
-  },
-  {
-   "id": "4-4",
-   "kategorie": "4",
    "frage": "Wie komme ich schneller von A nach B?",
    "antwort": "Mehrere Wege, je nachdem wo du bist:\n\n• Schnellreise per Kutsche oder Boot — mit Menü, festen Zielen und Preisen\n• Kutschentaxi\n• Die Straßenbahn in Saint Denis, an festen Haltestellen mit E einsteigen\n• Ballon — mieten und selbst steuern, oder eine feste Route nehmen\n• Eigenes Pferd oder Boot\n\nWichtig zur Schnellreise: Sie ist zum Reisen da, nicht zum Fliehen. Wer sie nutzt, um sich einer laufenden RP-Situation zu entziehen, verstößt gegen §2.17.",
    "syn": [
@@ -429,7 +417,7 @@
    ]
   },
   {
-   "id": "4-5",
+   "id": "4-4",
    "kategorie": "4",
    "frage": "Kann ich ein Boot kaufen?",
    "antwort": "Ja. An den Häfen gibt es einen NPC, über den das Bootsmenü läuft: kaufen, herausnehmen, andocken, transportieren, anpassen, umbenennen, Bootsinventar.\n\nDie Auswahl reicht vom Kanu bis zum Dampfschiff, bezahlt wird in Dollar oder Gold. Kanus bekommst du auch in den Kanu-Shops.\n\nZwei Dinge, die oft für Rückfragen sorgen: Große Schiffe brauchen Kohlebriketts, sonst fahren sie nicht. Und Boote docken nur an dem Hafen normal ab, an dem du sie zuletzt genutzt hast — der Transport zu einem anderen Hafen kostet extra.\n\nG öffnet das Hafenmenü und setzt den Anker.",
@@ -445,7 +433,7 @@
    ]
   },
   {
-   "id": "4-6",
+   "id": "4-5",
    "kategorie": "4",
    "frage": "Kann ich Haustiere haben?",
    "antwort": "Ja, in den Tierhandlungen. Verwaltet wird über /mypets — herausholen, zurückschicken, allgemein verwalten.\n\nDraußen kannst du dein Tier sitzen lassen, aufstehen lassen, folgen lassen, nach Hause schicken, heilen und wiederbeleben.\n\nMaximal 15 Haustiere, davon höchstens 3 gleichzeitig draußen. Tiere altern und brauchen Futter und Wasser — ohne Pflege geht es ihnen schlecht. Namen müssen eindeutig sein.\n\nDie Auswahl reicht von Hunden, Katzen und Füchsen über Vögel bis zu größeren Tieren wie Bären, Wölfen und Pumas.",
@@ -460,7 +448,7 @@
    ]
   },
   {
-   "id": "4-7",
+   "id": "4-6",
    "kategorie": "4",
    "frage": "Wie passe ich meine Anzeige an?",
    "antwort": "Über das Radial-Menü unter „Nützliches\", oder direkt mit /edit_hud. Mit /hud_off blendest du sie ganz aus.\n\nDu kannst Farben ändern, Positionen verschieben, Größen anpassen und einzelne Bereiche ein- und ausschalten: Statusanzeigen, Pferdeanzeigen, Stimme, Temperatur, Geld, Gold, Uhrzeit, Job, Spieler-ID und die Kartenansichten. Deine Einstellungen werden gespeichert.\n\nDass die Anzeige bei offener Karte, im Pausemenü, beim Tod oder im Kinomodus verschwindet, ist kein Fehler.",
@@ -475,7 +463,7 @@
    ]
   },
   {
-   "id": "4-8",
+   "id": "4-7",
    "kategorie": "4",
    "frage": "Wie mache ich Emotes und Animationen?",
    "antwort": "Über das Radial-Menü oder die Taste P.\n\nDrin sind Begrüßungen, Feiern, Applaus, Provozieren, jede Menge Emotes, dazu Kleidungsumschalter für Hut, Maske und Bandana sowie Direktzugriffe auf Haustiere, Hausverwaltung und Camp.\n\nLieblingsanimationen erreichst du direkt mit /a, zum Beispiel /a sit. Abbrechen mit /clear.\n\nFür Alltagsgegenstände gibt es zusätzlich das Interaktionsmenü: An Stühlen, Bänken, Betten, Badewannen oder Pianos [ALT] gedrückt halten, dann erscheinen passende Möglichkeiten.",
@@ -491,7 +479,7 @@
    ]
   },
   {
-   "id": "4-9",
+   "id": "4-8",
    "kategorie": "4",
    "frage": "Wie schreibe ich jemandem, der gerade nicht da ist?",
    "antwort": "Mit einem Telegramm. Du benutzt es aus dem Inventar, dann kommt nach kurzer Zeit ein Postbote auf einem Pferd zu dir. Erst wenn er da ist, kannst du das Telegramm ausfüllen und abschicken.\n\nEs gibt normale und anonyme Telegramme. Geld lässt sich mitschicken.\n\nEingehende Telegramme kommen mit kurzer Verzögerung an, prüfen kannst du sie mit /telegram.",
@@ -505,7 +493,7 @@
    ]
   },
   {
-   "id": "4-10",
+   "id": "4-9",
    "kategorie": "4",
    "frage": "Wie funktioniert das Telefon?",
    "antwort": "An den gesetzten Telefonen — aktuell in Arztpraxen, bei den Sheriffs, im Gerichtshof, in der Regierung und im Präsidialamt. Das Netz wird noch erweitert.\n\nWichtig: Nur unsere Telefone funktionieren. Die Telefon-Props, die überall in der Spielwelt herumstehen, reagieren nicht. Das ist so gewollt.\n\nMit E öffnest du das Telefon und nimmst Anrufe an. Rechts steht die Nummernliste mit allen erreichbaren Anschlüssen, du musst nichts auswendig lernen. Die Ziffern werden **angeklickt**, nicht gedreht — nach jeder Ziffer läuft kurz die Drehanimation. Der Knopf in der Mitte startet den Anruf.\n\nAufgelegt wird mit der **Rücktaste**. Die steht nirgends im Spiel und ist der häufigste Grund für Rückfragen.\n\nKlingeln hörst du schon von weitem, rangehen kannst du erst direkt am Apparat.",
@@ -519,26 +507,23 @@
    ]
   },
   {
-   "id": "4-11",
+   "id": "4-10",
    "kategorie": "4",
    "frage": "Was kann ich machen, wenn gerade wenig los ist?",
-   "antwort": "Einiges:\n\n• Gesellschaftsspiele als Gegenstände aus dem Gemischtwarenladen — UNO, Stadt-Land-Fluss, Flaschendrehen, Tic Tac Toe, dazu Sudoku, Galgenraten und Kreuzworträtsel für allein\n• Schere, Stein, Papier über /rps\n• Ein Duell über /duel\n• Fotografieren mit der Kamera vom Waffenschmied, Bilder lassen sich im Fotostudio zu einem Gegenstand machen\n• Poster an Telefonmasten aufhängen\n• Beiträge an die schwarzen Bretter in den Städten pinnen\n• Ein Notizbuch führen über /notizbuch\n• Baden gehen\n• Auf Schatzsuche gehen\n\nUnd das Tagesgeschenk nicht vergessen — einmal am Tag über das Radial-Menü oder /dailygift.",
+   "antwort": "Mehr, als hier stehen sollte.\n\nEs gibt Gesellschaftsspiele als Gegenstände, Dinge zum Sammeln und Suchen, und jede Menge Kleinigkeiten, die man beim Herumstreifen findet.\n\nVergiss das Tagesgeschenk nicht — einmal am Tag über das Radial-Menü.\n\nUnd der beste Zeitvertreib bleibt: jemanden ansprechen.",
    "syn": [
     "langeweile",
     "freizeit",
-    "spiele",
-    "minispiele",
-    "uno",
     "zeitvertreib",
     "was tun",
     "aktivitaeten"
    ]
   },
   {
-   "id": "4-12",
+   "id": "4-11",
    "kategorie": "4",
-   "frage": "Ich bin einfach umgefallen — was ist passiert?",
-   "antwort": "Wahrscheinlich Bewusstlosigkeit. Wenn deine Gesundheit niedrig ist und du Faust- oder Hammertreffer abbekommst, geht dein Charakter zu Boden. Das ist kein Fehler.\n\nWas dann gilt, steht in der New Life Regel: Du siehst und hörst nichts, während du unten liegst, und erinnerst dich danach nur an die Zeit bis zum Fall.\n\nWiederbeleben können dich Mitspieler mit medizinischem Hintergrund. Es gibt außerdem einen NPC-Doktor gegen Bezahlung.",
+   "frage": "Ich bin umgefallen — bin ich tot?",
+   "antwort": "Nein. Umfallen heißt bewusstlos, nicht tot.\n\nWenn deine Gesundheit niedrig ist und du Faust- oder Hammertreffer abbekommst, geht dein Charakter zu Boden. Du kannst wieder aufstehen — Mitspieler mit medizinischem Hintergrund können dich behandeln, und es gibt einen NPC-Doktor gegen Bezahlung.\n\nWährend du unten liegst, siehst und hörst dein Charakter nichts und erinnert sich danach nur an die Zeit bis zum Fall.\n\nErst wenn dein Charakter wirklich stirbt, greift die New Life Regel.",
    "syn": [
     "bewusstlos",
     "umgefallen",
@@ -546,12 +531,14 @@
     "ko",
     "down",
     "tot",
+    "gestorben",
     "wiederbeleben",
-    "rev"
+    "rev",
+    "aufstehen"
    ]
   },
   {
-   "id": "4-13",
+   "id": "4-12",
    "kategorie": "4",
    "frage": "Wie werde ich wieder sauber?",
    "antwort": "Zwei Wege:\n\nBaden in den Badehäusern der Städte — ein normales Bad kostet wenig, ein Luxusbad etwas mehr.\n\nOder unterwegs waschen: an Waschfässern, Waschbecken, Waschzubern, Wassereimern und Wassertrögen. Dafür brauchst du ein Waschtuch oder Seife und drückst E. Die Wasch-Items nutzen sich mit der Zeit ab.",
