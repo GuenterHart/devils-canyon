@@ -1,0 +1,363 @@
+{
+ "stand": "04.08.2026",
+ "kategorien": [
+  {
+   "nr": "1",
+   "titel": "Einstieg & Whitelist",
+   "intro": "Alles, was du brauchst, um bei uns anzufangen."
+  },
+  {
+   "nr": "2",
+   "titel": "Regeln & Support",
+   "intro": "Die häufigsten Fragen zum Regelwerk und zum Ticket-System. Das vollständige Regelwerk findest du unter devils-canyon.de/regeln."
+  },
+  {
+   "nr": "3",
+   "titel": "Verbindung & Technik",
+   "intro": "Wenn RedM klemmt, das Spiel abstürzt oder die Verbindung nicht zustande kommt."
+  }
+ ],
+ "eintraege": [
+  {
+   "id": "1-1",
+   "kategorie": "1",
+   "frage": "Was ist Devil's Canyon?",
+   "antwort": "Ein deutschsprachiger Roleplay-Server für Red Dead Redemption 2, angesiedelt im Jahr 1899.\n\nKein Deathmatch mit Hüten, sondern eine Welt, in der dein Charakter ein Leben führt: mit Arbeit, Ruf, Schulden und Leuten, die sich an dich erinnern. Die Wirtschaft hängt zusammen — wer sammelt, verarbeitet und verkauft, hält sie am Laufen.",
+   "syn": [
+    "was ist das",
+    "server",
+    "worum geht es",
+    "rp",
+    "roleplay"
+   ]
+  },
+  {
+   "id": "1-2",
+   "kategorie": "1",
+   "frage": "Was brauche ich, um mitspielen zu können?",
+   "antwort": "• Red Dead Redemption 2 im Besitz — Steam, Epic oder Rockstar, alle funktionieren\n• Den Rockstar Games Launcher, einmal eingerichtet und angemeldet\n• RedM, kostenlos von cfx.re\n• Ein funktionierendes Mikrofon ohne störende Hintergrundgeräusche\n• Discord\n• Mindestalter 18 Jahre\n\nRDR2 muss vorher einmal ganz normal gestartet worden sein, sonst findet RedM die Installation nicht.",
+   "syn": [
+    "voraussetzungen",
+    "brauche ich",
+    "was benoetige ich",
+    "anforderungen",
+    "redm"
+   ]
+  },
+  {
+   "id": "1-3",
+   "kategorie": "1",
+   "frage": "Wie werde ich freigeschaltet?",
+   "antwort": "Es gibt keine Bewerbung und kein Formular im Discord. Die Freischaltung läuft direkt im Spiel.\n\nDu verbindest dich, erstellst deinen Charakter — und danach erscheint ein kurzer Fragebogen. Sieben Fragen im Multiple-Choice-Verfahren, alle zum Regelwerk und zum Verhalten im Roleplay. Pro Frage hast du Zeit, du musst also nicht hetzen.\n\nBestehst du, wird deine Rolle automatisch vergeben und du bist drin.\n\nWichtig: Falsche Antworten haben Folgen. Lies das Regelwerk vorher durch — alle Antworten stehen dort drin, und das ist ausdrücklich so gedacht.",
+   "syn": [
+    "whitelist",
+    "freischaltung",
+    "quiz",
+    "fragebogen",
+    "test",
+    "aufnahme",
+    "zugang",
+    "bewerbung"
+   ]
+  },
+  {
+   "id": "1-4",
+   "kategorie": "1",
+   "frage": "Wie verbinde ich mich auf den Server?",
+   "antwort": "Nach der Freischaltung findest du uns direkt in der RedM-Serverliste — such dort nach Devil's Canyon.\n\nDen direkten Verbindungslink gibt es im Discord im Kanal Verbinden.",
+   "syn": [
+    "verbinden",
+    "beitreten",
+    "connect",
+    "wie komme ich drauf",
+    "serverliste",
+    "ip"
+   ]
+  },
+  {
+   "id": "1-5",
+   "kategorie": "1",
+   "frage": "Ich bin neu — wo fange ich an?",
+   "antwort": "Erstell deinen Charakter und komm einfach in der Welt an. Du musst nicht sofort wissen, wer du sein willst — das entwickelt sich beim Spielen.\n\nEin paar Anlaufstellen für den Anfang: Die öffentlichen Arbeiten und der Zeitungsdienst brauchen keine Voraussetzungen und bringen dich mit Leuten in Kontakt. Wo du die findest, zeigt dir die Karte unter devils-canyon.de/karte.\n\nUnd im Discord gibt es einen Anfänger-Guide, der die ersten Schritte durchgeht.",
+   "syn": [
+    "neu",
+    "anfang",
+    "erste schritte",
+    "einstieg",
+    "was mache ich"
+   ]
+  },
+  {
+   "id": "1-6",
+   "kategorie": "1",
+   "frage": "Gibt es eine Probezeit?",
+   "antwort": "Ja, die ersten vier Wochen gelten als Probezeit.\n\nDas heißt nicht, dass wir dir auf die Finger schauen — es heißt, dass wir uns beide anschauen, ob es passt.",
+   "syn": [
+    "probezeit",
+    "testphase",
+    "vier wochen"
+   ]
+  },
+  {
+   "id": "1-7",
+   "kategorie": "1",
+   "frage": "Muss ich Deutsch sprechen?",
+   "antwort": "Ja, die Serversprache ist Deutsch.\n\nEinzelne fremdsprachige Wörter sind kein Problem, solange die Verständigung nicht darunter leidet.",
+   "syn": [
+    "sprache",
+    "deutsch",
+    "englisch",
+    "fremdsprache"
+   ]
+  },
+  {
+   "id": "1-8",
+   "kategorie": "1",
+   "frage": "Brauche ich wirklich ein Mikrofon?",
+   "antwort": "Ja. Roleplay läuft bei uns über Sprache — ohne Mikrofon kannst du nicht mitspielen.\n\nEs muss kein teures Gerät sein, aber es sollte verständlich sein und keine dauerhaften Hintergrundgeräusche übertragen.",
+   "syn": [
+    "mikrofon",
+    "mikro",
+    "headset",
+    "sprechen",
+    "voice"
+   ]
+  },
+  {
+   "id": "1-9",
+   "kategorie": "1",
+   "frage": "Was kommt im Whitelist-Fragebogen dran?",
+   "antwort": "Alles, was du wissen musst, steht im Regelwerk unter devils-canyon.de/regeln. Die Fragen prüfen kein Detailwissen, sondern ob du das Grundprinzip verstanden hast.\n\nDiese Themen solltest du vorher gelesen haben:\n• RDM — was gilt als grundloses Töten\n• Fail-RP — und wie man richtig damit umgeht, wenn es einem passiert\n• Meta — welches Wissen dein Charakter haben darf und welches nicht\n• Wortwahl und Zeitkolorit — wir spielen 1899, nicht heute\n• Verbotene RP-Inhalte\n• Raub und Überfälle — was man einem Opfer abnehmen darf\n• Lasso und Schussankündigung\n\nWenn du dir bei einem Thema unsicher bist, lies den entsprechenden Abschnitt lieber zweimal. Der Fragebogen ist keine Schikane, sondern soll sicherstellen, dass alle mit denselben Grundlagen anfangen.",
+   "syn": [
+    "fragebogen",
+    "quiz",
+    "fragen",
+    "whitelist fragen",
+    "vorbereitung",
+    "worauf achten",
+    "test"
+   ]
+  },
+  {
+   "id": "2-1",
+   "kategorie": "2",
+   "frage": "Wo finde ich das Regelwerk?",
+   "antwort": "Unter devils-canyon.de/regeln — dort kannst du suchen und direkt auf einzelne Paragraphen verlinken.\n\nIm Discord steht es außerdem im Kanal Serverregeln. Und du kannst jederzeit /regel gefolgt von einem Stichwort im Discord eingeben, zum Beispiel /regel rdm oder /regel 2.9.",
+   "syn": [
+    "regeln",
+    "regelwerk",
+    "wo stehen die regeln",
+    "paragraph"
+   ]
+  },
+  {
+   "id": "2-2",
+   "kategorie": "2",
+   "frage": "Was bedeuten RDM, VDM und Meta?",
+   "antwort": "RDM heißt Random Deathmatch: jemanden ohne nachvollziehbaren RP-Grund angreifen oder töten. Verboten.\n\nVDM und HDM meinen dasselbe mit Fahrzeug oder Pferd — jemanden umreiten oder überfahren, ohne dass es dafür einen Grund im Spiel gibt. Ebenfalls verboten.\n\nMeta bedeutet, Wissen von außerhalb des Spiels einzusetzen: aus Discord, aus einem Stream, aus einem Gespräch nebenbei. Dein Charakter weiß nur, was er im Spiel erlebt hat.\n\nDie ausformulierten Regeln dazu findest du im Regelwerk.",
+   "syn": [
+    "rdm",
+    "vdm",
+    "hdm",
+    "meta",
+    "metagaming",
+    "random deathmatch",
+    "was bedeutet"
+   ]
+  },
+  {
+   "id": "2-3",
+   "kategorie": "2",
+   "frage": "Was ist die New Life Regel?",
+   "antwort": "Sie regelt, was nach schweren Verletzungen, Bewusstlosigkeit oder dem Tod deines Charakters gilt.\n\nDer Kern: Während der Bewusstlosigkeit sieht und hört dein Charakter nichts, und nach dem Erwachen erinnert er sich nur an die Zeit bis zum Fall. Wer danach zurückkommt, um sich zu rächen, oder plötzlich weiß, wer die Täter waren, spielt gegen die Regel.\n\nDazu gehört auch eine Erholungsphase — direkt nach dem Aufwachen wieder in den Kampf zu ziehen, ist nicht drin.",
+   "syn": [
+    "nlr",
+    "new life",
+    "new life regel",
+    "bewusstlos",
+    "tod",
+    "erinnerung"
+   ]
+  },
+  {
+   "id": "2-4",
+   "kategorie": "2",
+   "frage": "Was ist ein Bloodout?",
+   "antwort": "Der endgültige Tod deines Charakters.\n\nDamit verliert er den RP-Strang seiner Fraktion und sämtliche Erinnerungen an die vorherige Situation. Das ist unwiderruflich.\n\nDie genauen Bedingungen stehen im Regelwerk unter §4.6.",
+   "syn": [
+    "bloodout",
+    "chartod",
+    "charaktertod",
+    "permatod",
+    "endgueltiger tod"
+   ]
+  },
+  {
+   "id": "2-5",
+   "kategorie": "2",
+   "frage": "Wie melde ich einen Regelverstoß?",
+   "antwort": "Über ein Ticket im Discord. Nicht im Chat, nicht per Direktnachricht ans Team, und vor allem nicht mitten in der laufenden Szene.\n\nWichtig sind zwei Dinge: ein Videobeweis, der die Situation vollständig, unbearbeitet und mit Ton zeigt, und dass du dich zeitnah meldest. Einzelne Screenshots reichen nicht.\n\nOhne Videobeweis kann ein Ticket abgelehnt werden.",
+   "syn": [
+    "melden",
+    "ticket",
+    "regelverstoss",
+    "beschwerde",
+    "report",
+    "anzeigen"
+   ]
+  },
+  {
+   "id": "2-6",
+   "kategorie": "2",
+   "frage": "Bekomme ich verlorene Sachen erstattet?",
+   "antwort": "Nicht automatisch. Erstattet wird nur, was durch serverseitige Fehler, Bugs, Crashes oder unplanmäßige Neustarts verlorengegangen ist.\n\nNicht erstattet werden Client-Abstürze bei dir, Fehlbedienung, falsche Übergaben und Eigenverschulden.\n\nFür einen Antrag brauchst du ein Ticket innerhalb der Frist und einen Videobeweis. Es gibt außerdem einen Mindestwert — Kleinbeträge werden nicht bearbeitet. Die genauen Zahlen stehen im Regelwerk unter §5.7.",
+   "syn": [
+    "erstattung",
+    "rueckerstattung",
+    "verloren",
+    "weg",
+    "bug",
+    "wiederherstellung"
+   ]
+  },
+  {
+   "id": "2-7",
+   "kategorie": "2",
+   "frage": "Was ist ein Warn und was passiert danach?",
+   "antwort": "Ein Warn dokumentiert einen Regelverstoß. Er dient der Nachvollziehbarkeit, nicht der Bestrafung um ihrer selbst willen.\n\nWenn du eine Zeit lang nicht mehr auffällst, kannst du per Ticket beantragen, dass ein Warn gelöscht wird. Sammeln sich mehrere aktive Warns an, führt das zum Ausschluss.\n\nDie genauen Zahlen stehen im Regelwerk unter §5.9.",
+   "syn": [
+    "warn",
+    "verwarnung",
+    "strafe",
+    "sanktion",
+    "bann",
+    "ban"
+   ]
+  },
+  {
+   "id": "2-8",
+   "kategorie": "2",
+   "frage": "Kann ich meinen Charakternamen ändern?",
+   "antwort": "Nur eingeschränkt. Nach der Erstellung sind Änderungen ausschließlich am Nachnamen möglich, und auch nur im Rahmen einer Eheschließung.\n\nWenn du direkt nach der Erstellung merkst, dass etwas nicht stimmt, melde dich zeitnah per Ticket. Später sind Anpassungen ausgeschlossen.",
+   "syn": [
+    "name",
+    "namen aendern",
+    "charakter aendern",
+    "umbenennen",
+    "heirat"
+   ]
+  },
+  {
+   "id": "2-9",
+   "kategorie": "2",
+   "frage": "Wie gründe ich ein Unternehmen?",
+   "antwort": "Zwei Dinge musst du mitbringen: eine Mindestspielzeit auf dem Server und ein ausführliches Konzept.\n\nDas Konzept reichst du als Google-Docs-Dokument per Ticket ein. Es sollte enthalten, was das Unternehmen ist und wem es gehört, welche Waren oder Dienstleistungen angeboten werden, welchen Mehrwert es fürs Roleplay bringt und wo es langfristig hinsoll.\n\nWenn dir Google Docs nichts sagt, sag im Ticket Bescheid — dann helfen wir dir dabei. Erst nach Genehmigung durch die Serverleitung darf das Unternehmen offiziell gegründet werden.",
+   "syn": [
+    "unternehmen",
+    "firma",
+    "gruenden",
+    "gewerbe",
+    "laden",
+    "betrieb",
+    "konzept"
+   ]
+  },
+  {
+   "id": "3-1",
+   "kategorie": "3",
+   "frage": "RedM startet gar nicht",
+   "antwort": "Der Reihe nach:\n\n• Starte Red Dead Redemption 2 einmal ganz normal und lass es bis ins Hauptmenü laufen. RedM braucht das, um die Installation zu finden.\n• Der Rockstar Games Launcher muss installiert und angemeldet sein.\n• Starte RedM einmal als Administrator.\n• Prüf, ob dein Virenscanner RedM blockiert. Einige erkennen es fälschlich als verdächtig.\n\nHilft nichts davon, deinstallier RedM und installier es neu von cfx.re. Deine Spieldaten sind davon nicht betroffen.",
+   "syn": [
+    "redm startet nicht",
+    "startet nicht",
+    "geht nicht auf",
+    "oeffnet nicht",
+    "absturz beim start"
+   ]
+  },
+  {
+   "id": "3-2",
+   "kategorie": "3",
+   "frage": "Ich hänge ewig im Ladebildschirm",
+   "antwort": "Beim ersten Verbinden lädt dein Rechner mehrere Gigabyte an Server-Inhalten herunter. Das dauert je nach Leitung eine ganze Weile und ist normal — beim zweiten Mal geht es deutlich schneller.\n\nHängt es dauerhaft an derselben Stelle, leer den Cache:\n\n1. RedM komplett schließen\n2. Windows-Taste + R, dann %LOCALAPPDATA%\\RedM\\RedM.app\\data eingeben\n3. Den Ordner cache löschen\n4. RedM neu starten\n\nDer Ordner wird beim nächsten Verbinden neu angelegt. Du lädst danach einmal alles neu, dafür sind kaputte Dateien weg.",
+   "syn": [
+    "ladebildschirm",
+    "laedt ewig",
+    "haengt",
+    "laden",
+    "cache",
+    "stuck"
+   ]
+  },
+  {
+   "id": "3-3",
+   "kategorie": "3",
+   "frage": "Die Verbindung wird abgelehnt oder bricht ab",
+   "antwort": "Häufigste Ursachen:\n\n• Du bist noch nicht freigeschaltet. Ohne Whitelist kommst du nicht rein.\n• Der Server läuft gerade nicht oder wird neu gestartet. Schau im Discord, ob etwas angekündigt wurde.\n• Deine RDR2-Version ist veraltet. Nach einem Rockstar-Update muss auch RedM einmal aktualisiert werden.\n\nBleibt es dabei, mach einen Screenshot der Fehlermeldung und meld dich per Ticket. Die genaue Meldung sagt uns meistens sofort, woran es liegt.",
+   "syn": [
+    "verbindung",
+    "abgelehnt",
+    "timeout",
+    "rejected",
+    "kick",
+    "kommt nicht rein",
+    "connection"
+   ]
+  },
+  {
+   "id": "3-4",
+   "kategorie": "3",
+   "frage": "Das Spiel stürzt mittendrin ab",
+   "antwort": "Erst das Naheliegende ausschließen:\n\n• Überprüf die Spieldateien über Steam, Epic oder den Rockstar Launcher.\n• Aktualisier deinen Grafiktreiber.\n• Schalt Overlays ab, die sich ins Spiel einklinken — Aufnahmeprogramme, das Steam-Overlay, Streaming-Werkzeuge. Die sind eine häufige Absturzursache und lassen sich in zwei Minuten testen.\n• Leer den Cache, wie unter Ladebildschirm beschrieben.\n\nStürzt es weiter ab, meld dich per Ticket. RedM legt bei einem Absturz automatisch einen Bericht an — den brauchen wir, um etwas dazu sagen zu können.",
+   "syn": [
+    "absturz",
+    "crash",
+    "stuerzt ab",
+    "fliegt raus",
+    "freeze",
+    "haengt sich auf"
+   ]
+  },
+  {
+   "id": "3-5",
+   "kategorie": "3",
+   "frage": "Wo finde ich meinen Absturzbericht?",
+   "antwort": "RedM legt nach einem Absturz automatisch eine ZIP-Datei an. Du findest sie hier:\n\nWindows-Taste + R, dann %LOCALAPPDATA%\\RedM\\RedM.app\\crashes eingeben.\n\nNimm die neueste Datei und häng sie an dein Ticket. Ohne die können wir bei Abstürzen wenig ausrichten — mit ihr sehen wir oft direkt, woran es lag.",
+   "syn": [
+    "crashdump",
+    "absturzbericht",
+    "dump",
+    "log",
+    "fehlerbericht"
+   ]
+  },
+  {
+   "id": "3-6",
+   "kategorie": "3",
+   "frage": "Mein Mikrofon funktioniert nicht",
+   "antwort": "• Prüf in den Windows-Sound-Einstellungen, ob das richtige Gerät als Standard eingestellt ist.\n• Schau nach, ob Windows den Mikrofonzugriff für Apps überhaupt erlaubt.\n• Im Spiel: Voice-Chat in den Einstellungen aktiviert und das richtige Eingabegerät gewählt?\n• Wenn du Discord parallel laufen hast, kann eine exklusive Gerätebelegung dazwischenfunken.\n\nHör dich testweise selbst ab, bevor du dich meldest — dann weißt du schon, ob das Mikrofon überhaupt Signal liefert.",
+   "syn": [
+    "mikrofon geht nicht",
+    "mikro",
+    "kein ton",
+    "hoert mich niemand",
+    "voice",
+    "sprachchat"
+   ]
+  },
+  {
+   "id": "3-7",
+   "kategorie": "3",
+   "frage": "Ich habe wenig FPS",
+   "antwort": "RDR2 ist auch ohne Server anspruchsvoll, und ein Roleplay-Server mit vielen zusätzlichen Gebäuden und Objekten fordert die Grafikkarte zusätzlich.\n\nWas am meisten bringt:\n\n• Texturqualität und Schatten eine Stufe runter — die kosten am meisten\n• Grafiktreiber aktuell halten\n• Aufnahme- und Overlay-Programme im Hintergrund beenden\n• In dichten Städten wie Saint Denis ist die Bildrate naturgemäß niedriger als auf freiem Feld\n\nBleibt es unspielbar, meld dich per Ticket mit deiner Hardware — dann schauen wir uns konkrete Einstellungen an.",
+   "syn": [
+    "fps",
+    "ruckelt",
+    "lag",
+    "performance",
+    "langsam",
+    "bildrate"
+   ]
+  }
+ ]
+}
