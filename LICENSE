@@ -1,0 +1,22 @@
+Copyright (c) 2026 Guenter Hart / Devil's Canyon RolePlay
+Alle Rechte vorbehalten.
+
+Diese Website und ihre Bestandteile — Quelltext, Gestaltung, Layout,
+Texte, Regelwerk, FAQ sowie die Kartendaten und Markerpositionen unter
+karte/ — sind urheberrechtlich geschuetzt.
+
+Eine Vervielfaeltigung, Bearbeitung, Verbreitung oder Weiterverwendung,
+ganz oder in Teilen, ist ohne vorherige schriftliche Zustimmung nicht
+gestattet. Das Repository ist ausschliesslich zur Auslieferung der
+Website ueber GitHub Pages oeffentlich; es handelt sich nicht um ein
+Open-Source-Projekt, und es wird keine Nutzungslizenz eingeraeumt.
+
+Ausgenommen sind Bestandteile Dritter, die eigenen Lizenzbedingungen
+unterliegen:
+  - Leaflet und Leaflet.markercluster (BSD-2-Clause)
+  - die verwendeten Schriftarten in fonts/ (SIL Open Font License)
+  - die Kartengrundlage sowie Bildmaterial aus Red Dead Redemption 2
+    (Rechte bei Take-Two Interactive / Rockstar Games; Nutzung im
+    Rahmen der Fan-Content-Richtlinie, nicht kommerziell)
+
+Kontakt: siehe Impressum am Ende der Startseite, https://devils-canyon.de
