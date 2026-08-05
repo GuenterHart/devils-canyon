@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Häufige Fragen – Devil's Canyon</title>
-<meta name="description" content="Häufige Fragen rund um Devil's Canyon: Einstieg, Regeln und Technik.">
+<title>Changelog – Devil's Canyon</title>
+<meta name="description" content="Alle Änderungen und Neuerungen auf Devil's Canyon.">
 <link rel="icon" href="../img/dc-logo.png">
 
 <style>
@@ -251,7 +251,7 @@
 
   .rule {
     display: grid;
-    grid-template-columns: 76px 1fr;
+    grid-template-columns: 92px 1fr;
     gap: 22px;
     padding: 22px 24px;
     background: linear-gradient(160deg, rgba(37,29,23,0.94) 0%, rgba(34,27,22,0.92) 70%);
@@ -447,6 +447,7 @@
   <a href="../karte/">Interaktive Karte</a>
   <a href="../regeln/">Regelwerk</a>
   <a href="../faq/">Häufige Fragen</a>
+  <a href="../changelog/">Changelog</a>
   <hr>
   <a href="https://cfx.re/join/krlzav">Server beitreten</a>
   <a href="https://discord.gg/yWe493bN8T">Discord beitreten</a>
@@ -456,7 +457,7 @@
 <header>
   <div class="wrap">
     <a class="back" href="../">← Zur Startseite</a>
-    <h1>Häufige Fragen</h1>
+    <h1>Changelog</h1>
     <p class="stand" id="stand">Devil&rsquo;s Canyon</p>
   </div>
 </header>
@@ -466,11 +467,11 @@
     <div class="field">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
       <input id="q" type="search" autocomplete="off" spellcheck="false"
-             placeholder="Frage suchen – z.&nbsp;B. Whitelist, Mikrofon, Absturz oder Erstattung"
-             aria-label="Häufige Fragen durchsuchen">
+             placeholder="Changelog durchsuchen – z.&nbsp;B. Banking, Crafting oder Jahreszeiten"
+             aria-label="Changelog durchsuchen">
       <button id="clear" type="button" aria-label="Suche leeren">×</button>
     </div>
-    <div class="chips" id="chips" role="group" aria-label="Nach Kategorie filtern"></div>
+    <div class="chips" id="chips" role="group" aria-label="Nach Jahr filtern"></div>
     <p class="count" id="count" role="status" aria-live="polite"></p>
   </div>
 </div>
@@ -479,7 +480,7 @@
 
 <footer>
   <div class="wrap">
-    Etwas nicht gefunden? Frag im Discord nach – wir nehmen die Frage dann hier mit auf.
+    Nicht alles steht im Changelog – manches müsst ihr im Spiel selbst herausfinden.
   </div>
 </footer>
 
@@ -542,7 +543,7 @@
     elClear.style.display = query ? "block" : "none";
 
     var rules = DATA.eintraege.filter(function (r) {
-      return sectionFilter === "alle" || r.kategorie === sectionFilter;
+      return sectionFilter === "alle" || r._jahr === sectionFilter;
     });
 
     if (tokens.length) {
@@ -556,37 +557,33 @@
       elCount.textContent = "Keine Treffer";
       elList.innerHTML =
         '<div class="notice"><strong>Nichts gefunden</strong>' +
-        "Versuch einen anderen Begriff – etwa <em>Whitelist</em>, <em>Absturz</em> " +
-        "oder <em>Erstattung</em>. Wenn deine Frage hier fehlt, frag im Discord nach." +
+        "Versuch einen anderen Begriff – etwa <em>Banking</em>, <em>Crafting</em> " +
+        "oder eine Changelog-Nummer." +
         "</div>";
       return;
     }
 
-    elCount.textContent = rules.length === 1 ? "1 Frage" : rules.length + " Fragen";
+    elCount.textContent = rules.length === 1 ? "1 Eintrag" : rules.length + " Einträge";
 
     var html = "", lastSection = null, group = !tokens.length;
 
     rules.forEach(function (r) {
-      var katTitel = (DATA.kategorien.filter(function (k) { return k.nr === r.kategorie; })[0] || {}).titel || "";
-      if (group && katTitel !== lastSection) {
-        html += '<h2 class="section-head">' + esc(katTitel) + "</h2>";
-        var meta = INTROS[r.kategorie];
-        if (meta) {
-          html += '<div class="section-intro">' + esc(meta) + "</div>";
-        }
-        lastSection = katTitel;
+      if (group && r._jahr !== lastSection) {
+        html += '<h2 class="section-head">' + esc(r._jahr) + "</h2>";
+        lastSection = r._jahr;
       }
-      var long = r.antwort.length > 620;
+      var long = (r.text || "").length > 900;
       html +=
         '<article class="rule" id="' + esc(r.id) + '">' +
           '<button class="num" type="button" data-id="' + esc(r.id) + '" ' +
-                  'title="Link zu dieser Frage kopieren">' + esc(r.id.replace("-", ".")) +
-            "<small>Link</small>" +
+                  'title="Link zu diesem Eintrag kopieren">' +
+            (r.nummer ? "#" + esc(String(r.nummer)) : "•") +
+            "<small>" + esc(r.datum || "") + "</small>" +
           "</button>" +
           "<div>" +
-            "<h3>" + mark(r.frage, tokens) + "</h3>" +
-            '<p class="body' + (long ? " clip" : "") + '">' + mark(r.antwort, tokens) + "</p>" +
-            (long ? '<button class="more" type="button">Ganze Antwort anzeigen</button>' : "") +
+            "<h3>" + mark(r.titel, tokens) + "</h3>" +
+            '<p class="body' + (long ? " clip" : "") + '">' + mark(r.text || "", tokens) + "</p>" +
+            (long ? '<button class="more" type="button">Ganzen Eintrag anzeigen</button>' : "") +
           "</div>" +
         "</article>";
     });
@@ -599,7 +596,7 @@
     if (more) {
       var p = more.previousElementSibling;
       var clipped = p.classList.toggle("clip");
-      more.textContent = clipped ? "Ganze Antwort anzeigen" : "Antwort einklappen";
+      more.textContent = clipped ? "Ganzen Eintrag anzeigen" : "Eintrag einklappen";
       return;
     }
     var num = e.target.closest(".num");
@@ -665,20 +662,25 @@
     el.scrollIntoView({ block: "start" });
   }
 
-  fetch("faq.json", { cache: "no-cache" })
+  fetch("changelog.json", { cache: "no-cache" })
     .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
     .then(function (d) {
       DATA = d;
-      (DATA.kategorien || []).forEach(function (a) {
-        if (a.intro) INTROS[a.nr] = a.intro;
-      });
+      // Jahre aus den Datumsangaben ableiten - eine feste Kategorienliste
+      // waere Pflegeaufwand, den niemand nachhalten würde.
+      var jahre = [];
       DATA.eintraege.forEach(function (r) {
-        r._nr    = "";
-        r._title = norm(r.frage);
-        r._text  = norm(r.antwort);
-        r._syn   = " " + (r.syn || []).map(norm).join(" ") + " ";
+        r._jahr  = (r.datum || "").split(".")[2] || "";
+        if (r._jahr && jahre.indexOf(r._jahr) === -1) jahre.push(r._jahr);
+        r._nr    = norm(String(r.nummer || ""));
+        r._title = norm(r.titel);
+        r._text  = norm(r.text);
+        r._syn   = " " + norm(r.datum || "") + " ";
       });
-      elStand.textContent = "Stand " + (DATA.stand || "–") + " · " + DATA.eintraege.length + " Fragen";
+      jahre.sort().reverse();
+      DATA.kategorien = jahre.map(function (j) { return { nr: j, titel: j }; });
+      elStand.textContent = "Stand " + (DATA.stand || "–") + " · "
+                          + DATA.eintraege.length + " Einträge";
       buildChips();
       render();
       fitScrollPadding();
@@ -686,8 +688,8 @@
     })
     .catch(function (err) {
       elList.innerHTML =
-        '<div class="notice error"><strong>Fragen lassen sich nicht laden</strong>' +
-        "Die Datei faq.json wurde nicht gefunden. Sie muss im selben Ordner liegen wie diese Seite. " +
+        '<div class="notice error"><strong>Changelog lässt sich nicht laden</strong>' +
+        "Die Datei changelog.json wurde nicht gefunden. Sie muss im selben Ordner liegen wie diese Seite. " +
         "Beim Testen ohne Webserver blockiert der Browser das Laden – dann über die Website öffnen." +
         "</div>";
       elCount.textContent = "";
