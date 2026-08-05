@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog – Devil's Canyon</title>
+<meta name="description" content="Alle Änderungen und Neuerungen auf Devil's Canyon.">
+<link rel="icon" href="../img/dc-logo.png">
+
+<style>
+  @font-face { font-family:'Sancreek'; src:url('../fonts/Sancreek-Regular.woff2') format('woff2');
+               font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-Regular.woff2') format('woff2');
+               font-weight:400; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-Medium.woff2') format('woff2');
+               font-weight:500; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-SemiBold.woff2') format('woff2');
+               font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Barlow Condensed'; src:url('../fonts/BarlowCondensed-Bold.woff2') format('woff2');
+               font-weight:700; font-style:normal; font-display:swap; }
+</style>
+<style>
+  :root {
+    --bg-deep:    #171310;
+    --bg-panel:   #221b16;
+    --bg-raised:  #2c231c;
+    --line:       #3d3226;
+    --gold:       #c8a46c;
+    --gold-brt:   #f0cf8e;
+    --fire:       #e8791e;
+    --cream:      #ece2d0;
+    --cream-dim:  #b8ab97;
+    --paper:      #d4b891;
+    --shadow:     0 12px 32px rgba(0,0,0,0.55);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 200px; } /* wird per JS an die echte Leistenhöhe angepasst */
+
+  body {
+    margin: 0;
+    position: relative;
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 0%, #1d1712 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 15% 45%, #1c1611 0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 85% 80%, #1c1611 0%, transparent 55%),
+      var(--bg-deep);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 19px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='300'%20height='300'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='4'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='300'%20height='300'%20filter='url%28%2523n%29'/%3E%3C/svg%3E");
+    background-size: 300px 300px;
+    opacity: 0.05;
+  }
+
+  .wrap { width: min(1080px, 92vw); margin-inline: auto; }
+
+  a { color: var(--gold-brt); }
+  mark { background: rgba(200,164,108,0.26); color: var(--gold-brt); padding: 0 0.12em; border-radius: 2px; }
+
+  ::selection { background: var(--gold); color: var(--bg-deep); }
+
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  /* ---------------------------------------------------------- Kopfbereich
+     Eigene Bildflaeche wie der Hero der Startseite. Damit hat die Naht
+     darunter eine echte Stossfuge zwischen zwei Flaechen und haelt etwas
+     zusammen, statt frei auf einheitlichem Grund zu liegen. */
+  header {
+    position: relative;
+    overflow: hidden;
+    padding: 52px 0 42px;
+    text-align: center;
+  }
+  /* Flach abgedunkeltes Bild mit HARTER Unterkante - genau wie die Abschnitte
+     der Startseite. Ein Verlauf nach unten wuerde die Kante aufloesen, dann
+     haette die Naht darunter nichts mehr zu halten. */
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(23,19,16,0.88), rgba(23,19,16,0.88)),
+      url('../img/hero-map.jpg');
+    background-size: cover;
+    background-position: center 35%;
+    background-repeat: no-repeat;
+  }
+  header .wrap { position: relative; z-index: 1; }
+
+  .back {
+    display: inline-block;
+    font-size: 0.9rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    text-decoration: none;
+    margin-bottom: 22px;
+    transition: color 0.18s ease;
+  }
+  .back:hover { color: var(--gold-brt); }
+
+  h1 {
+    font-family: 'Sancreek', serif;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 7vw, 3.4rem);
+    line-height: 1.1;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(180deg, #e6d2a8 12%, #c8a46c 48%, #8a6034 82%, #5c3d20 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stand {
+    margin: 12px 0 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+
+  /* ------------------------------------------------------------ Suchleiste */
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+    padding: 18px 0 15px;
+  }
+
+  /* Sattlernaht auf der Stossfuge zwischen Kopfbild und Suchleiste.
+     Sie liegt bewusst ALS AUFLAGE auf der Kante - je 14px ueber dem Bild und
+     ueber der Leiste. Ein eigenes Element dazwischen wuerde einen dunklen
+     Streifen erzeugen, und die Naht saesse in einer Rille statt auf der Fuge.
+     Da sie zur klebrigen Leiste gehoert, schiebt sie sich beim Scrollen
+     sauber mit nach oben aus dem Bild. */
+  .bar::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -14px;
+    height: 28px;
+    pointer-events: none;
+    background-image:
+      url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='24'%20height='28'%20viewBox='0%200%2024%2028'%3E%3Cg%20fill='none'%20stroke-linecap='round'%3E%3Cpath%20d='M%206.5%2012%20Q%209.5%207.2%2013%204.6'%20stroke='%23c8a46c'%20stroke-width='2.6'%20opacity='0.82'/%3E%3Cpath%20d='M%206.5%2016%20Q%209.5%2020.8%2013%2023.4'%20stroke='%23c8a46c'%20stroke-width='2.6'%20opacity='0.82'/%3E%3C/g%3E%3Ccircle%20cx='6.5'%20cy='14'%20r='2.1'%20fill='%23171310'/%3E%3Ccircle%20cx='6.5'%20cy='14'%20r='2.1'%20fill='none'%20stroke='%23c8a46c'%20stroke-width='0.9'%20opacity='0.55'/%3E%3Ccircle%20cx='13'%20cy='4.6'%20r='1.8'%20fill='%23171310'/%3E%3Ccircle%20cx='13'%20cy='4.6'%20r='1.8'%20fill='none'%20stroke='%23c8a46c'%20stroke-width='0.9'%20opacity='0.55'/%3E%3Ccircle%20cx='13'%20cy='23.4'%20r='1.8'%20fill='%23171310'/%3E%3Ccircle%20cx='13'%20cy='23.4'%20r='1.8'%20fill='none'%20stroke='%23c8a46c'%20stroke-width='0.9'%20opacity='0.55'/%3E%3C/svg%3E"),
+      linear-gradient(to right, rgba(200,164,108,0.42) 0 100%);
+    background-size: 24px 28px, 100% 1.4px;
+    background-position: center, center;
+    background-repeat: repeat-x, no-repeat;
+  }
+
+  .field { position: relative; display: flex; align-items: center; }
+  .field svg {
+    position: absolute; left: 16px; width: 19px; height: 19px;
+    stroke: var(--cream-dim); fill: none; stroke-width: 2;
+  }
+  #q {
+    width: 100%;
+    padding: 14px 48px 14px 47px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.05rem;
+    color: var(--cream);
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  #q::placeholder { color: #7d6e5c; }
+  #q:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,164,108,0.14); }
+  #q::-webkit-search-cancel-button { display: none; }
+
+  #clear {
+    position: absolute; right: 10px; display: none;
+    background: none; border: 0; cursor: pointer;
+    color: var(--cream-dim); font-size: 1.4rem; line-height: 1;
+    padding: 6px 10px; font-family: inherit;
+  }
+  #clear:hover { color: var(--cream); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chip {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--cream-dim);
+    background: rgba(23,19,16,0.6);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  }
+  .chip:hover { color: var(--gold-brt); border-color: var(--gold); }
+  .chip[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--bg-deep); }
+
+  .count {
+    margin: 12px 0 0;
+    font-size: 0.82rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+
+  /* ---------------------------------------------------------------- Regeln */
+  main { padding: 30px 0 90px; }
+
+  .section-head {
+    font-family: 'Sancreek', serif;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin: 42px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-head:first-child { margin-top: 6px; }
+
+  /* Einleitungstext des Abschnitts - Kontext, keine Regel. Deshalb ohne
+     Paragraphennummer und optisch zurueckgenommen. Bewusst NICHT einklappbar:
+     die laengste Einleitung hat acht Zeilen, da schneidet ein Einklappen nur
+     mitten im Satz ab, ohne nennenswert Platz zu sparen. */
+  .section-intro {
+    margin: 0 0 18px;
+    padding: 16px 20px;
+    border-left: 2px solid var(--line);
+    color: var(--cream-dim);
+    font-size: 0.97rem;
+    white-space: pre-wrap;
+  }
+
+
+  .rule {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 22px;
+    padding: 22px 24px;
+    background: linear-gradient(160deg, rgba(37,29,23,0.94) 0%, rgba(34,27,22,0.92) 70%);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line);
+    border-radius: 2px;
+    margin-bottom: 12px;
+    transition: border-color 0.18s ease;
+  }
+  .rule:target, .rule.flash { border-left-color: var(--fire); background: var(--bg-raised); }
+
+  .num {
+    font-family: 'Sancreek', serif;
+    font-weight: 400;
+    font-size: 1.35rem;
+    line-height: 1.2;
+    color: var(--gold-brt);
+    background: none; border: 0; padding: 0;
+    text-align: left; cursor: pointer;
+    transition: color 0.18s ease;
+  }
+  .num:hover { color: var(--fire); }
+  .num small {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7d6e5c;
+    margin-top: 6px;
+  }
+
+  .rule h3 {
+    margin: 0 0 8px;
+    font-size: 1.22rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--cream);
+  }
+  .rule .body { margin: 0; white-space: pre-wrap; color: var(--cream-dim); }
+  .rule .body.clip {
+    display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .more {
+    margin-top: 10px;
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .more:hover { color: var(--gold-brt); }
+
+  .notice { text-align: center; padding: 70px 20px; color: var(--cream-dim); }
+  .notice strong {
+    display: block;
+    font-family: 'Sancreek', serif; font-weight: 400;
+    font-size: 1.5rem; color: var(--cream); margin-bottom: 12px;
+  }
+  .notice.error strong { color: var(--fire); }
+
+  footer { padding: 0 0 70px; color: #7d6e5c; font-size: 0.95rem; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%);
+    background: var(--gold); color: var(--bg-deep);
+    font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.85rem;
+    padding: 10px 22px; border-radius: 6px; box-shadow: var(--shadow);
+    opacity: 0; pointer-events: none; transition: opacity 0.18s ease; z-index: 9998;
+  }
+  #toast.on { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+
+  @media (max-width: 640px) {
+    body { font-size: 18px; }
+    html { scroll-padding-top: 250px; }
+    header { padding: 32px 0 24px; }
+    .rule { grid-template-columns: 1fr; gap: 8px; padding: 18px; }
+    .num small { display: inline; margin-left: 10px; }
+  }
+  /* ---------------------------------------------------------------- Burger-Menü
+     Feste Navigation oben links. Sie pulsiert dezent, bis der Besucher sie
+     einmal geöffnet hat - danach nie wieder, sonst nervt es. */
+  #nav-btn {
+    position: fixed;
+    top: 22px;
+    left: 22px;
+    z-index: 900;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    cursor: pointer;
+    background: rgba(23,19,16,0.82);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    backdrop-filter: blur(6px);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  #nav-btn:hover { border-color: var(--gold); background: rgba(34,27,22,0.95); }
+
+  /* Die drei Striche werden absolut gesetzt statt über ein Raster verteilt.
+     Nur so treffen sich beide Linien beim Umschalten exakt in der Mitte -
+     mit Rasterabständen ergab das eine Pfeilform statt eines Kreuzes. */
+  #nav-btn span {
+    position: absolute;
+    left: 50%;
+    width: 24px;
+    height: 2px;
+    margin-left: -12px;
+    background: var(--gold);
+    border-radius: 1px;
+    transition: top 0.2s ease, transform 0.25s ease 0.05s, opacity 0.15s ease;
+  }
+  #nav-btn span:nth-child(1) { top: 17px; }
+  #nav-btn span:nth-child(2) { top: 25px; }
+  #nav-btn span:nth-child(3) { top: 33px; }
+
+  #nav-btn.offen span { transition: top 0.2s ease, transform 0.25s ease 0.2s, opacity 0.15s ease; }
+  #nav-btn.offen span:nth-child(1) { top: 25px; transform: rotate(45deg); }
+  #nav-btn.offen span:nth-child(2) { opacity: 0; }
+  #nav-btn.offen span:nth-child(3) { top: 25px; transform: rotate(-45deg); }
+
+  #nav-btn.pulst { animation: nav-puls 2.6s ease-in-out infinite; }
+  @keyframes nav-puls {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(200,164,108,0.42); border-color: var(--line); }
+    50%      { box-shadow: 0 0 0 12px rgba(200,164,108,0);  border-color: var(--gold); }
+  }
+
+  #nav-menu {
+    position: fixed;
+    top: 84px;
+    left: 22px;
+    z-index: 899;
+    min-width: 226px;
+    padding: 8px;
+    background: rgba(23,19,16,0.97);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  #nav-menu.offen { opacity: 1; transform: none; pointer-events: auto; }
+  #nav-menu a {
+    display: block;
+    padding: 11px 14px;
+    border-radius: 4px;
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.16s ease, color 0.16s ease;
+  }
+  #nav-menu a:hover { background: rgba(200,164,108,0.13); color: var(--gold-bright); }
+  #nav-menu hr {
+    border: 0;
+    height: 1px;
+    background: var(--line);
+    margin: 6px 10px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #nav-btn.pulst { animation: none; }
+    #nav-menu { transition: none; }
+  }
+  @media (max-width: 640px) {
+    #nav-btn { top: 14px; left: 14px; width: 46px; height: 46px; }
+    #nav-btn span:nth-child(1) { top: 14px; }
+    #nav-btn span:nth-child(2) { top: 22px; }
+    #nav-btn span:nth-child(3) { top: 30px; }
+    #nav-btn.offen span:nth-child(1),
+    #nav-btn.offen span:nth-child(3) { top: 22px; }
+    #nav-menu { top: 68px; left: 14px; right: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<button id="nav-btn" type="button"
+        aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-menu">
+  <span></span><span></span><span></span>
+</button>
+
+<nav id="nav-menu" aria-label="Hauptnavigation">
+  <a href="../">Startseite</a>
+  <a href="../karte/">Interaktive Karte</a>
+  <a href="../regeln/">Regelwerk</a>
+  <a href="../faq/">Häufige Fragen</a>
+  <a href="../changelog/">Changelog</a>
+  <hr>
+  <a href="https://cfx.re/join/krlzav">Server beitreten</a>
+  <a href="https://discord.gg/yWe493bN8T">Discord beitreten</a>
+</nav>
+
+
+<header>
+  <div class="wrap">
+    <a class="back" href="../">← Zur Startseite</a>
+    <h1>Changelog</h1>
+    <p class="stand" id="stand">Devil&rsquo;s Canyon</p>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="field">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+      <input id="q" type="search" autocomplete="off" spellcheck="false"
+             placeholder="Changelog durchsuchen – z.&nbsp;B. Banking, Crafting oder Jahreszeiten"
+             aria-label="Changelog durchsuchen">
+      <button id="clear" type="button" aria-label="Suche leeren">×</button>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Nach Jahr filtern"></div>
+    <p class="count" id="count" role="status" aria-live="polite"></p>
+  </div>
+</div>
+
+<main><div class="wrap" id="list"></div></main>
+
+<footer>
+  <div class="wrap">
+    Nicht alles steht im Changelog – manches müsst ihr im Spiel selbst herausfinden.
+  </div>
+</footer>
+
+<div id="toast" role="status">Link kopiert</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var DATA = null, sectionFilter = "alle", INTROS = {};
+  var elList  = document.getElementById("list");
+  var elQ     = document.getElementById("q");
+  var elClear = document.getElementById("clear");
+  var elChips = document.getElementById("chips");
+  var elCount = document.getElementById("count");
+  var elStand = document.getElementById("stand");
+  var elToast = document.getElementById("toast");
+
+  /* Deutsche Normalisierung. Ziffernfolgen wie 2.9 bleiben zusammen,
+     sonst würde daraus "2" und "9" und die Nummernsuche geht ins Leere. */
+  function norm(s) {
+    return (s || "").toLowerCase()
+      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+      .replace(/(\d)\./g, "$1~")
+      .replace(/[^a-z0-9~]+/g, " ").trim();
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function score(rule, tokens) {
+    var total = 0;
+    for (var i = 0; i < tokens.length; i++) {
+      var t = tokens[i], part = 0;
+      if (rule._title.indexOf(t) !== -1) part += 24;
+      if (rule._syn.indexOf(" " + t + " ") !== -1) part += 24;
+      else if (rule._syn.indexOf(t) !== -1) part += 12;
+      if (rule._text.indexOf(t) !== -1) part += 4;
+      if (part === 0) return 0;               // jedes Wort muss irgendwo vorkommen
+      total += part;
+    }
+    return total;
+  }
+
+  function mark(text, tokens) {
+    var out = esc(text);
+    var parts = tokens.filter(function (t) { return t.length > 1; })
+                      .map(function (t) { return t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); });
+    if (!parts.length) return out;
+    try { return out.replace(new RegExp("(" + parts.join("|") + ")", "gi"), "<mark>$1</mark>"); }
+    catch (e) { return out; }
+  }
+
+  function render() {
+    var query  = elQ.value.trim();
+    var tokens = norm(query).split(" ").filter(Boolean);
+    elClear.style.display = query ? "block" : "none";
+
+    var rules = DATA.eintraege.filter(function (r) {
+      return sectionFilter === "alle" || r._jahr === sectionFilter;
+    });
+
+    if (tokens.length) {
+      rules = rules.map(function (r) { return { r: r, s: score(r, tokens) }; })
+                   .filter(function (x) { return x.s > 0; })
+                   .sort(function (a, b) { return b.s - a.s; })
+                   .map(function (x) { return x.r; });
+    }
+
+    if (!rules.length) {
+      elCount.textContent = "Keine Treffer";
+      elList.innerHTML =
+        '<div class="notice"><strong>Nichts gefunden</strong>' +
+        "Versuch einen anderen Begriff – etwa <em>Banking</em>, <em>Crafting</em> " +
+        "oder eine Changelog-Nummer." +
+        "</div>";
+      return;
+    }
+
+    elCount.textContent = rules.length === 1 ? "1 Eintrag" : rules.length + " Einträge";
+
+    var html = "", lastSection = null, group = !tokens.length;
+
+    rules.forEach(function (r) {
+      if (group && r._jahr !== lastSection) {
+        html += '<h2 class="section-head">' + esc(r._jahr) + "</h2>";
+        lastSection = r._jahr;
+      }
+      var long = (r.text || "").length > 900;
+      html +=
+        '<article class="rule" id="' + esc(r.id) + '">' +
+          '<button class="num" type="button" data-id="' + esc(r.id) + '" ' +
+                  'title="Link zu diesem Eintrag kopieren">' +
+            (r.nummer ? "#" + esc(String(r.nummer)) : "•") +
+            "<small>" + esc(r.datum || "") + "</small>" +
+          "</button>" +
+          "<div>" +
+            "<h3>" + mark(r.titel, tokens) + "</h3>" +
+            '<p class="body' + (long ? " clip" : "") + '">' + mark(r.text || "", tokens) + "</p>" +
+            (long ? '<button class="more" type="button">Ganzen Eintrag anzeigen</button>' : "") +
+          "</div>" +
+        "</article>";
+    });
+
+    elList.innerHTML = html;
+  }
+
+  elList.addEventListener("click", function (e) {
+    var more = e.target.closest(".more");
+    if (more) {
+      var p = more.previousElementSibling;
+      var clipped = p.classList.toggle("clip");
+      more.textContent = clipped ? "Ganzen Eintrag anzeigen" : "Eintrag einklappen";
+      return;
+    }
+    var num = e.target.closest(".num");
+    if (num) {
+      var url = location.origin + location.pathname + "#" + num.dataset.id;
+      history.replaceState(null, "", "#" + num.dataset.id);
+      var show = function () {
+        elToast.classList.add("on");
+        setTimeout(function () { elToast.classList.remove("on"); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(show, show);
+      } else { show(); }
+    }
+  });
+
+  elQ.addEventListener("input", render);
+  elClear.addEventListener("click", function () { elQ.value = ""; render(); elQ.focus(); });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== elQ) {
+      e.preventDefault(); elQ.focus(); elQ.select();
+    }
+    if (e.key === "Escape" && document.activeElement === elQ) { elQ.value = ""; render(); }
+  });
+
+  function buildChips() {
+    var all = [{ nr: "alle", titel: "Alle" }].concat(DATA.kategorien);
+    elChips.innerHTML = all.map(function (a) {
+      return '<button class="chip" type="button" data-nr="' + esc(a.nr) + '" ' +
+             'aria-pressed="' + (a.nr === "alle") + '">' + esc(a.titel) + "</button>";
+    }).join("");
+    elChips.addEventListener("click", function (e) {
+      var c = e.target.closest(".chip");
+      if (!c) return;
+      sectionFilter = c.dataset.nr;
+      Array.prototype.forEach.call(elChips.children, function (x) {
+        x.setAttribute("aria-pressed", x === c);
+      });
+      render();
+      fitScrollPadding();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  /* Die Suchleiste ist klebrig und je nach Fensterbreite unterschiedlich hoch,
+     weil die Abschnitts-Chips umbrechen. Ein fester Wert im CSS trifft daher
+     nie. Stattdessen die echte Höhe messen und als scroll-padding setzen. */
+  var elBar = document.querySelector(".bar");
+  function fitScrollPadding() {
+    if (!elBar) return;
+    document.documentElement.style.scrollPaddingTop = (elBar.offsetHeight + 18) + "px";
+  }
+  window.addEventListener("resize", fitScrollPadding);
+
+  function jumpToHash() {
+    fitScrollPadding();
+    var id = location.hash.slice(1);
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add("flash");
+    el.scrollIntoView({ block: "start" });
+  }
+
+  fetch("changelog.json", { cache: "no-cache" })
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function (d) {
+      DATA = d;
+      // Jahre aus den Datumsangaben ableiten - eine feste Kategorienliste
+      // waere Pflegeaufwand, den niemand nachhalten würde.
+      var jahre = [];
+      DATA.eintraege.forEach(function (r) {
+        r._jahr  = (r.datum || "").split(".")[2] || "";
+        if (r._jahr && jahre.indexOf(r._jahr) === -1) jahre.push(r._jahr);
+        r._nr    = norm(String(r.nummer || ""));
+        r._title = norm(r.titel);
+        r._text  = norm(r.text);
+        r._syn   = " " + norm(r.datum || "") + " ";
+      });
+      jahre.sort().reverse();
+      DATA.kategorien = jahre.map(function (j) { return { nr: j, titel: j }; });
+      elStand.textContent = "Stand " + (DATA.stand || "–") + " · "
+                          + DATA.eintraege.length + " Einträge";
+      buildChips();
+      render();
+      fitScrollPadding();
+      setTimeout(jumpToHash, 60);
+    })
+    .catch(function (err) {
+      elList.innerHTML =
+        '<div class="notice error"><strong>Changelog lässt sich nicht laden</strong>' +
+        "Die Datei changelog.json wurde nicht gefunden. Sie muss im selben Ordner liegen wie diese Seite. " +
+        "Beim Testen ohne Webserver blockiert der Browser das Laden – dann über die Website öffnen." +
+        "</div>";
+      elCount.textContent = "";
+      console.error(err);
+    });
+
+  window.addEventListener("hashchange", jumpToHash);
+})();
+</script>
+<script>
+(function () {
+  var btn  = document.getElementById("nav-btn");
+  var menu = document.getElementById("nav-menu");
+  if (!btn || !menu) return;
+
+  function auf(zustand) {
+    btn.classList.toggle("offen", zustand);
+    menu.classList.toggle("offen", zustand);
+    btn.setAttribute("aria-expanded", zustand ? "true" : "false");
+    btn.setAttribute("aria-label", zustand ? "Menü schließen" : "Menü öffnen");
+  }
+
+  btn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    // Nach der ersten Nutzung hört das Pulsieren auf.
+    auf(!menu.classList.contains("offen"));
+  });
+
+  document.addEventListener("click", function (e) {
+    if (menu.classList.contains("offen") && !menu.contains(e.target)) auf(false);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") auf(false);
+  });
+
+})();
+</script>
+</body>
+</html>
