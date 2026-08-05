@@ -727,7 +727,7 @@
    "titel": "Voraussetzungen zur Unternehmensgründung",
    "abschnitt": "6.0 Unternehmen",
    "abschnittNr": "6",
-   "text": "1. Spieler, die ein Unternehmen gründen möchten, müssen mindestens 7 Tage aktiv auf dem Server gespielt haben.\n2. Als aktiv gilt nur tatsächliche Spielzeit; reines AFK-Sein oder das Umgehen der Aktivität wird nicht angerechnet.\n3. Die Serverleitung behält sich vor, die Aktivität im Zweifelsfall zu überprüfen.",
+   "text": "1. Spieler, die ein Unternehmen gründen möchten, müssen mindestens 7 Tage aktiv auf dem Server gespielt haben.\nAls aktiv gilt nur tatsächliche Spielzeit; reines AFK-Sein oder das Umgehen der Aktivität wird nicht angerechnet.\nDie Serverleitung behält sich vor, die Aktivität im Zweifelsfall zu überprüfen.\n\n2. Zusätzlich muss der Antragsteller über ein Eigenkapital von mindestens $2.000 verfügen. Das Kapital dient als Startkapital für den Aufbau des Unternehmens und muss zum Zeitpunkt der Antragstellung und bei Übergabe des Unternehmens nachweislich vorhanden sein.\n\n3. Die Erfüllung der Mindestvoraussetzungen begründet keinen Anspruch auf eine Genehmigung. Die endgültige Entscheidung über die Gründung eines Unternehmens liegt bei der Serverleitung.",
    "syn": [
     "unternehmen",
     "firma",
