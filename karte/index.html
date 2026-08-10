@@ -484,20 +484,50 @@ const MAP_IMAGE_URL = "../map.jpg"; // <- euer neues Kartenbild (mit eigenem Bra
 const MAP_IMAGE_WIDTH = 7200;    // <- echte Pixel-Breite eures Kartenbilds
 const MAP_IMAGE_HEIGHT = 5400;   // <- echte Pixel-Höhe eures Kartenbilds
 
-// Kalibrierung per Ausgleichsrechnung (linare Regression) aus 11 echten
-// Referenzpunkten (Stadt-Koordinaten + abgelesene Pixel-Position), deutlich
-// genauer als eine Kalibrierung mit nur 2 Punkten. Alle 11 Punkte weichen im
-// Schnitt nur ca. 1-6 Pixel vom Idealwert ab (bei 7200px Bildbreite).
-// px = A*gx + B*gy + C   |   py = D*gx + E*gy + F
-const AFFINE = {
-  A:  0.615320, B: -0.000467, C: 4579.8674,
-  D:  0.000350, E: -0.614414, F: 2188.0212,
-};
+// Kalibrierung fuer die gezeichnete Karte (Stand 10.08.2026).
+// Eine affine Formel reicht hier NICHT: die Karte ist von Hand gezeichnet und
+// dadurch ungleichmaessig verzerrt. Mit einer linearen Ausgleichsrechnung lagen
+// die 17 Messpunkte im Mittel 157 Pixel daneben, im schlimmsten Fall 438.
+//
+// Stattdessen ein Thin-Plate-Spline: eine glatte Flaeche, die exakt durch alle
+// Stuetzpunkte laeuft und dazwischen sanft interpoliert. An den 17 vermessenen
+// Orten sitzt die Umrechnung damit punktgenau; dazwischen ist mit rund 200
+// Pixel Abweichung zu rechnen - das ist die Ungenauigkeit der Zeichnung selbst,
+// nicht der Rechnung.
+//
+// Weitere Stuetzpunkte verbessern das Ergebnis. Dafuer Spielkoordinate und
+// Bildpixel des Ortes messen und den Satz neu berechnen lassen.
+// Stuetzpunkte der Kalibrierung: Spielkoordinaten der 17 vermessenen Orte.
+const TPS_GX = [-5497.18, -3680.65, -5194.13, -2372.18, -1424.15, -1939.54, -849.06, -1797.01, -287.01, 584.18, 460.04, 1529.09, 2868.74, 2958.41, 2615.74, 1313.45, 471.34];
+const TPS_GY = [-2949.85, -2611.15, -2124.61, -2404.97, -2301.55, -1692.20, -1312.05, -391.48, 712.33, 1693.43, 2217.55, 439.22, 1357.53, 528.46, -1139.14, -1296.37, -278.10];
+// Gewichte, vorab berechnet. Nicht von Hand aendern - bei neuen Stuetzpunkten
+// muss der komplette Satz neu bestimmt werden.
+const TPS_WX = [30.32942430, -57.05035016, -18.06512908, 99.98014326, -134.35809673, 51.28782587, 37.53259801, 9.21383987, -113.74565151, -22.30753627, 62.25353698, 3.66761412, -39.01739690, 22.31943923, 18.65680862, -27.74595233, 77.04888272];
+const TPS_WY = [6.55244867, 6.79390117, -9.25148930, -26.16919862, 14.56286860, 18.61733581, -30.42649030, 15.23189479, 15.41874993, -40.18628384, 4.71064612, 26.27231004, 30.45578375, -43.20784184, 24.07462188, -25.33427139, 11.88501453];
+const TPS_AX = [3812.16429730, 478.18072994, 128.90997332];
+const TPS_AY = [2099.28662402, 23.16278244, -751.68229168];
+const TPS_SCALE = 1000.0;
+
+function gameToPixel(gx, gy) {
+  const X = gx / TPS_SCALE, Y = gy / TPS_SCALE;
+  let sx = TPS_AX[0] + TPS_AX[1] * X + TPS_AX[2] * Y;
+  let sy = TPS_AY[0] + TPS_AY[1] * X + TPS_AY[2] * Y;
+  for (let i = 0; i < TPS_GX.length; i++) {
+    const dx = X - TPS_GX[i] / TPS_SCALE;
+    const dy = Y - TPS_GY[i] / TPS_SCALE;
+    const r2 = dx * dx + dy * dy;
+    if (r2 > 1e-12) {
+      const u = r2 * Math.log(r2);
+      sx += TPS_WX[i] * u;
+      sy += TPS_WY[i] * u;
+    }
+  }
+  return [sx, sy];
+}
 
 function gameToMap(gx, gy) {
-  const px = AFFINE.A * gx + AFFINE.B * gy + AFFINE.C;
-  const py = AFFINE.D * gx + AFFINE.E * gy + AFFINE.F;
-  // Leaflet CRS.Simple: y wächst nach OBEN im Koordinatensystem, Bild-Pixel-Y nach UNTEN.
+  const [px, py] = gameToPixel(gx, gy);
+  // Leaflet CRS.Simple: y waechst nach OBEN, Bild-Pixel-Y nach UNTEN.
   return [MAP_IMAGE_HEIGHT - py, px];
 }
 
