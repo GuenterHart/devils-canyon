@@ -291,10 +291,17 @@
   #map-wrap {
     flex: 1;
     position: relative;
-    background: #0d0b09;
+    /* Dunkles Holz statt Schwarz: bleibt bei sehr schmalen Fenstern doch
+       einmal ein Rand, sieht es aus wie ein Blatt auf einem Tisch. */
+    background: #1a120b;
   }
 
-  #map { width: 100%; height: 100%; background: #0d0b09; }
+  #map {
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(ellipse at center, #241a11 0%, #140e08 100%);
+  }
 
   #map-notice {
     position: absolute;
@@ -848,19 +855,30 @@ const map = L.map('map', {
 const bounds = [[0, 0], [MAP_IMAGE_HEIGHT, MAP_IMAGE_WIDTH]];
 map.setMaxBounds(bounds);
 
-// Nicht weiter herauszoomen als noetig, um das ganze Bild zu sehen.
-// Wird bei jeder Fenstergroesse neu bestimmt.
+// Die Karte soll das Fenster FUELLEN, nicht hineinpassen.
+// getBoundsZoom(bounds, false) liefert die Stufe, bei der das ganze Bild zu
+// sehen ist - bei einem breiten Fenster und einem 4:3-Bild entstehen dadurch
+// schwarze Balken links und rechts. Mit true bekommt man stattdessen die
+// Stufe, bei der die Ansicht vollstaendig INNERHALB des Bildes liegt. Dann
+// ist kein Rand mehr da; dafuer liegen oben und unten Teile ausserhalb -
+// dort sitzt bei dieser Karte ohnehin nur die Rahmenverzierung.
 function lockMinZoom() {
-  const z = map.getBoundsZoom(bounds, false);
+  const z = map.getBoundsZoom(bounds, true);
   map.setMinZoom(z);
   if (map.getZoom() < z) map.setZoom(z);
 }
 map.on('resize', lockMinZoom);
 
+// Karte mittig und formatfuellend zeigen.
+function fillView() {
+  const z = map.getBoundsZoom(bounds, true);
+  map.setView([MAP_IMAGE_HEIGHT / 2, MAP_IMAGE_WIDTH / 2], z, { animate: false });
+}
+
 // Kartenbild-Layer. Falls map.jpg fehlt, zeigt Leaflet einfach eine leere/graue
 // Fläche - die Marker funktionieren trotzdem, nur ohne Hintergrundbild.
 L.imageOverlay(MAP_IMAGE_URL, bounds, { errorOverlayUrl: undefined }).addTo(map);
-map.fitBounds(bounds);
+fillView();
 lockMinZoom();
 
 // Fix: Beim ersten Laden hat der Browser das Flexbox-Layout (Sidebar-Breite,
@@ -869,12 +887,12 @@ lockMinZoom();
 // Kartengröße neu berechnen und wieder zentrieren.
 window.addEventListener('load', () => {
   map.invalidateSize();
-  map.fitBounds(bounds);
+  fillView();
   lockMinZoom();
 });
 setTimeout(() => {
   map.invalidateSize();
-  map.fitBounds(bounds);
+  fillView();
   lockMinZoom();
 }, 300);
 
