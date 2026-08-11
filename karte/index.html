@@ -494,25 +494,26 @@ const MAP_IMAGE_HEIGHT = 4344;   // <- echte Pixel-Höhe eures Kartenbilds
 // Kalibrierung fuer die gezeichnete Karte (Stand 10.08.2026).
 // Eine affine Formel reicht hier NICHT: die Karte ist von Hand gezeichnet und
 // dadurch ungleichmaessig verzerrt. Mit einer linearen Ausgleichsrechnung lagen
-// die 17 Messpunkte im Mittel 157 Pixel daneben, im schlimmsten Fall 438.
+// die Messpunkte im Mittel weit daneben - die Karte ist von Hand gezeichnet.
 //
 // Stattdessen ein Thin-Plate-Spline: eine glatte Flaeche, die exakt durch alle
 // Stuetzpunkte laeuft und dazwischen sanft interpoliert. An den 17 vermessenen
-// Orten sitzt die Umrechnung damit punktgenau; dazwischen ist mit rund 200
+// Orten sitzt die Umrechnung damit punktgenau; dazwischen ist mit rund 155
 // Pixel Abweichung zu rechnen - das ist die Ungenauigkeit der Zeichnung selbst,
 // nicht der Rechnung.
 //
 // Weitere Stuetzpunkte verbessern das Ergebnis. Dafuer Spielkoordinate und
 // Bildpixel des Ortes messen und den Satz neu berechnen lassen.
-// Stuetzpunkte der Kalibrierung: Spielkoordinaten der 17 vermessenen Orte.
-const TPS_GX = [-5497.18, -3680.65, -5194.13, -2372.18, -1424.15, -1939.54, -849.06, -1797.01, -287.01, 584.18, 460.04, 1529.09, 2868.74, 2958.41, 2615.74, 1313.45, 471.34];
-const TPS_GY = [-2949.85, -2611.15, -2124.61, -2404.97, -2301.55, -1692.20, -1312.05, -391.48, 712.33, 1693.43, 2217.55, 439.22, 1357.53, 528.46, -1139.14, -1296.37, -278.10];
+// Stuetzpunkte der Kalibrierung: Spielkoordinaten der 25 vermessenen Orte
+// (Stand 11.08.2026, gemessen auf der Karte mit 5792 x 4344).
+const TPS_GX = [-5497.18, -3680.65, -5194.13, -2372.18, -1424.15, -1939.54, -849.06, -1797.01, -287.01, 584.18, 460.04, 1529.09, 2868.74, 2958.41, 2615.74, 1313.45, 471.34, -5232.49, -4217.21, -3464.13, -2475.91, -429.17, 3281.16, -126.65, -1335.67];
+const TPS_GY = [-2949.85, -2611.15, -2124.61, -2404.97, -2301.55, -1692.20, -1312.05, -391.48, 712.33, 1693.43, 2217.55, 439.22, 1357.53, 528.46, -1139.14, -1296.37, -278.10, -3472.57, -3457.38, -3627.98, -417.73, 130.96, -658.73, -1470.84, 2432.17];
 // Gewichte, vorab berechnet. Nicht von Hand aendern - bei neuen Stuetzpunkten
 // muss der komplette Satz neu bestimmt werden.
-const TPS_WX = [24.39833688, -45.89383724, -14.53239273, 80.42847080, -108.08362448, 41.25820659, 30.19288996, 7.41202229, -91.50205744, -17.94517362, 50.07951197, 2.95039180, -31.38732817, 17.95474889, 15.00836604, -22.32007721, 61.98154566];
-const TPS_WY = [5.27108093, 5.46531605, -7.44230917, -21.05166645, 11.71501874, 14.97661236, -24.47642109, 12.25321314, 12.40352772, -32.32763278, 3.78945310, 21.13461386, 24.49998604, -34.75830833, 19.36669583, -20.38001387, 9.56083391];
-const TPS_AX = [3066.67439027, 384.66983164, 103.70091187];
-const TPS_AY = [1688.75946199, 18.63317165, -604.68664353];
+const TPS_WX = [130.43775221, -80.54558020, -31.12803172, 70.28314258, -120.44555583, 78.64005410, -40.63955196, 2.08470964, -213.59676946, 6.43870692, 37.57656916, 21.11914423, -33.40605628, 10.97629203, 5.44599438, -27.01641312, -0.66046738, -135.63857156, 72.55641529, 15.22103857, -20.47172342, 176.76488925, 12.83300912, 51.73705660, 11.43394684];
+const TPS_WY = [59.76143466, 32.52006831, -38.30110970, -6.84186447, 12.97205996, 11.88395414, -73.25110569, 21.56018295, 12.31213623, -24.19927350, -10.08297092, 24.80420685, 23.42296955, -29.37190163, 34.88693985, -43.07785234, -1.65536333, -38.98467113, 22.62584347, -40.19519911, -10.18552756, -2.08143012, -10.56120832, 64.72582474, 7.31385710];
+const TPS_AX = [3251.91473984, 405.68954867, 129.09227213];
+const TPS_AY = [1933.58681549, -5.79982407, -526.56990935];
 const TPS_SCALE = 1000.0;
 
 function gameToPixel(gx, gy) {
