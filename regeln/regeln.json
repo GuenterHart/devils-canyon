@@ -1,6 +1,6 @@
 {
  "hinweis": "Automatisch erzeugt aus data/rules/*.md - nicht von Hand bearbeiten.",
- "stand": "05.08.2026",
+ "stand": "16.08.2026",
  "abschnitte": [
   {
    "nr": "1",
@@ -782,6 +782,15 @@
    "abschnitt": "6.0 Unternehmen",
    "abschnittNr": "6",
    "text": "Unternehmen sollen aktiv am Servergeschehen teilnehmen.\n\nIst ein Unternehmen länger als 14 Tage ohne nachvollziehbaren Grund inaktiv, kann die Serverleitung eine Überprüfung durchführen.\nErfolgt innerhalb einer angemessenen Frist keine Rückmeldung oder Aktivität, kann das Unternehmen geschlossen oder neu vergeben werden.\nBei angekündigten Pausen (Urlaub, Krankheit etc.) kann die Serverleitung Ausnahmen genehmigen.\n\nUnternehmensleiter sollen regelmäßig auf dem Server aktiv sein.\n\nWer über einen Zeitraum von 14 Tagen nicht aktiv spielt und keine Abwesenheit ankündigt, wird die Unternehmensleitung verlieren.\nZiel ist es, Unternehmen dauerhaft besetzt und bespielbar zu halten.\n\nDiese Regel verhindert, dass wichtige Betriebe wochenlang \"blockiert\" werden.",
+   "syn": []
+  },
+  {
+   "id": "6-7",
+   "nr": "6.7",
+   "titel": "Mindestaktivität der Unternehmensleitung",
+   "abschnitt": "6.0 Unternehmen",
+   "abschnittNr": "6",
+   "text": "Die Leitung eines Unternehmens ist verpflichtet, eine Mindestaktivität von 5 Stunden pro Woche auf dem Server zu erreichen.\n\nDer Wertungszeitraum gilt jeweils von Montag bis Sonntag.\nEs zählt ausschließlich die tatsächliche aktive Spielzeit. AFK-Zeit oder das reine Einloggen zum Erreichen der Mindeststunden wird nicht gewertet.\nDie 5 Stunden können innerhalb der Woche frei auf die einzelnen Tage verteilt werden.\nKann die Mindestaktivität aufgrund von Urlaub, Krankheit oder anderen wichtigen Gründen nicht erreicht werden, ist eine rechtzeitige Abmeldung bei der Fraktionsverwaltung erforderlich.\nWird die Mindestaktivität ohne entsprechende Abmeldung nicht erreicht, kann die Unternehmensleitung verwarnt oder das Unternehmen entzogen werden.\nBei wiederholter Unterschreitung behält sich die Fraktionsverwaltung vor, das Unternehmen neu zu vergeben und eine Unternehmenssperre auszusprechen.\n\nZiel dieser Regel ist es, sicherzustellen, dass Unternehmen aktiv geführt werden und dauerhaft für die Spielerschaft zur Verfügung stehen.",
    "syn": []
   }
  ]
