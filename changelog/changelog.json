@@ -1,6 +1,14 @@
 {
- "stand": "10.08.2026",
+ "stand": "19.08.2026",
  "eintraege": [
+  {
+   "id": "60",
+   "msg": "1539670069200818178",
+   "nummer": 60,
+   "datum": "19.08.2026",
+   "titel": "Changelog #60",
+   "text": "Howdy zusammen,\ndiesmal wird es im Canyon hochprozentig, geschäftig und ein wenig glücksspielerisch. 🤠\nMit der Schwarzbrennerei, mietbaren Marktständen, der fertigen Visitenkarte und Lotterie 2.0 erwarten euch gleich mehrere größere Neuerungen.\n\n🥃 Schwarzbrennerei – Brennen auf eigene Gefahr\nAb sofort könnt ihr eure eigene Schwarzbrennerei irgendwo in der Wildnis errichten.\nMit einem Destillen-Bausatz stellt ihr eine Destille samt Maischefass auf. Allerdings nur außerhalb von Städten und Gebäuden und mit genügend Abstand zu anderen Anlagen. Pro Charakter ist eine Anlage möglich.\n\n🌾 Aus verschiedenen Farmprodukten könnt ihr 11 unterschiedliche Sorten sowie einen einfachen Rohbrand herstellen.\n\n🔥 So funktioniert's\nAm Maischefass setzt ihr zunächst eure Maische an. Die Gärung läuft anschließend selbstständig weiter.\nDanach geht es an die Destille – und hier solltet ihr wissen, was ihr tut:\n\n🌡️ Beim Anfeuern müsst ihr die Temperatur im grünen Bereich halten. Mit der Leertaste öffnet ihr die Klappe und könnt gegenkühlen.\n🥶 Zu kalt → Ansatz verloren\n🔥 Zu heiß → Destille fliegt euch um die Ohren und die komplette Anlage ist weg\nHabt ihr die richtige Temperatur erreicht, läuft der Brennvorgang selbstständig weiter.\n\n🚨 Vorsicht vor neugierigen Augen\nWährend des Brennens steigt sichtbarer Rauch auf. Überlegt euch also gut, wo ihr eure Anlage aufstellt.\n⚖️ Brennen ohne Lizenz ist illegal und das Gesetz darf entsprechend reagieren.\n🧨 Wird es brenzlig, könnt ihr eure Anlage sogar selbst mit einer Zündschnur sprengen. Dann sind allerdings Anlage, Ware und Beweise verschwunden.\n📈 Mit jedem Brennvorgang sammelt ihr Erfahrung. Dadurch schaltet ihr neue Sorten frei, verkürzt Wartezeiten und bekommt mehr Spielraum bei der Temperatur.\nVom Krugwäscher bis zum Alten Schwarzbrenner ist es allerdings ein langer Weg. 🥃\n\n💼 Visitenkarte – Testphase abgeschlossen\n\nDie Testphase unseres Visitenkarten-Systems wurde erfolgreich beendet. Das System läuft stabil und ist damit vollständig einsatzbereit.\n👔 Beruf und Rang werden automatisch aus der Berufsverwaltung übernommen\n📜 Rangbezeichnungen werden korrekt dargestellt\n👁️ Im Radialmenü könnt ihr zwischen Betrachten und Zeigen wählen\n🪪 Die eigene Karte kann angesehen werden, ohne sie anderen zu präsentieren\n🤝 Beim Zeigen bekommt gezielt der Spieler in unmittelbarer Nähe eure Karte angezeigt\n\n❤️ Ein besonderer Dank geht an unseren Serverpartner  für die Bereitstellung der benötigten Exporte zur Anbindung an unsere Berufsverwaltung!"
+  },
   {
    "id": "59",
    "msg": "1536369674269499484",
