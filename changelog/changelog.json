@@ -1,6 +1,14 @@
 {
- "stand": "07.09.2026",
+ "stand": "13.09.2026",
  "eintraege": [
+  {
+   "id": "63",
+   "msg": "1548710748858093680",
+   "nummer": 63,
+   "datum": "13.09.2026",
+   "titel": "Changelog #63",
+   "text": "🎒 Neues Newcomer-Pass-System\n\nHowdy zusammen 🤠\n\ndieses Mal gibt es einen kleinen Sonderchangelog rund um ein neues System für frische Charaktere im Canyon.\n\nAb sofort erhalten neue Charaktere automatisch einen 14-tägigen Newcomer Pass.\n\nDer Pass soll die ersten Schritte im Canyon etwas leichter machen und dabei verschiedene Bereiche des Serverlebens zeigen, ohne daraus ein starres Tutorial zu machen.\n\n🧭 Orientierung für die ersten Tage\n\nDer Newcomer Pass führt durch unterschiedliche Aufgaben rund um:\n\n- 💼 Arbeit\n- 🔨 Handwerk\n- 🏦 Bank\n- 🛒 Handel\n- 🦌 Jagd\n- 🎣 Angeln\n\nDer Fortschritt verteilt sich dabei auf insgesamt vier Kapitel.\n\nBei vielen Aufgaben gibt es zusätzlich kleine Hinweise, falls einmal nicht ganz klar sein sollte, wo oder wie es weitergeht.\n\nDen eigenen Fortschritt könnt ihr jederzeit über\n`/newcomer` einsehen.\n\n🎁 Belohnungen für den Fortschritt\n\nNach Abschluss der einzelnen Kapitel warten verschiedene Belohnungen auf euch.\n\nDazu gehören unter anderem:\n\n🎒 ein Rucksack\n🛞 eine Jagdkutsche\n🐕 ein Coonhound\n🎟️ und zum Abschluss ein 10-€-Devil’s-Canyon-Gutschein\n\nDer Pass soll dabei nicht vorgeben, welchen Weg ein Charakter gehen muss.\n\nVielmehr soll er neuen Spielern zeigen, was im Canyon alles möglich ist, damit sie anschließend selbst entscheiden können, wohin sich ihre Geschichte entwickelt.\n\n❤️ Ein großes Dankeschön\n\nEin besonderes Dankeschön geht an  für die Idee zum Newcomer Pass und für das Beisteuern der Belohnungen.\n\nDamit bekommen neue Charaktere künftig etwas mehr Orientierung für ihre ersten Tage, ohne dass ihnen vorgeschrieben wird, welche Geschichte sie erzählen sollen.\n\nDenn am Ende soll der Newcomer Pass vor allem eines tun:\n\nMöglichkeiten zeigen – und den Rest dem RP überlassen. 🤠"
+  },
   {
    "id": "1546574419005276293",
    "msg": "1546574419005276293",
