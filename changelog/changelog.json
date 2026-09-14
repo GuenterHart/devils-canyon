@@ -1,6 +1,14 @@
 {
- "stand": "13.09.2026",
+ "stand": "14.09.2026",
  "eintraege": [
+  {
+   "id": "64",
+   "msg": "1549122258382094438",
+   "nummer": 64,
+   "datum": "14.09.2026",
+   "titel": "Changelog #64",
+   "text": "🤠 Der Canyon Pass ist fertiggestellt\n\nIn den vergangenen Wochen haben wir an einem neuen langfristigen Fortschrittssystem für Devil’s Canyon gearbeitet.\n\nDer Canyon Pass ist nun technisch fertiggestellt und vollständig in unsere eigenen Systeme integriert. Ihr findet ihn dann in unserem Radialmenü unter X-Nützliches.\n\n🏜️ Season 1 – Pioniere des Canyon\n\nDie erste Season umfasst insgesamt 60 Ränge und läuft über 84 Tage.\n\nFortschritt sammelt ihr ganz normal beim Spielen im Canyon. Zahlreiche bestehende Aktivitäten wurden dafür direkt mit dem Pass verbunden – unter anderem Arbeiten, Handwerk, Jagd, Angeln, Reisen, Handel und viele weitere Systeme.\n\nZusätzlich erwarten euch:\n\n⭐ tägliche Herausforderungen\n⭐ wöchentliche Herausforderungen\n⭐ langfristige Season-Ziele\n⭐ ein kostenloser Belohnungspfad\n⭐ ein zusätzlicher Premium-Pfad\n⭐ eigene Abzeichen und Meilensteine für euren Fortschritt\n\n🎁 Belohnungen\n\nÜber die 60 Ränge verteilt warten verschiedene Belohnungen auf euch – von kleineren Gegenständen und Canyon-Coins bis hin zu besonderen Belohnungen.\n\nDarunter befinden sich beispielsweise exklusive Gegenstände, Ausrüstung, ein besonderer Briefrabe und zum Abschluss sogar besondere Pferde.\n\n💎 Premium-Canyon Pass\n\nDer Premium-Pass bietet einen zusätzlichen Belohnungspfad.\n\nWichtig:\nPremium erhöht nicht eure XP und beschleunigt euren Fortschritt nicht.\n\nWer Premium erst später während der Season freischaltet, kann bereits erreichte Premium-Belohnungen rückwirkend beanspruchen.\n\nZum Start wird der Premium-Canyon Pass für 14,99 € im Devil’s-Canyon-Shop erhältlich sein.\n\n🔧 Technik & Tests\n\nDer Canyon Pass wurde vollständig mit unseren bestehenden Systemen verbunden und auf LIVE getestet.\nAuch besondere Vorgänge wie Pferde- und Kanukäufe, Votes, Postabholungen, K.O.-Schläge, Reisen sowie zahlreiche weitere Aktivitäten werden automatisch erkannt.\n\nDer genaue Startzeitpunkt der ersten Season wird noch separat bekanntgegeben.\n\nWillkommen bei den Pionieren des Canyon. 🤠"
+  },
   {
    "id": "63",
    "msg": "1548710748858093680",
